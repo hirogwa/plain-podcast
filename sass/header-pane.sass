@@ -1,0 +1,61 @@
+/*
+ * Defines the look and feel of the header pane.
+ */
+
+$color-text: #eee
+#header-site
+    background-color: #000
+    background-repeat: no-repeat 
+    background-position: center center
+    background-size: cover
+    color: $color-text
+
+    #header-site-inner
+        max-width: 640px
+        margin: auto
+        padding: 40px 40px 70px
+        position: relative
+
+    h1
+        font-weight: 100
+        margin: auto
+        text-align: center
+
+        .title
+            letter-spacing: 0.5em
+            font-size: 150%
+
+        .tagline
+            display: block
+            font-size: small
+            margin-top: 10px
+            letter-spacing: 0.4em
+        a
+            color: inherit
+
+    nav
+        position: absolute
+        bottom: 0
+        right: 0
+        padding-right: 40px
+        font-weight: bold
+
+        ul
+            list-style: none outside none
+        li
+            display: block
+            float: left
+            list-style: none
+
+            a
+                display: block
+                padding: 10px 20px
+                margin: 0 2px
+                width: 4em
+                color: inherit
+                text-align: center
+                font-size: 80%
+                background: rgba(50, 50, 50, 0.85)
+            a:hover
+                background: rgba(255, 102, 178, 0.85)
+                transition-duration: 0.4s 

@@ -1,0 +1,163 @@
+@charset "UTF-8";
+/* Defines the pane structure.
+ */
+body {
+  margin: 0;
+  padding: 0; }
+
+#contents {
+  margin: 30px auto;
+  max-width: 640px; }
+
+#footer-site {
+  margin-top: 30px; }
+
+/* Defines the look and feel of the header pane.
+ */
+#header-site {
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  color: #eeeeee; }
+  #header-site #header-site-inner {
+    max-width: 640px;
+    margin: auto;
+    padding: 40px 40px 70px;
+    position: relative; }
+  #header-site h1 {
+    font-weight: 100;
+    margin: auto;
+    text-align: center; }
+    #header-site h1 .title {
+      letter-spacing: 0.5em;
+      font-size: 150%; }
+    #header-site h1 .tagline {
+      display: block;
+      font-size: small;
+      margin-top: 10px;
+      letter-spacing: 0.4em; }
+    #header-site h1 a {
+      color: inherit; }
+  #header-site nav {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-right: 40px;
+    font-weight: bold; }
+    #header-site nav ul {
+      list-style: none outside none; }
+    #header-site nav li {
+      display: block;
+      float: left;
+      list-style: none; }
+      #header-site nav li a {
+        display: block;
+        padding: 10px 20px;
+        margin: 0 2px;
+        width: 4em;
+        color: inherit;
+        text-align: center;
+        font-size: 80%;
+        background: rgba(50, 50, 50, 0.85); }
+      #header-site nav li a:hover {
+        background: rgba(255, 102, 178, 0.85);
+        transition-duration: 0.4s; }
+
+/* Defines the look and feel of the contents pane.
+ */
+#contents {
+  padding: 20px; }
+  #contents .episode {
+    margin-top: 40px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    background-color: floralwhite;
+    position: relative; }
+    #contents .episode .audio-player {
+      padding: 20px 20px 0; }
+      #contents .episode .audio-player audio {
+        width: 100%; }
+    #contents .episode .date {
+      top: -30px;
+      left: -20px;
+      display: block;
+      position: absolute;
+      background-color: #222222;
+      color: white;
+      text-align: center;
+      font-size: 70%;
+      border-radius: 50%;
+      padding: 10px; }
+    #contents .episode .excerpt {
+      padding: 15px 40px;
+      font-size: 90%;
+      line-height: 170%; }
+    #contents .episode h2 {
+      background-color: white;
+      line-height: 250%;
+      margin: 0;
+      font-size: 120%;
+      letter-spacing: 0.2em;
+      border-bottom: 1px solid #eeeeee; }
+      #contents .episode h2 a {
+        display: block;
+        padding: 0 10px 0 70px;
+        color: #222222;
+        transition-duration: 0.2s; }
+      #contents .episode h2 a:hover {
+        background: rgba(255, 102, 178, 0.85);
+        color: white;
+        transition-duration: 0.2s; }
+    #contents .episode .show-notes {
+      padding: 0 30px;
+      line-height: 170%;
+      font-size: 90%; }
+      #contents .episode .show-notes a {
+        color: #222222; }
+      #contents .episode .show-notes a:hover {
+        text-decoration: underline; }
+      #contents .episode .show-notes h3 {
+        letter-spacing: 0.2em;
+        color: #333333;
+        border-bottom: solid 1px #cccccc; }
+
+/* Defines the look and feel of the footer pane.
+ */
+#footer-site {
+  background-color: black;
+  color: white;
+  font-size: 80%;
+  padding: 20px; }
+  #footer-site #footer-site-inner {
+    max-width: 960px;
+    margin: auto;
+    color: #bbbbbb;
+    letter-spacing: 0.1em;
+    font-size: 90%; }
+    #footer-site #footer-site-inner h2, #footer-site #footer-site-inner a {
+      color: white; }
+    #footer-site #footer-site-inner a:hover {
+      text-decoration: underline; }
+    #footer-site #footer-site-inner ul {
+      list-style: none;
+      padding-left: 0; }
+  #footer-site .footer-site-box {
+    box-sizing: border-box;
+    width: 33%;
+    float: left;
+    padding: 20px; }
+  #footer-site .copyright {
+    clear: both;
+    text-align: center;
+    margin: 20px; }
+
+/* Common themes like color and font.
+ */
+body {
+  font-family: "ヒラギノ明朝 Pro W3", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
+  background-image: url("bodybackground.png");
+  background-repeat: repeat; }
+
+a {
+  text-decoration: none; }

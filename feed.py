@@ -1,15 +1,15 @@
 from django.contrib.syndication.views import Feed
-from django.shortcuts import get_object_or_404
 from models import Episode, Podcast
 from urlparse import urljoin
 import mimetypes
 
 
 class AllEpisodesFeed(Feed):
-    podcast = get_object_or_404(Podcast, pk=1)
-    title = podcast.name
-    link = '/podcast/feed/'
-    description = podcast.description
+    podcast = Podcast.objects.get(pk=1)
+    if podcast:
+        title = podcast.name
+        link = '/podcast/feed/'
+        description = podcast.description
 
     def items(self):
         return Episode.objects.all().order_by('-pub_date')

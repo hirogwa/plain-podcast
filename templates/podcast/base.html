@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  {% block page-title %}
+  <title></title>
+  {% endblock %}
+
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'podcast/favicon.png' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'podcast/style.css' %}"/>
+</head>
+<body>
+<div id="container">
+  <header id="header-site">
+    <div id="header-site-inner">
+      <h1>
+        <span class="title"><a href="{% url 'podcast:index' %}">{{ podcast.name }}</a></span>
+        <span class="tagline">{{ podcast.tagline }}</span>
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="{% url 'podcast:index' %}">Home</a></li>
+          <li><a href="{% url 'podcast:feed' %}">RSS</a></li>
+          <li><a href="{{ podcast.itunes_url }}">iTunes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div id="contents">
+    {% block contents %}
+    {% endblock %}
+  </div>
+  <footer id="footer-site">
+    <div id="footer-site-inner">
+      <div class="footer-site-box">
+        <h2>{{ podcast.name }}</h2>
+        <p>
+          {{ podcast.description }}
+        </p>
+      </div>
+      <div class="footer-site-box">
+        <h2>Twitter</h2>
+        <p>
+          番組の感想やゲストへの質問など、Twitterハッシュタグ&nbsp;<a href="https://twitter.com/search?q=%23楽屋裏でコソコソ">#楽屋裏でコソコソ</a>&nbsp;までお寄せください。
+        </p>
+      </div>
+      <div class="footer-site-box">
+        <h2>購読</h2>
+        <p>
+          RSSを購読すると、新しいエピソードを自動でダウンロード、再生することができます。
+        </p>
+        <ul>
+          <li><a href="{% url 'podcast:feed' %}">RSSフィードを購読</a></li>
+          <li><a href="{{ podcast.itunes_url }}">iTunesで購読</a></li>
+        </ul>
+      </div>
+      <div class="copyright">
+        <p>
+          Copyright &copy; 2014 by <a href="https://twitter.com/{{ podcast.twitter_id }}">{{ podcast.twitter_id }}</a>. All Rights Reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
