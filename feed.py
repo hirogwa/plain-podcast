@@ -25,7 +25,7 @@ class AllEpisodesFeed(Feed):
         return episode.description + '<h3>Show Notes</h3>' + episode.show_notes
 
     def item_enclosure_url(self, episode):
-        return urljoin(self.podcast.app_root_url, 'media/{0}'.format(episode.audio_file.name))
+        return urljoin(self.podcast.media_url + '/', episode.audio_file.name)
 
     def item_enclosure_length(self, episode):
         return episode.audio_file.size

@@ -6,6 +6,7 @@ class Podcast(models.Model):
     name = models.CharField(max_length=200)
     tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
+    media_url = models.URLField()
     app_root_url = models.URLField()
     itunes_url = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
