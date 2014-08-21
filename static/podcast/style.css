@@ -68,19 +68,47 @@ body {
  */
 #contents {
   padding: 20px; }
-  #contents .episode {
+  #contents #embedded-twitter-timeline iframe {
+    display: block;
+    margin: 0 auto; }
+  #contents .social-share {
+    padding: 20px; }
+  #contents .twitter-share {
+    padding: 20px;
+    background-color: black; }
+  #contents .content-box {
     margin-top: 40px;
     margin-bottom: 15px;
     padding-bottom: 15px;
     background-color: floralwhite;
-    position: relative; }
-    #contents .episode .audio-player {
+    position: relative;
+    border: solid 1px white; }
+    #contents .content-box h2 {
+      background-color: white;
+      line-height: 250%;
+      margin: 0;
+      font-size: 120%;
+      letter-spacing: 0.2em;
+      border-bottom: 1px solid #eeeeee; }
+      #contents .content-box h2 a {
+        display: block;
+        padding: 0 10px 0 70px;
+        color: #222222;
+        transition-duration: 0.2s; }
+      #contents .content-box h2 a:hover {
+        background: rgba(255, 102, 178, 0.85);
+        color: white;
+        transition-duration: 0.2s; }
+    #contents .content-box .audio-player {
       padding: 20px 20px 0; }
-      #contents .episode .audio-player audio {
+      #contents .content-box .audio-player audio {
         width: 100%; }
-    #contents .episode .date {
+    #contents .content-box .date {
       top: -30px;
       left: -20px;
+      min-height: 40px;
+      min-width: 40px;
+      text-align: center;
       display: block;
       position: absolute;
       background-color: #222222;
@@ -89,38 +117,32 @@ body {
       font-size: 70%;
       border-radius: 50%;
       padding: 10px; }
-    #contents .episode .excerpt {
+    #contents .content-box .content-box-body {
       padding: 15px 40px;
       font-size: 90%;
+      color: #555555;
       line-height: 170%; }
-    #contents .episode h2 {
-      background-color: white;
-      line-height: 250%;
-      margin: 0;
-      font-size: 120%;
-      letter-spacing: 0.2em;
-      border-bottom: 1px solid #eeeeee; }
-      #contents .episode h2 a {
-        display: block;
-        padding: 0 10px 0 70px;
-        color: #222222;
-        transition-duration: 0.2s; }
-      #contents .episode h2 a:hover {
-        background: rgba(255, 102, 178, 0.85);
-        color: white;
-        transition-duration: 0.2s; }
-    #contents .episode .show-notes {
-      padding: 0 30px;
-      line-height: 170%;
-      font-size: 90%; }
-      #contents .episode .show-notes a {
+      #contents .content-box .content-box-body a {
         color: #222222; }
-      #contents .episode .show-notes a:hover {
+      #contents .content-box .content-box-body a:hover {
         text-decoration: underline; }
-      #contents .episode .show-notes h3 {
+      #contents .content-box .content-box-body h3 {
         letter-spacing: 0.2em;
-        color: #333333;
         border-bottom: solid 1px #cccccc; }
+    #contents .content-box .episode-footer {
+      margin-bottom: 10px;
+      padding: 10px 25px; }
+      #contents .content-box .episode-footer .episode-footer-inner {
+        background-color: #eeeeee;
+        padding: 10px 15px;
+        min-height: 21px; }
+        #contents .content-box .episode-footer .episode-footer-inner .episode-twitter-share-button {
+          width: 90px;
+          float: left; }
+        #contents .content-box .episode-footer .episode-footer-inner .episode-fb-like-button {
+          width: 20%;
+          float: left;
+          bottom: 5px; }
 
 /* Defines the look and feel of the footer pane.
  */
@@ -152,10 +174,40 @@ body {
     text-align: center;
     margin: 20px; }
 
+.presenter-profile .profile-image-box {
+  padding-top: 30px; }
+.presenter-profile .profile-description-box {
+  text-align: justify; }
+.presenter-profile .presenter-even .profile-image-box {
+  width: 30%;
+  float: left; }
+.presenter-profile .presenter-even .profile-description-box {
+  width: 70%;
+  float: left; }
+  .presenter-profile .presenter-even .profile-description-box .profile-description-internal {
+    padding-left: 30px; }
+.presenter-profile .presenter-odd .profile-image-box {
+  width: 30%;
+  float: right; }
+.presenter-profile .presenter-odd .profile-description-box {
+  width: 70%;
+  float: right; }
+  .presenter-profile .presenter-odd .profile-description-box .profile-description-internal {
+    padding-right: 30px; }
+.presenter-profile img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin: auto; }
+.presenter-profile .clear {
+  clear: both;
+  display: block; }
+
 /* Common themes like color and font.
  */
 body {
-  font-family: "ヒラギノ明朝 Pro W3", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
+  font-family: "Meiryo", "ヒラギノ角ゴ Pro W3", sans-serif;
   background-image: url("bodybackground.png");
   background-repeat: repeat; }
 

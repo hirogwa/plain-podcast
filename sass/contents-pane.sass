@@ -5,35 +5,25 @@
 #contents
     padding: 20px
 
-    .episode
+    #embedded-twitter-timeline
+        iframe
+            display: block
+            margin: 0 auto
+
+    .social-share
+        padding: 20px
+
+    .twitter-share
+        padding: 20px
+        background-color: black
+
+    .content-box
         margin-top: 40px
         margin-bottom: 15px
         padding-bottom: 15px
         background-color: rgb(255,250,240)
         position: relative
-
-        .audio-player
-            padding: 20px 20px 0
-
-            audio
-                width: 100%
-
-        .date
-            top: -30px
-            left: -20px
-            display: block
-            position: absolute
-            background-color: #222
-            color: #fff
-            text-align: center
-            font-size: 70%
-            border-radius: 50%
-            padding: 10px
-
-        .excerpt
-            padding: 15px 40px
-            font-size: 90%
-            line-height: 170%
+        border: solid 1px #fff
 
         h2
             background-color: #fff
@@ -53,10 +43,32 @@
                 color: #fff
                 transition-duration: 0.2s 
 
-        .show-notes
-            padding: 0 30px
-            line-height: 170%
+        .audio-player
+            padding: 20px 20px 0
+
+            audio
+                width: 100%
+
+        .date
+            top: -30px
+            left: -20px
+            min-height: 40px
+            min-width: 40px
+            text-align: center
+            display: block
+            position: absolute
+            background-color: #222
+            color: #fff
+            text-align: center
+            font-size: 70%
+            border-radius: 50%
+            padding: 10px
+
+        .content-box-body
+            padding: 15px 40px
             font-size: 90%
+            color: #555
+            line-height: 170%
 
             a
                 color: #222
@@ -65,6 +77,22 @@
 
             h3
                 letter-spacing: 0.2em
-                color: #333
                 border-bottom: solid 1px #ccc
+
+        .episode-footer
+            margin-bottom: 10px
+            padding: 10px 25px
+
+            .episode-footer-inner
+                background-color: #eee
+                padding: 10px 15px
+                min-height: 21px
+
+                .episode-twitter-share-button
+                    width: 90px
+                    float: left
+                .episode-fb-like-button
+                    width: 20%
+                    float: left
+                    bottom: 5px
 

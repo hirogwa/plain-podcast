@@ -9,6 +9,18 @@
   {% load static %}
   <link rel="icon" type="image/png" href="{% static 'podcast/favicon.png' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'podcast/style.css' %}"/>
+
+  <div id="fb-root">
+    <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId={{ podcast.facebook_app_id }}&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+    </script>
+  </div>
+
 </head>
 <body>
 <div id="container">
@@ -21,6 +33,7 @@
       <nav>
         <ul>
           <li><a href="{% url 'podcast:index' %}">Home</a></li>
+          <li><a href="{% url 'podcast:about' %}">About</a></li>
           <li><a href="{% url 'podcast:feed' %}">RSS</a></li>
           <li><a href="{{ podcast.itunes_url }}">iTunes</a></li>
         </ul>
@@ -34,30 +47,40 @@
   <footer id="footer-site">
     <div id="footer-site-inner">
       <div class="footer-site-box">
-        <h2>{{ podcast.name }}</h2>
+        {% if footer_about %}
+        <h2>{{ footer_about.title }}</h2>
         <p>
-          {{ podcast.description }}
+          {{ footer_about.statement|safe }}
         </p>
+        {% endif %}
       </div>
       <div class="footer-site-box">
-        <h2>Twitter</h2>
+        {% if footer_twitter %}
+        <h2>{{ footer_twitter.title }}</h2>
         <p>
-          番組の感想やゲストへの質問など、Twitterハッシュタグ&nbsp;<a href="https://twitter.com/search?q=%23楽屋裏でコソコソ">#楽屋裏でコソコソ</a>&nbsp;までお寄せください。
+          {{ footer_twitter.statement|safe }}
         </p>
+        <div class="footer-twitter-button">
+          <a href="https://twitter.com/intent/tweet?button_hashtag={{ podcast.twitter_hashtag }}" class="twitter-hashtag-button" data-related="{{ podcast.twitter_id }}" data-url="{{ podcast.app_root_url }}">Tweet #{{ podcast.twitter_hashtag }}</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+        {% endif %}
       </div>
       <div class="footer-site-box">
-        <h2>購読</h2>
+        {% if footer_subscription %}
+        <h2>{{ footer_subscription.title }}</h2>
         <p>
-          RSSを購読すると、新しいエピソードを自動でダウンロード、再生することができます。
+          {{ footer_subscription.statement|safe }}
         </p>
         <ul>
-          <li><a href="{% url 'podcast:feed' %}">RSSフィードを購読</a></li>
-          <li><a href="{{ podcast.itunes_url }}">iTunesで購読</a></li>
+          <li><a href="{% url 'podcast:feed' %}">RSS Feed</a></li>
+          <li><a href="{{ podcast.itunes_url }}">iTunes</a></li>
         </ul>
+        {% endif %}
       </div>
       <div class="copyright">
         <p>
-          Copyright &copy; 2014 by <a href="https://twitter.com/{{ podcast.twitter_id }}">{{ podcast.twitter_id }}</a>. All Rights Reserved.
+          Copyright &copy; 2014 by <a href="{{ podcast.facebook_page }}">{{ podcast.name }}</a>. All Rights Reserved.
         </p>
       </div>
     </div>

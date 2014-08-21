@@ -4,13 +4,16 @@ import mimetypes
 
 class Podcast(models.Model):
     name = models.CharField(max_length=200)
-    tagline = models.CharField(max_length=300)
+    tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
-    domain = models.URLField()
+    app_root_url = models.URLField()
     itunes_url = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
     twitter_id = models.CharField(max_length=100, blank=True)
+    twitter_hashtag = models.CharField(max_length=100, blank=True)
+    twitter_timeline_widget_id = models.CharField(max_length=30, blank=True)
     facebook_app_id = models.CharField(max_length=30, blank=True)
+    google_analytics_id = models.CharField(max_length=50, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -39,3 +42,29 @@ class Episode(models.Model):
     def get_absolute_url(self):
         return '/podcast/episode/%s' % self.slug
 
+
+class Presenter(models.Model):
+    name = models.CharField(max_length=100)
+    introduction = models.TextField()
+    thumbnail_square = models.ImageField(upload_to='images')
+    display_order = models.IntegerField(blank=True)
+    twitter_id = models.CharField(max_length=100, blank=True)
+    facebook_page = models.URLField(blank=True)
+    personal_site = models.URLField(blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.display_order is None:
+            self.display_order = 100
+        super(Presenter, self).save(*args, **kwargs)
+
+
+class Statement(models.Model):
+    unique_name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    statement = models.TextField()
+
+    def __unicode__(self):
+        return self.unique_name

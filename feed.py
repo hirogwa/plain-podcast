@@ -5,8 +5,9 @@ import mimetypes
 
 
 class AllEpisodesFeed(Feed):
-    podcast = Podcast.objects.get(pk=1)
-    if podcast:
+    podcast_list = Podcast.objects.all()
+    if len(podcast_list) > 0:
+        podcast = podcast_list[0]
         title = podcast.name
         link = '/podcast/feed/'
         description = podcast.description
@@ -24,7 +25,7 @@ class AllEpisodesFeed(Feed):
         return episode.description + '<h3>Show Notes</h3>' + episode.show_notes
 
     def item_enclosure_url(self, episode):
-        return urljoin(self.podcast.domain, 'media/{0}'.format(episode.audio_file.name))
+        return urljoin(self.podcast.app_root_url, 'media/{0}'.format(episode.audio_file.name))
 
     def item_enclosure_length(self, episode):
         return episode.audio_file.size

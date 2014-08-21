@@ -4,6 +4,7 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
+    url(r'^about/$', views.about, name='about'),
     url(r'^episode/(?P<slug>\S+)/$', views.episode, name='episode'),
     url(r'^feed/$', AllEpisodesFeed(), name='feed'),
 )

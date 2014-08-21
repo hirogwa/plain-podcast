@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block contents %}
-<div class="episode">
+<div class="episode content-box">
   <span class="date">
     {{ episode.pub_date.year }}年<br>
     {{ episode.pub_date.month }}月{{ episode.pub_date.day }}日に<br>
@@ -18,12 +18,20 @@
       <source src="{% get_media_prefix %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
     </audio>
   </div>
-  <div class="excerpt">
-    <p>{{ episode.description|safe }}</p>
+  <div class="episode-description content-box-body">
+      <p>{{ episode.description|safe }}</p>
+      <h3>関連リンクなどをメモメモ</h3>
+      <p>{{ episode.show_notes|safe }}</p>
   </div>
-  <div class="show-notes">
-    <h3>関連リンクなどをメモメモ</h3>
-    <p>{{ episode.show_notes|safe }}</p>
+  <div class="episode-footer">
+    <div class="episode-footer-inner">
+      <div class="episode-twitter-share-button">
+        <a href="https://twitter.com/share" class="twitter-share-button"
+         data-url="{{ podcast.app_root_url }}{{ episode.get_absolute_url }}" data-text="{{ episode.title }}" data-hashtags="{{ podcast.name }}">Tweet</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </div>
+      <div class="fb-like episode-fb-like-button" data-href="{% url 'podcast:episode' episode.slug %}" data-layout="button_count" data-width="30px" data-action="like" data-show-faces="false" data-share="false"></div>
+    </div>
   </div>
 </div>
 {% endblock %}

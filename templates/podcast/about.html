@@ -1,0 +1,28 @@
+{% extends "podcast/base.html" %}
+
+{% block page-title %}
+<title>{{ podcast.name }}</title>
+{% endblock %}
+
+{% block contents %}
+{% load static %}
+{% for presenter in presenters %}
+<div class="presenter-profile content-box">
+  <div class="presenter-profile-description
+   presenter-{% if forloop.counter0|divisibleby:2 %}even{% else %}odd{% endif %}
+   content-box-body">
+    <div class="profile-image-box">
+      <img class="profile-image" src="{% get_media_prefix %}{{ presenter.thumbnail_square }}" alt="">
+    </div>
+    <div class="profile-description-box">
+      <div class="profile-description-internal">
+        <p>
+          {{ presenter.introduction|safe }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <span class="clear"></span>
+</div>
+{% endfor %}
+{% endblock %}
