@@ -148,12 +148,17 @@ body {
         padding: 10px 15px;
         min-height: 21px; }
         #contents .content-box .episode-footer .episode-footer-inner .episode-twitter-share-button {
-          width: 90px;
+          box-sizing: border-box;
+          width: 15%;
           float: left; }
         #contents .content-box .episode-footer .episode-footer-inner .episode-fb-like-button {
-          width: 20%;
+          box-sizing: border-box;
+          width: 35%;
           float: left;
           bottom: 5px; }
+        #contents .content-box .episode-footer .episode-footer-inner .episode-footer-clear {
+          clear: left;
+          display: block; }
 
 /* Defines the look and feel of the footer pane.
  */
