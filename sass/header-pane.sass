@@ -3,6 +3,7 @@
  */
 
 $color-text: #eee
+$mobile-max: 480px
 #header-site
     background-color: #000
     background-repeat: no-repeat 
@@ -45,6 +46,8 @@ $color-text: #eee
         bottom: 0
         right: 30px
         font-weight: bold
+        @media screen and (max-width: $mobile-max)
+            right: 20px
 
         ul
             list-style: none outside none

@@ -49,6 +49,9 @@ body {
     bottom: 0;
     right: 30px;
     font-weight: bold; }
+    @media screen and (max-width: 480px) {
+      #header-site nav {
+        right: 20px; } }
     #header-site nav ul {
       list-style: none outside none;
       margin: 0;
@@ -192,22 +195,30 @@ body {
   padding-top: 30px; }
 .presenter-profile .profile-description-box {
   text-align: justify; }
-.presenter-profile .presenter-even .profile-image-box {
-  width: 30%;
-  float: left; }
-.presenter-profile .presenter-even .profile-description-box {
-  width: 70%;
-  float: left; }
-  .presenter-profile .presenter-even .profile-description-box .profile-description-internal {
-    padding-left: 30px; }
-.presenter-profile .presenter-odd .profile-image-box {
-  width: 30%;
-  float: right; }
-.presenter-profile .presenter-odd .profile-description-box {
-  width: 70%;
-  float: right; }
-  .presenter-profile .presenter-odd .profile-description-box .profile-description-internal {
-    padding-right: 30px; }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-even .profile-image-box {
+    box-sizing: border-box;
+    width: 30%;
+    float: left; } }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-even .profile-description-box {
+    box-sizing: border-box;
+    width: 70%;
+    float: left; }
+    .presenter-profile .presenter-even .profile-description-box .profile-description-internal {
+      padding-left: 30px; } }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-odd .profile-image-box {
+    box-sizing: border-box;
+    width: 30%;
+    float: right; } }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-odd .profile-description-box {
+    box-sizing: border-box;
+    width: 70%;
+    float: right; }
+    .presenter-profile .presenter-odd .profile-description-box .profile-description-internal {
+      padding-right: 30px; } }
 .presenter-profile img {
   border-radius: 50%;
   width: 150px;
