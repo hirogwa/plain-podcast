@@ -6,11 +6,13 @@
 
 {% block contents %}
 <div class="episode content-box">
-  <span class="date">
+  <div class="episode-pub-date">
+    <div class="episode-pub-date-inner">
     {{ episode.pub_date.year }}年<br>
     {{ episode.pub_date.month }}月{{ episode.pub_date.day }}日に<br>
     コソコソ
-  </span>
+    </div>
+  </div>
   <h2><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h2>
   <div class="audio-player">
     {% load static %}
