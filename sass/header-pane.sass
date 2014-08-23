@@ -4,8 +4,9 @@
 
 $color-text: #eee
 $mobile-max: 480px
+$desktop-min: 640px
 #header-site
-    background-color: #000
+    background-color: #333
     background-repeat: no-repeat 
     background-position: center center
     background-size: cover
@@ -14,13 +15,14 @@ $mobile-max: 480px
     #header-site-inner
         max-width: 640px
         margin: auto
-        padding: 40px 30px 70px
+        padding: 3em 2em 4em
         position: relative
 
     h1
         font-weight: 100
         margin: 0 auto 0.5em
         text-align: center
+        margin-bottom: 0
 
         .title
             letter-spacing: 0.5em
@@ -29,10 +31,15 @@ $mobile-max: 480px
         .tagline
             display: block
             font-size: small
-            margin-top: 10px
-            letter-spacing: 0.4em
+            margin-top: 0.5em
+            letter-spacing: 0.2em
+            color: #ccc
         a
             color: inherit
+        img
+            max-width: 90%
+            @media screen and (max-width: $mobile-max)
+                max-width: 100%
 
     #header-navigation
         font-size: 0.8em
@@ -41,10 +48,21 @@ $mobile-max: 480px
             display: inline
             margin-right: 0.5em
 
+    .header-social
+        @media screen and (min-width: $desktop-min) 
+            right: 20px
+            position: absolute
+            bottom: 0
+            left: 2em
+            .fb-like
+                bottom: 0.4em
+        @media screen and (max-width: $mobile-max)
+            margin: 1em auto
+
     nav
         position: absolute
         bottom: 0
-        right: 30px
+        right: 2em
         font-weight: bold
         @media screen and (max-width: $mobile-max)
             right: 20px
@@ -67,7 +85,7 @@ $mobile-max: 480px
                 color: inherit
                 text-align: center
                 font-size: 0.8em
-                background: rgba(50, 50, 50, 0.85)
+                background: rgba(20, 20, 20, 0.85)
             a:hover
-                background: rgba(255, 102, 178, 0.85)
+                background: rgba(255, 102, 102, 0.85)
                 transition-duration: 0.4s 
