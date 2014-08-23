@@ -15,7 +15,7 @@ body {
 /* Defines the look and feel of the header pane.
  */
 #header-site {
-  background-color: black;
+  background-color: #333333;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -23,51 +23,79 @@ body {
   #header-site #header-site-inner {
     max-width: 640px;
     margin: auto;
-    padding: 40px 40px 70px;
+    padding: 3em 2em 4em;
     position: relative; }
   #header-site h1 {
     font-weight: 100;
-    margin: auto;
-    text-align: center; }
+    margin: 0 auto 0.5em;
+    text-align: center;
+    margin-bottom: 0; }
     #header-site h1 .title {
       letter-spacing: 0.5em;
       font-size: 150%; }
     #header-site h1 .tagline {
       display: block;
       font-size: small;
-      margin-top: 10px;
-      letter-spacing: 0.4em; }
+      margin-top: 0.5em;
+      letter-spacing: 0.2em;
+      color: #cccccc; }
     #header-site h1 a {
       color: inherit; }
+    #header-site h1 img {
+      max-width: 90%; }
+      @media screen and (max-width: 480px) {
+        #header-site h1 img {
+          max-width: 100%; } }
+  #header-site #header-navigation {
+    font-size: 0.8em; }
+    #header-site #header-navigation .fa {
+      display: inline;
+      margin-right: 0.5em; }
+  @media screen and (min-width: 640px) {
+    #header-site .header-social {
+      right: 20px;
+      position: absolute;
+      bottom: 0;
+      left: 2em; }
+      #header-site .header-social .fb-like {
+        bottom: 0.4em; } }
+  @media screen and (max-width: 480px) {
+    #header-site .header-social {
+      margin: 1em auto; } }
   #header-site nav {
     position: absolute;
     bottom: 0;
-    right: 0;
-    padding-right: 40px;
+    right: 2em;
     font-weight: bold; }
+    @media screen and (max-width: 480px) {
+      #header-site nav {
+        right: 20px; } }
     #header-site nav ul {
-      list-style: none outside none; }
+      list-style: none outside none;
+      margin: 0;
+      padding: 0; }
     #header-site nav li {
       display: block;
       float: left;
       list-style: none; }
       #header-site nav li a {
         display: block;
-        padding: 10px 20px;
-        margin: 0 2px;
-        width: 4em;
+        padding: 1em 1em;
+        margin: 0 0.1em;
+        width: 4.7em;
+        height: 1.5em;
         color: inherit;
         text-align: center;
-        font-size: 80%;
-        background: rgba(50, 50, 50, 0.85); }
+        font-size: 0.8em;
+        background: rgba(20, 20, 20, 0.85); }
       #header-site nav li a:hover {
-        background: rgba(255, 102, 178, 0.85);
+        background: rgba(255, 102, 102, 0.85);
         transition-duration: 0.4s; }
 
 /* Defines the look and feel of the contents pane.
  */
 #contents {
-  padding: 20px; }
+  padding: 1em 2em; }
   #contents #embedded-twitter-timeline iframe {
     display: block;
     margin: 0 auto; }
@@ -85,38 +113,38 @@ body {
     border: solid 1px white; }
     #contents .content-box h2 {
       background-color: white;
-      line-height: 250%;
       margin: 0;
       font-size: 120%;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.1em;
       border-bottom: 1px solid #eeeeee; }
       #contents .content-box h2 a {
         display: block;
-        padding: 0 10px 0 70px;
+        padding: 0.5em 1.5em 0.5em 3.5em;
         color: #222222;
         transition-duration: 0.2s; }
       #contents .content-box h2 a:hover {
-        background: rgba(255, 102, 178, 0.85);
+        background: rgba(255, 102, 102, 0.85);
         color: white;
         transition-duration: 0.2s; }
     #contents .content-box .audio-player {
       padding: 20px 20px 0; }
       #contents .content-box .audio-player audio {
         width: 100%; }
-    #contents .content-box .date {
-      top: -30px;
-      left: -20px;
-      min-height: 40px;
-      min-width: 40px;
-      text-align: center;
-      display: block;
+    #contents .content-box .episode-pub-date {
       position: absolute;
+      top: -2.3em;
+      left: -1.5em; }
+    #contents .content-box .episode-pub-date-inner {
+      height: 5.5em;
+      width: 5.5em;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      border-radius: 50%;
+      padding: 0.8em;
       background-color: #222222;
       color: white;
-      text-align: center;
-      font-size: 70%;
-      border-radius: 50%;
-      padding: 10px; }
+      font-size: 0.7em; }
     #contents .content-box .content-box-body {
       padding: 15px 40px;
       font-size: 90%;
@@ -137,12 +165,17 @@ body {
         padding: 10px 15px;
         min-height: 21px; }
         #contents .content-box .episode-footer .episode-footer-inner .episode-twitter-share-button {
-          width: 90px;
+          box-sizing: border-box;
+          width: 15%;
           float: left; }
         #contents .content-box .episode-footer .episode-footer-inner .episode-fb-like-button {
-          width: 20%;
+          box-sizing: border-box;
+          width: 35%;
           float: left;
           bottom: 5px; }
+        #contents .content-box .episode-footer .episode-footer-inner .episode-footer-clear {
+          clear: left;
+          display: block; }
 
 /* Defines the look and feel of the footer pane.
  */
@@ -150,13 +183,16 @@ body {
   background-color: black;
   color: white;
   font-size: 80%;
-  padding: 20px; }
+  padding: 1em; }
   #footer-site #footer-site-inner {
     max-width: 960px;
     margin: auto;
     color: #bbbbbb;
     letter-spacing: 0.1em;
     font-size: 90%; }
+    #footer-site #footer-site-inner .fa {
+      display: inline;
+      margin-right: 0.5em; }
     #footer-site #footer-site-inner h2, #footer-site #footer-site-inner a {
       color: white; }
     #footer-site #footer-site-inner a:hover {
@@ -165,35 +201,46 @@ body {
       list-style: none;
       padding-left: 0; }
   #footer-site .footer-site-box {
-    box-sizing: border-box;
-    width: 33%;
-    float: left;
-    padding: 20px; }
+    margin: 0;
+    padding: 1em 1.5em; }
+    @media screen and (min-width: 640px) {
+      #footer-site .footer-site-box {
+        box-sizing: border-box;
+        width: 33%;
+        float: left; } }
   #footer-site .copyright {
     clear: both;
     text-align: center;
-    margin: 20px; }
+    margin: 1em; }
 
 .presenter-profile .profile-image-box {
   padding-top: 30px; }
 .presenter-profile .profile-description-box {
   text-align: justify; }
-.presenter-profile .presenter-even .profile-image-box {
-  width: 30%;
-  float: left; }
-.presenter-profile .presenter-even .profile-description-box {
-  width: 70%;
-  float: left; }
-  .presenter-profile .presenter-even .profile-description-box .profile-description-internal {
-    padding-left: 30px; }
-.presenter-profile .presenter-odd .profile-image-box {
-  width: 30%;
-  float: right; }
-.presenter-profile .presenter-odd .profile-description-box {
-  width: 70%;
-  float: right; }
-  .presenter-profile .presenter-odd .profile-description-box .profile-description-internal {
-    padding-right: 30px; }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-even .profile-image-box {
+    box-sizing: border-box;
+    width: 30%;
+    float: left; } }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-even .profile-description-box {
+    box-sizing: border-box;
+    width: 70%;
+    float: left; }
+    .presenter-profile .presenter-even .profile-description-box .profile-description-internal {
+      padding-left: 30px; } }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-odd .profile-image-box {
+    box-sizing: border-box;
+    width: 30%;
+    float: right; } }
+@media screen and (min-width: 640px) {
+  .presenter-profile .presenter-odd .profile-description-box {
+    box-sizing: border-box;
+    width: 70%;
+    float: right; }
+    .presenter-profile .presenter-odd .profile-description-box .profile-description-internal {
+      padding-right: 30px; } }
 .presenter-profile img {
   border-radius: 50%;
   width: 150px;

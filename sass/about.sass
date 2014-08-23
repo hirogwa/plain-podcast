@@ -1,3 +1,4 @@
+$desktop-min: 640px
 .presenter-profile
     .profile-image-box
         padding-top: 30px
@@ -6,25 +7,33 @@
 
     .presenter-even
         .profile-image-box
-            width: 30%
-            float: left
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 30%
+                float: left
 
         .profile-description-box
-            width: 70%
-            float: left
-            .profile-description-internal
-                padding-left: 30px
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 70%
+                float: left
+                .profile-description-internal
+                    padding-left: 30px
 
     .presenter-odd
         .profile-image-box
-            width: 30%
-            float: right
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 30%
+                float: right
 
         .profile-description-box
-            width: 70%
-            float: right
-            .profile-description-internal
-                padding-right: 30px
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 70%
+                float: right
+                .profile-description-internal
+                    padding-right: 30px
 
     img
         border-radius: 50%

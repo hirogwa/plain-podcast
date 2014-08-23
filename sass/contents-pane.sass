@@ -3,7 +3,7 @@
  */
 
 #contents
-    padding: 20px
+    padding: 1em 2em
 
     #embedded-twitter-timeline
         iframe
@@ -27,19 +27,18 @@
 
         h2
             background-color: #fff
-            line-height: 250%
             margin: 0
             font-size: 120%
-            letter-spacing: 0.2em
+            letter-spacing: 0.1em
             border-bottom: 1px solid #eee
             a
                 display: block
-                padding: 0 10px 0 70px
+                padding: 0.5em 1.5em 0.5em 3.5em
                 color: #222
                 transition-duration: 0.2s
 
             a:hover
-                background: rgba(255, 102, 178, 0.85)
+                background: rgba(255, 102, 102, 0.85)
                 color: #fff
                 transition-duration: 0.2s 
 
@@ -49,20 +48,23 @@
             audio
                 width: 100%
 
-        .date
-            top: -30px
-            left: -20px
-            min-height: 40px
-            min-width: 40px
-            text-align: center
-            display: block
+        .episode-pub-date
             position: absolute
+            top: -2.3em
+            left: -1.5em
+
+        .episode-pub-date-inner
+            height: 5.5em
+            width: 5.5em
+            display: table-cell
+            vertical-align: middle
+            text-align: center
+            border-radius: 50%
+            padding: 0.8em
+
             background-color: #222
             color: #fff
-            text-align: center
-            font-size: 70%
-            border-radius: 50%
-            padding: 10px
+            font-size: 0.7em
 
         .content-box-body
             padding: 15px 40px
@@ -89,10 +91,16 @@
                 min-height: 21px
 
                 .episode-twitter-share-button
-                    width: 90px
+                    box-sizing: border-box
+                    width: 15%
                     float: left
+
                 .episode-fb-like-button
-                    width: 20%
+                    box-sizing: border-box
+                    width: 35%
                     float: left
                     bottom: 5px
 
+                .episode-footer-clear
+                    clear: left
+                    display: block

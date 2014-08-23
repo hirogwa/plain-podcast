@@ -2,18 +2,23 @@
  * Defines the look and feel of the footer pane.
  */
 
+$desktop-min: 640px
 #footer-site
     background-color: #000
     color: #fff
     font-size: 80%
-    padding: 20px
-    
+    padding: 1em
+
     #footer-site-inner
         max-width: 960px
         margin: auto
         color: #bbb
         letter-spacing: 0.1em
         font-size: 90%
+
+        .fa
+            display: inline
+            margin-right: 0.5em
 
         h2, a
             color: #fff
@@ -26,13 +31,15 @@
             padding-left: 0
 
     .footer-site-box
-        box-sizing: border-box
-        width: 33%
-        float: left
-        padding: 20px
+        @media screen and (min-width: $desktop-min) 
+            box-sizing: border-box
+            width: 33%
+            float: left
+        margin: 0
+        padding: 1em 1.5em
 
     .copyright
         clear: both
         text-align: center
-        margin: 20px
+        margin: 1em
 
