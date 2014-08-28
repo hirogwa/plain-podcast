@@ -42,26 +42,49 @@
         <a href="{% url 'podcast:index' %}" class="title">
           <img src="{% get_media_prefix %}{{ podcast.logo_horizontal }}" alt="{{ podcast.name }}"/>
         </a>
-        <span class="tagline">{{ podcast.tagline }}</span>
       </h1>
-      <div class="header-social">
-        <a href="https://twitter.com/{{ podcast.twitter_id }}" class="twitter-follow-button" data-show-count="false">Follow @{{ podcast.twitter_id }}</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-        <div class="fb-like episode-fb-like-button" data-href="{{ podcast.facebook_page }}" data-layout="button_count" data-width="30px" data-action="like" data-show-faces="false" data-share="false"></div>
+      <div class="header-subline">
+        <div class="tagline">
+          <p>{{ podcast.tagline }}</p>
+        </div>
+        <div class="header-social-links">
+          <div class="header-social-links-inner twitter">
+            <a href="https://www.twitter.com/{{ podcast.twitter_id }}"><i class="fa fa-twitter"></i></a>
+          </div>
+          <div class="header-social-links-inner facebook">
+            <a href="{{ podcast.facebook_page }}"><i class="fa fa-facebook"></i></a>
+          </div>
+          <span class="header-social-clear"></span>
+        </div>
+        <span class="header-subline-clear"></span>
       </div>
       <nav id="header-navigation">
         <ul>
-          <li><a href="{% url 'podcast:index' %}"><i class="fa fa-home"></i>Home</a></li>
-          <li><a href="{% url 'podcast:about' %}"><i class="fa fa-microphone"></i>About</a></li>
-          <li><a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i>RSS</a></li>
-          <li><a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a></li>
+          <li class="{% block index_active %}{% endblock %}">
+            <a href="{% url 'podcast:index' %}"><i class="fa fa-home"></i>Home</a>
+          </li>
+          <li class="{% block about_active %}{% endblock %}">
+            <a href="{% url 'podcast:about' %}"><i class="fa fa-microphone"></i>About</a>
+          </li>
+          <li>
+            <a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i>RSS</a>
+          </li>
+          <li>
+            <a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a>
+          </li>
         </ul>
       </nav>
     </div>
   </header>
-  <div id="contents">
-    {% block contents %}
-    {% endblock %}
+  <div id="middle-field">
+    <div id="contents">
+      {% block contents %}
+      {% endblock %}
+    </div>
+    <div id="side-bar">
+      {% block sidebar %}
+      {% endblock %}
+    </div>
   </div>
   <footer id="footer-site">
     <div id="footer-site-inner">
@@ -81,7 +104,6 @@
         </p>
         <div class="footer-twitter-button">
           <a href="https://twitter.com/intent/tweet?button_hashtag={{ podcast.twitter_hashtag }}" class="twitter-hashtag-button" data-related="{{ podcast.twitter_id }}" data-url="{{ podcast.app_root_url }}">Tweet #{{ podcast.twitter_hashtag }}</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </div>
         {% endif %}
       </div>
@@ -107,6 +129,9 @@
 </div>
 <script>
   $('video,audio').mediaelementplayer({audioWidth: '100%'});
+</script>
+<script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 </script>
 
 </body>

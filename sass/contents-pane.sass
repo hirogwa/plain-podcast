@@ -1,14 +1,10 @@
 /*
  * Defines the look and feel of the contents pane.
  */
-
+$heading-color: #444
+$text-color: #888
 #contents
-    padding: 1em 2em
-
-    #embedded-twitter-timeline
-        iframe
-            display: block
-            margin: 0 auto
+    padding: 0 2em 1em
 
     .social-share
         padding: 20px
@@ -18,23 +14,23 @@
         background-color: black
 
     .content-box
-        margin-top: 40px
+        margin-top: 2em
         margin-bottom: 15px
         padding-bottom: 15px
-        background-color: rgb(255,250,240)
+        background-color: rgba(255,250,240,0)
         position: relative
-        border: solid 1px #fff
 
         h2
-            background-color: #fff
+            color: $heading-color
             margin: 0
             font-size: 120%
             letter-spacing: 0.1em
-            border-bottom: 1px solid #eee
+            border-left: 4px solid rgba(255, 102, 102, 0.85)
+
             a
+                color: inherit
                 display: block
-                padding: 0.5em 1.5em 0.5em 3.5em
-                color: #222
+                padding: 0.5em 1.5em
                 transition-duration: 0.2s
 
             a:hover
@@ -43,33 +39,15 @@
                 transition-duration: 0.2s 
 
         .audio-player
-            padding: 20px 20px 0
+            padding: 20px 25px 0
 
             audio
                 width: 100%
 
-        .episode-pub-date
-            position: absolute
-            top: -2.3em
-            left: -1.5em
-
-        .episode-pub-date-inner
-            height: 5.5em
-            width: 5.5em
-            display: table-cell
-            vertical-align: middle
-            text-align: center
-            border-radius: 50%
-            padding: 0.8em
-
-            background-color: #222
-            color: #fff
-            font-size: 0.7em
-
         .content-box-body
-            padding: 15px 40px
+            padding: 0.5em 0
             font-size: 90%
-            color: #555
+            color: $text-color
             line-height: 170%
 
             a
@@ -78,8 +56,17 @@
                 text-decoration: underline
 
             h3
+                color: $heading-color
                 letter-spacing: 0.2em
                 border-bottom: solid 1px #ccc
+
+            .date
+                margin: 0
+                padding-right: 2em
+                text-align: right
+                font-style: italic
+                font-size: 0.9em
+                font-weight: bold
 
         .episode-footer
             margin-bottom: 10px

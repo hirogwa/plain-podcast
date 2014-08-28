@@ -2,11 +2,17 @@
  * Defines the look and feel of the header pane.
  */
 
-$color-text: #eee
+$color-text: #444
+$facebook-blue: #3b5998
+$facebook-blue-cloudy: rgba(#3b5998, 0.7)
+$twitter-blue: #4099ff
+$twitter-blue-cloudy: rgba(#4099ff, 0.7)
 $mobile-max: 480px
 $desktop-min: 640px
+$nav-normal: rgba(220, 220, 220, 0.85)
+$nav-highlighted: rgba(255, 102, 102, 0.85)
 #header-site
-    background-color: #333
+    background-color: inherit
     background-repeat: no-repeat 
     background-position: center center
     background-size: cover
@@ -15,8 +21,7 @@ $desktop-min: 640px
     #header-site-inner
         max-width: 640px
         margin: auto
-        padding: 3em 2em 4em
-        position: relative
+        padding: 3em 2em 0
 
     h1
         font-weight: 100
@@ -28,18 +33,63 @@ $desktop-min: 640px
             letter-spacing: 0.5em
             font-size: 150%
 
-        .tagline
-            display: block
-            font-size: small
-            margin-top: 0.5em
-            letter-spacing: 0.2em
-            color: #ccc
         a
             color: inherit
         img
-            max-width: 90%
+            max-width: 70%
             @media screen and (max-width: $mobile-max)
                 max-width: 100%
+    .header-subline
+        .header-subline-clear
+            display: block
+            clear: both
+        .tagline
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 75%
+            float: left
+            font-size: small
+            padding: 1em 1.5em
+            letter-spacing: 0.2em
+
+        .header-social-links
+            box-sizing: border-box
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 25%
+            float: right
+            padding-top: 1em
+            .header-social-clear
+                display: block
+                clear: both
+            .header-social-links-inner
+                float: right
+                margin: 0 0.3em
+                .fa
+                    font-size: 2.5em
+            a
+                padding: 0
+                margin: 0
+                height: 4em
+                width: 4em
+                display: table-cell
+                vertical-align: middle
+                text-align: center
+                border-radius: 50%
+                background: $color-text
+                color: #fff
+            .facebook
+                a
+                    background: $facebook-blue
+                a:hover
+                    background: $facebook-blue-cloudy
+                    transition-duration: 0.2s 
+            .twitter
+                a
+                    background: $twitter-blue
+                a:hover
+                    background: $twitter-blue-cloudy
+                    transition-duration: 0.2s 
 
     #header-navigation
         font-size: 0.8em
@@ -48,44 +98,40 @@ $desktop-min: 640px
             display: inline
             margin-right: 0.5em
 
-    .header-social
-        @media screen and (min-width: $desktop-min) 
-            right: 20px
-            position: absolute
-            bottom: 0
-            left: 2em
-            .fb-like
-                bottom: 0.4em
-        @media screen and (max-width: $mobile-max)
-            margin: 1em auto
 
     nav
-        position: absolute
-        bottom: 0
-        right: 2em
         font-weight: bold
-        @media screen and (max-width: $mobile-max)
-            right: 20px
+        margin: 1.5em auto
+        text-align: center
+        width: 100%
 
         ul
             list-style: none outside none
-            margin: 0
+            margin: 0 auto
             padding: 0
+            @media screen and (min-width: $desktop-min)
+                display: table
+                table-layout: fixed
         li
-            display: block
-            float: left
             list-style: none
+            padding: 0 1px
+            display: inline-block
+            @media screen and (min-width: $desktop-min)
+                display: table-cell
 
             a
-                display: block
-                padding: 1em 1em 
-                margin: 0 0.1em
-                width: 4.7em
-                height: 1.5em
+                padding: 0.4em 5.3em 
                 color: inherit
                 text-align: center
                 font-size: 0.8em
-                background: rgba(20, 20, 20, 0.85)
+                background: $nav-normal
+                margin: 0.3em 0
+                display: block
+                @media screen and (min-width: $desktop-min)
+                    margin: 0
             a:hover
-                background: rgba(255, 102, 102, 0.85)
+                background: $nav-highlighted
                 transition-duration: 0.4s 
+        .active a
+            background: $nav-highlighted
+

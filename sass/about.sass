@@ -1,9 +1,21 @@
 $desktop-min: 640px
 .presenter-profile
+    h2
+        a
+            cursor: default
     .profile-image-box
         padding-top: 30px
     .profile-description-box
-        text-align: justify
+        .demo-left
+            text-align: left
+        .demo-center
+            text-align: center
+        .demo-right
+            text-align: right
+
+        .profile-description-footer
+            margin: 0.5em 0
+
 
     .presenter-even
         .profile-image-box
@@ -17,7 +29,7 @@ $desktop-min: 640px
                 box-sizing: border-box
                 width: 70%
                 float: left
-                .profile-description-internal
+                .profile-description-internal, .profile-description-footer
                     padding-left: 30px
 
     .presenter-odd
@@ -32,7 +44,7 @@ $desktop-min: 640px
                 box-sizing: border-box
                 width: 70%
                 float: right
-                .profile-description-internal
+                .profile-description-internal, .profile-description-footer
                     padding-right: 30px
 
     img

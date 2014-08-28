@@ -6,13 +6,6 @@
 
 {% block contents %}
 <div class="episode content-box">
-  <div class="episode-pub-date">
-    <div class="episode-pub-date-inner">
-    {{ episode.pub_date.year }}年<br>
-    {{ episode.pub_date.month }}月{{ episode.pub_date.day }}日に<br>
-    コソコソ
-    </div>
-  </div>
   <h2><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h2>
   <div class="audio-player">
     {% load static %}
@@ -22,6 +15,7 @@
   </div>
   <div class="episode-description content-box-body">
       <p>{{ episode.description|safe }}</p>
+      <p class="date">{{ episode.pub_date.date }}</p>
       <h3>関連リンクなどをメモメモ</h3>
       <p>{{ episode.show_notes|safe }}</p>
   </div>
@@ -30,7 +24,6 @@
       <div class="episode-twitter-share-button">
         <a href="https://twitter.com/share" class="twitter-share-button"
          data-url="http://{{ host }}{% url 'podcast:episode' episode.slug %}" data-text="{{ episode.title }}" data-hashtags="{{ podcast.name }}">Tweet</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </div>
       <div class="fb-like episode-fb-like-button" data-href="{% url 'podcast:episode' episode.slug %}" data-layout="button_count" data-width="30px" data-action="like" data-show-faces="false" data-share="true"></div>
       <span class="episode-footer-clear"></span>

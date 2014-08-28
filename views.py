@@ -1,5 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import Http404, HttpResponse, HttpResponseNotModified
+from django.utils.http import http_date
+from django.views.static import was_modified_since
 from models import Episode, Podcast, Statement, Presenter
+import mimetypes
+import os.path
+import settings
+import stat
 
 
 def index(request):
@@ -9,7 +16,7 @@ def index(request):
 
 
 def about(request):
-    presenters = Presenter.objects.all().order_by('display_order')
+    presenters = Presenter.objects.filter(visibility='visible').order_by('display_order')
     context = {'presenters': presenters}
     context.update(get_common_context(request))
     return render(request, 'podcast/about.html', context)
@@ -34,3 +41,26 @@ def get_common_context(request):
                'footer_subscription': footer_subscription,
                }
     return context
+
+
+def private_resources(request, path):
+    if request.user.is_authenticated():
+        full_path = os.path.join(settings.PRIVATE_FILE_ROOT, path)
+        if not os.path.exists(full_path):
+            raise Http404('resource not found:"{}"'.format(full_path))
+
+        stat_obj = os.stat(full_path)
+        mime_type = mimetypes.guess_type(full_path)[0]
+
+        if not was_modified_since(
+                request.META.get('HTTP_IF_MODIFIED_SINCE'),
+                stat_obj[stat.ST_MTIME],
+                stat_obj[stat.ST_SIZE]):
+            return HttpResponseNotModified(content_type=mime_type)
+
+        response = HttpResponse(open(full_path, 'rb').read(), content_type=mime_type)
+        response["Last-Modified"] = http_date(stat_obj[stat.ST_MTIME])
+        return response
+
+    else:
+        raise Http404()

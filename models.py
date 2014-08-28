@@ -1,5 +1,10 @@
-from django.db import models
 import mimetypes
+from django.db import models
+from django.template.defaultfilters import slugify
+from storage import PrivateStorage
+
+
+APP_NAME = 'podcast'
 
 
 class Podcast(models.Model):
@@ -8,7 +13,7 @@ class Podcast(models.Model):
     description = models.TextField(blank=True)
     media_url = models.URLField()
     app_root_url = models.URLField()
-    logo_horizontal = models.ImageField(upload_to='images')
+    logo_horizontal = models.ImageField(upload_to='images', blank=True)
     itunes_url = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
     twitter_id = models.CharField(max_length=100, blank=True)
@@ -19,6 +24,9 @@ class Podcast(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        app_label = APP_NAME
 
 
 class Episode(models.Model):
@@ -44,22 +52,57 @@ class Episode(models.Model):
     def get_absolute_url(self):
         return '/podcast/episode/%s' % self.slug
 
+    class Meta:
+        app_label = APP_NAME
+
+
+class ScheduledEpisode(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(blank=True)
+    slug_base = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+    show_notes = models.TextField(blank=True)
+    audio_file = models.FileField(upload_to='episode', storage=PrivateStorage(), blank=True)
+    pub_date = models.DateTimeField('published_time')
+
+    def __unicode__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if self.slug == '':
+            if self.slug_base == '':
+                date = self.pub_date
+                self.slug = '%i-%02d-%02d' % (date.year, date.month, date.day)
+            else:
+                self.slug = slugify(self.slug_base)
+        super(ScheduledEpisode, self).save(*args, **kwargs)
+
+    class Meta:
+        app_label = APP_NAME
+
 
 class Presenter(models.Model):
     name = models.CharField(max_length=100)
     introduction = models.TextField()
-    thumbnail_square = models.ImageField(upload_to='images')
+    thumbnail_square = models.ImageField(upload_to='images', blank=True)
     display_order = models.IntegerField(blank=True)
     twitter_id = models.CharField(max_length=100, blank=True)
     facebook_page = models.URLField(blank=True)
     personal_site = models.URLField(blank=True)
+    visibility = models.CharField(max_length=20,
+                                  choices=[('visible', 'visible'), ('hidden', 'hidden')],
+                                  default='visible')
+
+    class Meta:
+        app_label = APP_NAME
+        ordering = ['display_order']
 
     def __unicode__(self):
-        return self.name
+        return '[%s] %s' % (self.visibility, self.name)
 
     def save(self, *args, **kwargs):
         if self.display_order is None:
-            self.display_order = 100
+            self.display_order = 999
         super(Presenter, self).save(*args, **kwargs)
 
 
@@ -70,3 +113,6 @@ class Statement(models.Model):
 
     def __unicode__(self):
         return self.unique_name
+
+    class Meta:
+        app_label = APP_NAME

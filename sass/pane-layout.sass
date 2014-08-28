@@ -1,14 +1,31 @@
 /*
  * Defines the pane structure.
  */
-
+$sidebar-threshold: 1080px
 body
     margin: 0
     padding: 0
 
-#contents
-    margin: 30px auto
+#middle-field
+    padding-top: 2em
+    position: relative
+
+    #contents
+        margin: 0 auto
+        max-width: 640px
+
+#side-bar
+    // narrow screen
+    margin: 0 auto
     max-width: 640px
+    iframe
+        margin: 0 auto
+        display: block
+    // wide enough to have side bar
+    @media screen and (min-width: $sidebar-threshold)
+        position: absolute
+        top: 2em
+        right: 2em
 
 #footer-site
     margin-top: 30px
