@@ -96,12 +96,12 @@ body {
     #header-site .header-subline .header-social-links .facebook a {
       background: #3b5998; }
     #header-site .header-subline .header-social-links .facebook a:hover {
-      background: rgba(59, 89, 152, 0.7);
+      background: rgba(59, 89, 152, 0.6);
       transition-duration: 0.2s; }
     #header-site .header-subline .header-social-links .twitter a {
       background: #4099ff; }
     #header-site .header-subline .header-social-links .twitter a:hover {
-      background: rgba(64, 153, 255, 0.7);
+      background: rgba(64, 153, 255, 0.6);
       transition-duration: 0.2s; }
   #header-site #header-navigation {
     font-size: 0.8em; }
@@ -117,28 +117,22 @@ body {
       list-style: none outside none;
       margin: 0 auto;
       padding: 0; }
-      @media screen and (min-width: 640px) {
-        #header-site nav ul {
-          display: table;
-          table-layout: fixed; } }
     #header-site nav li {
       list-style: none;
-      padding: 0 1px;
-      display: inline-block; }
-      @media screen and (min-width: 640px) {
+      padding: 0;
+      display: inline-block;
+      width: 24%; }
+      @media screen and (max-width: 480px) {
         #header-site nav li {
-          display: table-cell; } }
+          width: 48%; } }
       #header-site nav li a {
-        padding: 0.4em 5.3em;
+        margin: 0.2em 0;
+        padding: 0.3em 0em;
         color: inherit;
         text-align: center;
         font-size: 0.8em;
         background: rgba(220, 220, 220, 0.85);
-        margin: 0.3em 0;
         display: block; }
-        @media screen and (min-width: 640px) {
-          #header-site nav li a {
-            margin: 0; } }
       #header-site nav li a:hover {
         background: rgba(255, 102, 102, 0.85);
         transition-duration: 0.4s; }
@@ -262,7 +256,7 @@ body {
     margin: 1em; }
     #footer-site .disclaimer .credit {
       text-align: right;
-      font-size: 80%;
+      font-size: 0.8em;
       margin-top: 0.2em; }
       #footer-site .disclaimer .credit i {
         font-style: italic; }

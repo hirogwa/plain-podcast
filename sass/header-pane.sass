@@ -4,9 +4,9 @@
 
 $color-text: #444
 $facebook-blue: #3b5998
-$facebook-blue-cloudy: rgba(#3b5998, 0.7)
+$facebook-blue-cloudy: rgba(#3b5998, 0.6)
 $twitter-blue: #4099ff
-$twitter-blue-cloudy: rgba(#4099ff, 0.7)
+$twitter-blue-cloudy: rgba(#4099ff, 0.6)
 $mobile-max: 480px
 $desktop-min: 640px
 $nav-normal: rgba(220, 220, 220, 0.85)
@@ -109,26 +109,22 @@ $nav-highlighted: rgba(255, 102, 102, 0.85)
             list-style: none outside none
             margin: 0 auto
             padding: 0
-            @media screen and (min-width: $desktop-min)
-                display: table
-                table-layout: fixed
         li
             list-style: none
-            padding: 0 1px
+            padding: 0
             display: inline-block
-            @media screen and (min-width: $desktop-min)
-                display: table-cell
+            width: 24%
+            @media screen and (max-width: $mobile-max)
+                width: 48%
 
             a
-                padding: 0.4em 5.3em 
+                margin: 0.2em 0
+                padding: 0.3em 0em 
                 color: inherit
                 text-align: center
                 font-size: 0.8em
                 background: $nav-normal
-                margin: 0.3em 0
                 display: block
-                @media screen and (min-width: $desktop-min)
-                    margin: 0
             a:hover
                 background: $nav-highlighted
                 transition-duration: 0.4s 
