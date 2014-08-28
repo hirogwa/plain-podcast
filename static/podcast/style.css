@@ -256,10 +256,16 @@ body {
         box-sizing: border-box;
         width: 33%;
         float: left; } }
-  #footer-site .copyright {
+  #footer-site .disclaimer {
     clear: both;
     text-align: center;
     margin: 1em; }
+    #footer-site .disclaimer .credit {
+      text-align: right;
+      font-size: 80%;
+      margin-top: 0.2em; }
+      #footer-site .disclaimer .credit i {
+        font-style: italic; }
 
 .presenter-profile h2 a {
   cursor: default; }
