@@ -6,7 +6,7 @@ config = yaml.load(configfile)
 sys.path.append(config.get('project_directory'))
 
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'uragakuya.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', config.get('project_settings'))
 
 from django.core.files.base import ContentFile
 from models import ScheduledEpisode, Episode
