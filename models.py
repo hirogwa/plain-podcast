@@ -13,6 +13,7 @@ class Podcast(models.Model):
     description = models.TextField(blank=True)
     media_url = models.URLField()
     app_root_url = models.URLField()
+    favicon = models.ImageField(upload_to='images', blank=True)
     logo_horizontal = models.ImageField(upload_to='images', blank=True)
     itunes_url = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)

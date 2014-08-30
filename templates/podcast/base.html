@@ -8,7 +8,9 @@
   {% endblock %}
 
   {% load static %}
-  <link rel="icon" type="image/png" href="{% static 'podcast/favicon.png' %}">
+  {% if podcast.favicon %}
+  <link rel="icon" type="image/png" href="{% get_media_prefix %}{{ podcast.favicon }}">
+  {% endif %}
   <link rel="stylesheet" type="text/css" href="{% static 'podcast/style.css' %}"/>
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdnjs.cloudflare.com/ajax/libs/mediaelement/2.13.2/css/mediaelementplayer.min.css" rel="stylesheet">
