@@ -13,5 +13,6 @@ A plain Django application to host podcast.
   * define `MEDIA_URL`, `MEDIA_ROOT` for audio storage
 * App settings
   * define `PROJECT_ROOT`, `PRIVATE_FILE_ROOT`, `PRIVATE_FILE_URL` in settings.py
+  * create and place css file. `sass default-style.sass ../static/podcast/style.css`
 * Nginx
   * define locations `/static/`, `/media/`, `/media-private/`, accordingly in the nginx.conf
