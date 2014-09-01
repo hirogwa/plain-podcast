@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseNotModified
 from django.utils.http import http_date
 from django.views.static import was_modified_since
-from models import Episode, Podcast, Statement, Presenter
+from models import Episode, Podcast, Statement, Presenter, ScheduledEpisode
 import mimetypes
 import os.path
 import settings
@@ -29,6 +29,27 @@ def episode(request, slug):
     return render(request, 'podcast/episode.html', context)
 
 
+def scheduled_list(request):
+    if request.user.is_authenticated():
+        context = {'episodes': ScheduledEpisode.objects.all().order_by('-pub_date')}
+        context.update(get_common_context(request))
+        context.update(get_private_context(request))
+        return render(request, 'podcast/scheduled_list.html', context)
+    else:
+        raise Http404()
+
+
+def scheduled_episode(request, slug):
+    if request.user.is_authenticated():
+        episode_obj = get_object_or_404(ScheduledEpisode, slug=slug)
+        context = {'episode': episode_obj}
+        context.update(get_common_context(request))
+        context.update(get_private_context(request))
+        return render(request, 'podcast/scheduled_episode.html', context)
+    else:
+        raise Http404()
+
+
 def get_common_context(request):
     podcast_obj = get_object_or_404(Podcast, pk=1)
     footer_about = Statement.objects.filter(unique_name='footer-about').first()
@@ -41,6 +62,10 @@ def get_common_context(request):
                'footer_subscription': footer_subscription,
                }
     return context
+
+
+def get_private_context(request):
+    return {'private_media_prefix': settings.PRIVATE_FILE_URL}
 
 
 def private_resources(request, path):

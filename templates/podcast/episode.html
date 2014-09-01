@@ -6,11 +6,11 @@
 
 {% block contents %}
 <div class="episode content-box">
-  <h2><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h2>
+  <h2><a href="{% block episode_url %}{% url 'podcast:episode' episode.slug %}{% endblock %}">{{ episode.title }}</a></h2>
   <div class="audio-player">
     {% load static %}
     <audio controls>
-      <source src="{% get_media_prefix %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
+      <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
     </audio>
   </div>
   <div class="episode-description content-box-body">

@@ -1,0 +1,3 @@
+{% extends "podcast/index.html" %}
+
+{% block episode_url %}{% url 'podcast:scheduled_episode' episode.slug %}{% endblock %}

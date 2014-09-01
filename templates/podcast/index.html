@@ -11,7 +11,7 @@
   {% for episode in episodes %}
     <div class="episode content-box">
       <h2>
-        <a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a>
+        <a href="{% block episode_url %}{% url 'podcast:episode' episode.slug %}{% endblock %}">{{ episode.title }}</a>
       </h2>
       <div class="episode-description content-box-body">
         <div class="excerpt">
