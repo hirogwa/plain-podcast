@@ -6,7 +6,8 @@ A plain Django application to host podcast.
 * episode pre-uploading
 
 ## Installation
-
+* Python dependency
+  * `pip install -r requirements.txt`
 * Project settings
   * add the plain-podcast app
   * define `STATIC_URL`, `STATIC_ROOT` for css/js/images storage
