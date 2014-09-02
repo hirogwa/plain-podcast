@@ -1,7 +1,9 @@
 import mimetypes
-from datetime import timedelta
+import os.path
+from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
+from mutagen.mp3 import MP3
 from storage import PrivateStorage
 
 
@@ -49,7 +51,9 @@ class Episode(models.Model):
         super(Episode, self).save(*args, **kwargs)
 
     def get_duration(self):
-        return timedelta(minutes=20, seconds=1)
+        a_file = MP3(os.path.join(settings.MEDIA_ROOT, self.audio_file.name))
+        sec = a_file.info.length
+        return '%d:%02d' % (sec // 60, sec % 60)
 
     def get_mime_type(self):
         return mimetypes.guess_type(self.audio_file.name)[0]
