@@ -82,7 +82,7 @@ class AllEpisodesFeed(Feed):
 
     def item_extra_kwargs(self, episode):
         return {'duration': str(episode.get_duration()),
-                'explicit': '' if self.itunes_info is None else self.itunes_info.explicit,
+                'explicit': '' if not self.itunes_info else self.itunes_info.explicit,
                 'subtitle': episode.description,
                 'summary': episode.description,
                 }
