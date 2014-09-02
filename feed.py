@@ -57,10 +57,7 @@ class AllEpisodesFeed(Feed):
         description = podcast.description
 
     itunes_info_list = ITunesInfo.objects.all()
-    if len(itunes_info_list) > 0:
-        itunes_info = itunes_info_list[0]
-    else:
-        itunes_info = None
+    itunes_info = None if len(itunes_info_list) == 0 else itunes_info_list[0]
 
     def items(self):
         return Episode.objects.all().order_by('-pub_date')
