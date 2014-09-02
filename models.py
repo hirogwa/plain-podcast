@@ -1,4 +1,5 @@
 import mimetypes
+from datetime import timedelta
 from django.db import models
 from django.template.defaultfilters import slugify
 from storage import PrivateStorage
@@ -46,6 +47,9 @@ class Episode(models.Model):
         if self.slug == '':
             self.slug = '%i-%02d-%02d' % (date.year, date.month, date.day)
         super(Episode, self).save(*args, **kwargs)
+
+    def get_duration(self):
+        return timedelta(minutes=20, seconds=1)
 
     def get_mime_type(self):
         return mimetypes.guess_type(self.audio_file.name)[0]
@@ -117,3 +121,24 @@ class Statement(models.Model):
 
     class Meta:
         app_label = APP_NAME
+
+
+class ITunesInfo(models.Model):
+    """
+    channel(podcast global, not episode-to-episode) attributes passed to iTunes through the "itunes:" tags in RSS
+    """
+    author = models.CharField(max_length=100, blank=True)
+    category = models.CharField(max_length=100, blank=True)
+    image = models.ImageField(upload_to='images', blank=True)
+    explicit = models.CharField(max_length=100,
+                                choices=[('yes', 'yes'), ('clean', 'clean')],
+                                default='clean',
+                                blank=True)
+    owner_name = models.CharField(max_length=100, blank=True)
+    owner_email = models.EmailField(blank=True)
+    subtitle = models.TextField(blank=True)
+    summary = models.TextField(blank=True)
+    keywords = models.CharField(max_length=400, blank=True)
+
+    def __unicode__(self):
+        return 'iTunesInfo'
