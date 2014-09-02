@@ -18,12 +18,16 @@ class ITunesFeed(Rss201rev2Feed):
         if len(itunes_info_list) > 0:
             itunes_info = itunes_info_list[0]
             handler.addQuickElement('itunes:author', itunes_info.author)
-            handler.addQuickElement('itunes:category', attrs={'text': itunes_info.category})
-            handler.addQuickElement('itunes:image', attrs={'href': urljoin(podcast.media_url + '/', itunes_info.image.name)})
+            handler.addQuickElement('itunes:image',
+                                    attrs={'href': urljoin(podcast.media_url + '/', itunes_info.image.name)})
             handler.addQuickElement('itunes:explicit', itunes_info.explicit)
             handler.addQuickElement('itunes:subtitle', itunes_info.subtitle)
             handler.addQuickElement('itunes:summary', itunes_info.summary)
             handler.addQuickElement('itunes:keywords', itunes_info.keywords)
+
+            # (nested) category information
+            handler.startElement('itunes:category', attrs={'text': itunes_info.category})
+            handler.endElement('itunes:category')
 
             # (nested) owner information
             handler.startElement('itunes:owner', {})

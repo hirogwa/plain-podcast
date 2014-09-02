@@ -129,6 +129,7 @@ class ITunesInfo(models.Model):
     """
     author = models.CharField(max_length=100, blank=True)
     category = models.CharField(max_length=100, blank=True)
+    subcategory = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to='images', blank=True)
     explicit = models.CharField(max_length=100,
                                 choices=[('yes', 'yes'), ('clean', 'clean')],
