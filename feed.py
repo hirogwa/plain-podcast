@@ -86,7 +86,7 @@ class AllEpisodesFeed(Feed):
         return mimetypes.guess_type(episode.audio_file.name)[0]
 
     def item_extra_kwargs(self, episode):
-        return {'duration': episode.get_duration(),
+        return {'duration': str(episode.get_duration()),
                 'explicit': '' if self.itunes_info is None else self.itunes_info.explicit,
                 'subtitle': episode.description,
                 'summary': episode.description,
