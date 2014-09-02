@@ -15,12 +15,6 @@ class ITunesFeed(Rss201rev2Feed):
         super(ITunesFeed, self).add_root_elements(handler)
         podcast = Podcast.objects.all()[0]
         itunes_info_list = ITunesInfo.objects.all()
-        handler.startElement('custom', {})
-        handler.startElement('child1', {})
-        handler.endElement('child1')
-        handler.startElement('child2', {})
-        handler.endElement('child2')
-        handler.endElement('custom')
         if len(itunes_info_list) > 0:
             itunes_info = itunes_info_list[0]
             handler.addQuickElement('itunes:author', itunes_info.author)
