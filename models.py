@@ -147,3 +147,6 @@ class ITunesInfo(models.Model):
 
     def __unicode__(self):
         return 'iTunesInfo'
+
+    class Meta:
+        app_label = APP_NAME
