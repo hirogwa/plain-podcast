@@ -27,6 +27,8 @@ class ITunesFeed(Rss201rev2Feed):
 
             # (nested) category information
             handler.startElement('itunes:category', attrs={'text': itunes_info.category})
+            handler.startElement('itunes:category', attrs={'text': itunes_info.subcategory})
+            handler.endElement('itunes:category')
             handler.endElement('itunes:category')
 
             # (nested) owner information
