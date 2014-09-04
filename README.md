@@ -22,4 +22,4 @@ A plain Django application to host podcast.
   * define locations `/static/`, `/media/`, `/media-private/`, accordingly in the nginx.conf
 
 ## License
-plain-podcast is released under [MIT license](http://opensource.org/licenses/MIT).
+plain-podcast is released under the [MIT license](http://opensource.org/licenses/MIT).
