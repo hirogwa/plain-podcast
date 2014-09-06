@@ -4,6 +4,7 @@ A plain Django application to host podcast.
 
 ## Features
 * episode pre-uploading
+* RSS feed with iTunes tags
 
 ## Installation
 * Python dependency
@@ -19,3 +20,6 @@ A plain Django application to host podcast.
     1. `sass sass/default-style.sass static/podcast/style.css`
 * Nginx
   * define locations `/static/`, `/media/`, `/media-private/`, accordingly in the nginx.conf
+
+## License
+plain-podcast is released under the [MIT license](http://opensource.org/licenses/MIT).
