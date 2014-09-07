@@ -120,6 +120,11 @@
           <li><a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a></li>
         </ul>
         {% endif %}
+        {% if podcast.logo_stamp %}
+        <div class="footer-stamp">
+          <img src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+        </div>
+        {% endif %}
       </div>
       <div class="disclaimer">
         <p class="copyright">
