@@ -1,0 +1,79 @@
+@import constants
+$carousel-height: 480px
+$carousel-radius: 5px
+$carousel-fadeout: 80%
+$cl-carousel-dark: rgba(#000, 1)
+$cl-carousel-light: rgba(#000, 0)
+$fixed-row-height: 620px
+
+.fixed-row
+    max-height: $fixed-row-height
+    overflow: hidden
+.row
+    max-width: $main-column-width
+    margin: 1em auto 3em
+    .row-inner-column
+        width: 30%
+        min-height: 1em
+        display: inline-block
+        vertical-align: top
+        padding: 0 1.5%
+    #twitter-timeline
+        #twitter-timeline-inner
+            max-width: 70%
+            margin: auto
+#main-area-home
+    margin: 0 auto
+#promotion
+    padding: 0 0 1em
+    margin-bottom: 2em
+    #promotion-inner
+        max-width: $main-column-width
+        margin: 0 auto
+        border-radius: $carousel-radius
+        div.carousel
+            box-shadow: 0 0 2px rgba(#000, 0.4)
+            height: $carousel-height
+            max-width: 90%
+            margin: 0 auto
+            border-radius: $carousel-radius
+            overflow: hidden
+            div.carousel-inner
+                height: 100%
+                width: 100%
+                div.item
+                    height: 100%
+                    width: 100%
+                    background-size: cover
+                    background-position: center center
+                    div.carousel-screen
+                        height: 100%
+                        width: 100%
+                    div.carousel-screen-BL
+                        background: linear-gradient(45deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
+                    div.carousel-screen-BR
+                        background: linear-gradient(-45deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
+                    div.carousel-screen-TL
+                        background: linear-gradient(135deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
+                    div.carousel-screen-TR
+                        background: linear-gradient(-135deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
+
+                    div.carousel-caption
+                        font-size: 1.2em
+                        max-width: 40%
+                        a
+                            color: inherit
+                            text-decoration: underline
+                        a:hover
+                            opacity: 0.8
+                        blockquote
+                            margin: 0.5em
+                            padding: 0.5em
+                            font-style: italic
+                    div.carousel-caption-BL, div.carousel-caption-TL
+                        left: 3%
+                        text-align: left
+                    div.carousel-caption-BR, div.carousel-caption-TR
+                        left: auto
+                        right: 3%
+                        text-align: right

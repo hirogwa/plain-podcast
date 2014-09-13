@@ -1,3 +1,4 @@
+import datetime
 import mimetypes
 import os.path
 from django.conf import settings
@@ -10,10 +11,22 @@ from storage import PrivateStorage
 APP_NAME = 'podcast'
 
 
+class Theme(models.Model):
+    name = models.CharField(max_length=100)
+    notes = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        app_label = APP_NAME
+
+
 class Podcast(models.Model):
     name = models.CharField(max_length=200)
     tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
+    theme = models.ForeignKey(Theme)
     media_url = models.URLField()
     app_root_url = models.URLField()
     favicon = models.ImageField(upload_to='images', blank=True)
@@ -148,6 +161,37 @@ class ITunesInfo(models.Model):
 
     def __unicode__(self):
         return 'iTunesInfo'
+
+    class Meta:
+        app_label = APP_NAME
+
+
+class Promotion(models.Model):
+    name = models.CharField(max_length=50)
+    active = models.CharField(max_length=10,
+                              choices=[('active', 'active'),
+                                       ('inactive', 'inactive')],
+                              default='active')
+    image = models.ImageField(upload_to='images', blank=True)
+    caption = models.TextField(blank=True)
+    caption_location = models.CharField(max_length=50,
+                                        choices=[('TR', 'top-right'),
+                                                 ('TL', 'top-left'),
+                                                 ('BL', 'bottom-left'),
+                                                 ('BR', 'bottom-right')],
+                                        default='BL')
+    display_order = models.IntegerField(default=0)
+    input_datetime = models.DateTimeField(blank=True)
+    update_datetime = models.DateTimeField(blank=True)
+
+    def save(self, *args, **kwargs):
+        if not Promotion.objects.filter(id=self.id):
+            self.input_datetime = datetime.datetime.now()
+        self.update_datetime = datetime.datetime.now()
+        super(Promotion, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         app_label = APP_NAME

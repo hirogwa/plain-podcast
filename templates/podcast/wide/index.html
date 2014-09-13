@@ -1,0 +1,81 @@
+{% extends "podcast/wide/base.html" %}
+
+{% block page-title %}
+<title>{{ podcast.name }}</title>
+{% endblock %}
+
+{% block index_active %}active{% endblock %}
+
+{% block contents %}
+{% load static %}
+<div id="main-area-home">
+  <div id="promotion" class="row">
+    {% if promotions %}
+    <div id="promotion-inner">
+      <div id="carousel-promotion" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          {% for promotion in promotions %}
+          <li data-target="#carousel-promotion" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %}active{% endif %}"></li>
+          {% endfor %}
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          {% for promotion in promotions %}
+            <div class="{% if forloop.counter0 == 0 %}item active{% else %}item{% endif %}"
+                 style="background-image: url('{% get_media_prefix %}{{ promotion.image }}');">
+              <div class="carousel-screen carousel-screen-{{ promotion.caption_location }}">
+                <div class="carousel-caption carousel-caption-{{ promotion.caption_location }}">
+                  {{ promotion.caption|safe }}
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-promotion" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="right carousel-control" href="#carousel-promotion" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row fixed-row">
+    <div class="row-inner-column row-inner-column-left">
+      <div id="latest-episodes">
+        <h2>EPISODES</h2>
+        {% for episode in recent_episodes %}
+        <h3>{{ episode.title }}</h3>
+        <p>{{ episode.description|truncatechars:50 }}</p>
+        {% endfor %}
+        <div id="episode-see-all">
+          <a href="#">MORE</a>
+        </div>
+      </div>
+    </div>
+    <div class="row-inner-column row-inner-column-center">
+      <div id="news">
+        <h2>NEWS</h2>
+      </div>
+    </div>
+    <div id="twitter-timeline" class="row-inner-column row-inner-column-right">
+      <div id="twitter-timeline-inner">
+        <a class="twitter-timeline"  href="https://twitter.com/hashtag/{{ podcast.twitter_hashtag }}"  data-widget-id="{{ podcast.twitter_timeline_widget_id }}">#{{ podcast.twitter_hashtag }} Tweets</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row-inner-column row-inner-column-single">
+      <div id="recent-blog-entries">
+        <h2>BLOG</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<script>$('.carousel').carousel()</script>
+{% endblock %}

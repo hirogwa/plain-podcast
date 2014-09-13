@@ -1,0 +1,120 @@
+/*
+ * Defines the look and feel of the header pane.
+ */
+@import constants
+#header-site
+    background-color: inherit
+    background-repeat: no-repeat 
+    background-position: center center
+    background-size: cover
+    color: $cl-main-text
+
+    #header-site-inner
+        max-width: $main-column-width
+        margin: auto
+        padding: 1em 0em 0
+        letter-spacing: 0.2em
+        .header-column
+            display: inline-block
+        #header-right, #header-left
+            min-height: 1em
+            width: 33%
+        #header-right #media-links
+            padding: 1em
+            #media-links-inner
+                text-align: center
+                margin: 0 0 auto
+
+            .media-links-icon
+                display: inline-block
+                margin: 0em 0em
+                .fa
+                    font-size: 1.5em
+            a
+                padding: 0.5em
+                margin: 0 auto
+                height: 2.5em
+                width: 2.5em
+                display: table-cell
+                vertical-align: middle
+                text-align: center
+                border-radius: 50%
+                background: $cl-main-text
+                color: #fff
+            .facebook
+                a
+                    background: $facebook-blue
+                a:hover
+                    background: $facebook-blue-cloudy
+                    transition-duration: 0.2s 
+            .twitter
+                a
+                    background: $twitter-blue
+                a:hover
+                    background: $twitter-blue-cloudy
+                    transition-duration: 0.2s 
+            .apple
+                a
+                    background: $apple-silver
+                a:hover
+                    background: $apple-silver-cloudy
+                    transition-duration: 0.2s
+            .rss
+                a
+                    background: $rss-orange
+                a:hover
+                    background: $rss-orange-cloudy
+                    transition-duration: 0.2s
+        #header-center
+            width: 30%
+            margin: 0 auto
+            #header-title-clear
+                display: block
+                clear: both
+            #title-lines
+                #title-logo
+                    max-width: 60%
+                    margin: 1em auto 0
+                    h1
+                        margin: 0
+                    img
+                        max-width: 100%
+                #title-tagline
+                    text-align: center
+                    margin: 0
+                    font-size: 1em
+                    color: $cl-soft-text
+                    p
+                        margin: 0
+    #header-navigation
+        margin: 0.5em auto 1.5em
+        text-align: center
+        text-transform: uppercase
+        font-size: 1em
+        width: 100%
+        .fa
+            display: inline
+            margin-right: 0.5em
+        ul
+            list-style: none outside none
+            margin: 0 auto
+            padding: 0
+        li
+            list-style: none
+            padding: 0
+            display: inline-block
+            width: 16%
+            a
+                margin: 0.2em 0
+                padding: 0.3em 0em 
+                color: inherit
+                text-align: center
+                font-size: 0.8em
+                background: $cl-inactive
+                display: block
+                transition-duration: 0.4s
+            a:hover
+                transition-duration: 0.4s
+                color: $cl-theme1
+        .active a
+            color: $cl-theme1

@@ -1,4 +1,4 @@
-{% extends "podcast/episode.html" %}
+{% extends "podcast/plain-yogurt/episode.html" %}
 
 {% block episode_url %}{% url 'podcast:scheduled_episode' episode.slug %}{% endblock %}
 {% block media_prefix %}{{ private_media_prefix }}{% endblock %}

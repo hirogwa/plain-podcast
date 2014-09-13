@@ -1,0 +1,33 @@
+{% extends "podcast/wide/base.html" %}
+
+{% block page-title %}
+<title>{{ podcast.name }} - {{ episode.title }}</title>
+{% endblock %}
+
+{% block contents %}
+<div class="episode content-box">
+  <h2><a href="{% block episode_url %}{% url 'podcast:episode' episode.slug %}{% endblock %}">{{ episode.title }}</a></h2>
+  <div class="audio-player">
+    {% load static %}
+    <audio controls>
+      <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
+    </audio>
+  </div>
+  <div class="episode-description content-box-body">
+      <p>{{ episode.description }}</p>
+      <p class="date">{{ episode.pub_date.date }}</p>
+      <h3>Show Notes</h3>
+      <p>{{ episode.show_notes|safe }}</p>
+  </div>
+  <div class="episode-footer">
+    <div class="episode-footer-inner">
+      <div class="episode-twitter-share-button">
+        <a href="https://twitter.com/share" class="twitter-share-button"
+         data-url="http://{{ host }}{% url 'podcast:episode' episode.slug %}" data-text="{{ episode.title }}" data-hashtags="{{ podcast.name }}">Tweet</a>
+      </div>
+      <div class="fb-like episode-fb-like-button" data-href="{% url 'podcast:episode' episode.slug %}" data-layout="button_count" data-width="30px" data-action="like" data-show-faces="false" data-share="true"></div>
+      <span class="episode-footer-clear"></span>
+    </div>
+  </div>
+</div>
+{% endblock %}

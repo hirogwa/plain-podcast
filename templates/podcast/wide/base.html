@@ -1,0 +1,137 @@
+{% extends "podcast/base.html" %}
+
+{% block external %}
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div id="container">
+  <header id="header-site">
+    <div id="header-site-inner">
+      <div id="header-left" class="header-column">
+      </div>
+      <div id="header-center" class="header-column">
+        <div id="title-lines">
+          <div id="title-logo">
+            <h1>
+              <a href="{% url 'podcast:index' %}" class="title">
+                <img src="{% get_media_prefix %}{{ podcast.logo_horizontal }}" alt="{{ podcast.name }}"/>
+              </a>
+            </h1>
+          </div>
+          <div id="title-tagline">
+            <p>{{ podcast.tagline }}</p>
+          </div>
+        </div>
+        <span id="header-title-clear"></span>
+      </div>
+      <div id="header-right" class="header-column">
+        <div id="media-links">
+          <div id="media-links-inner">
+            <div class="media-links-row">
+              <div class="media-links-icon facebook">
+                <a href="{{ podcast.facebook_page }}"><i class="fa fa-facebook"></i></a>
+              </div>
+              <div class="media-links-icon twitter">
+                <a href="https://www.twitter.com/{{ podcast.twitter_id }}"><i class="fa fa-twitter"></i></a>
+              </div>
+              <div class="media-links-icon rss">
+                <a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i></a>
+              </div>
+              <div class="media-links-icon apple">
+                <a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="navigation-bar">
+        <nav id="header-navigation">
+          <ul>
+            <li class="{% block index_active %}{% endblock %}">
+              <a href="{% url 'podcast:index' %}"><i class="fa fa-home"></i>Home</a>
+            </li>
+            <li class="{% block news_active %}{% endblock %}">
+              <a href="{% url 'podcast:news' %}"><i class="fa fa-lightbulb-o"></i>News</a>
+            </li>
+            <li class="{% block episodes_active %}{% endblock %}">
+              <a href="{% url 'podcast:episodes' %}"><i class="fa fa-microphone"></i>Episode</a>
+            </li>
+            <li class="{% block blog_active %}{% endblock %}">
+              <a href="{% url 'podcast:blog' %}"><i class="fa fa-calendar"></i>Blog</a>
+            </li>
+            <li class="{% block about_active %}{% endblock %}">
+              <a href="{% url 'podcast:about' %}"><i class="fa fa-question"></i>About</a>
+            </li>
+            <li class="{% block contact_active %}{% endblock %}">
+              <a href="{% url 'podcast:contact' %}"><i class="fa fa-envelope"></i>Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div id="main-area">
+    {% block contents %}
+    {% endblock %}
+  </div>
+
+  <footer id="footer-site">
+    <div id="footer-site-inner">
+      <div class="footer-site-box">
+        {% if footer_about %}
+        <h2>{{ footer_about.title }}</h2>
+        <p>
+          {{ footer_about.statement|safe }}
+        </p>
+        {% endif %}
+      </div>
+      <div class="footer-site-box">
+        {% if footer_twitter %}
+        <h2>{{ footer_twitter.title }}</h2>
+        <p>
+          {{ footer_twitter.statement|safe }}
+        </p>
+        <div class="footer-twitter-button">
+          <a href="https://twitter.com/intent/tweet?button_hashtag={{ podcast.twitter_hashtag }}" class="twitter-hashtag-button" data-related="{{ podcast.twitter_id }}" data-url="{{ podcast.app_root_url }}">Tweet #{{ podcast.twitter_hashtag }}</a>
+        </div>
+        {% endif %}
+      </div>
+      <div class="footer-site-box">
+        {% if footer_subscription %}
+        <h2>{{ footer_subscription.title }}</h2>
+        <p>
+          {{ footer_subscription.statement|safe }}
+        </p>
+        <ul>
+          <li><a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i>RSS Feed</a></li>
+          <li><a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a></li>
+        </ul>
+        {% endif %}
+        {% if podcast.logo_stamp %}
+        <div class="footer-stamp">
+          <img src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+        </div>
+        {% endif %}
+      </div>
+      <div class="disclaimer">
+        <p class="copyright">
+          Copyright &copy; 2014 by <a href="{{ podcast.facebook_page }}">{{ podcast.name }}</a>. All Rights Reserved.
+        </p>
+        <p class="credit">
+          <i>Powered by <a href="https://github.com/hirogwa/plain-podcast">plain-podcast</a></i>
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  $('video,audio').mediaelementplayer({audioWidth: '100%'});
+</script>
+<script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+</script>
+{% endblock %}

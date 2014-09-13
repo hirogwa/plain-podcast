@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseNotModified
 from django.utils.http import http_date
 from django.views.static import was_modified_since
-from models import Episode, Podcast, Statement, Presenter, ScheduledEpisode
+from models import Episode, Podcast, Statement, Presenter, ScheduledEpisode, Promotion
 import mimetypes
 import os.path
 import settings
@@ -10,23 +10,55 @@ import stat
 
 
 def index(request):
+    episodes = Episode.objects.all().order_by('-pub_date')
+    context = {'episodes': episodes,
+               'recent_episodes': episodes[:5],
+               'promotions': Promotion.objects.filter(active='active').order_by('display_order', '-update_datetime'),
+               }
+    context.update(get_common_context(request))
+    return render(request, template_file(context, 'index'), context)
+
+
+def news(request):
     context = {'episodes': Episode.objects.all().order_by('-pub_date')}
     context.update(get_common_context(request))
-    return render(request, 'podcast/index.html', context)
+    return render(request, template_file(context, 'news'), context)
 
 
 def about(request):
     presenters = Presenter.objects.filter(visibility='visible').order_by('display_order')
     context = {'presenters': presenters}
     context.update(get_common_context(request))
-    return render(request, 'podcast/about.html', context)
+    return render(request, template_file(context, 'about'), context)
 
 
 def episode(request, slug):
     episode_obj = get_object_or_404(Episode, slug=slug)
     context = {'episode': episode_obj}
     context.update(get_common_context(request))
-    return render(request, 'podcast/episode.html', context)
+    return render(request, template_file(context, 'episode'), context)
+
+
+def episodes(request):
+    """
+    :param request:
+    :return: the list of episodes
+    """
+    context = {'episodes': Episode.objects.all().order_by('-pub_date')}
+    context.update(get_common_context(request))
+    return render(request, template_file(context, 'episodes'), context)
+
+
+def blog(request):
+    context = {'episodes': Episode.objects.all().order_by('-pub_date')}
+    context.update(get_common_context(request))
+    return render(request, template_file(context, 'episodes'), context)
+
+
+def contact(request):
+    context = {'episodes': Episode.objects.all().order_by('-pub_date')}
+    context.update(get_common_context(request))
+    return render(request, template_file(context, 'episodes'), context)
 
 
 def scheduled_list(request):
@@ -66,6 +98,10 @@ def get_common_context(request):
 
 def get_private_context(request):
     return {'private_media_prefix': settings.PRIVATE_FILE_URL}
+
+
+def template_file(context, template):
+    return 'podcast/{}/{}.html'.format(context.get('podcast').theme, template)
 
 
 def private_resources(request, path):

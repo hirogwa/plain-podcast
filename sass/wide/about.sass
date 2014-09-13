@@ -1,0 +1,59 @@
+$desktop-min: 640px
+.presenter-profile
+    h2
+        a
+            cursor: default
+    .profile-image-box
+        padding-top: 30px
+    .profile-description-box
+        .demo-left
+            text-align: left
+        .demo-center
+            text-align: center
+        .demo-right
+            text-align: right
+
+        .profile-description-footer
+            margin: 0.5em 0
+
+
+    .presenter-even
+        .profile-image-box
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 30%
+                float: left
+
+        .profile-description-box
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 70%
+                float: left
+                .profile-description-internal, .profile-description-footer
+                    padding-left: 30px
+
+    .presenter-odd
+        .profile-image-box
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 30%
+                float: right
+
+        .profile-description-box
+            @media screen and (min-width: $desktop-min)
+                box-sizing: border-box
+                width: 70%
+                float: right
+                .profile-description-internal, .profile-description-footer
+                    padding-right: 30px
+
+    img
+        border-radius: 50%
+        width: 150px
+        height: 150px
+        display: block
+        margin: auto
+
+    .clear
+        clear: both
+        display: block
