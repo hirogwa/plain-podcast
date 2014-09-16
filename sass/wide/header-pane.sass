@@ -2,6 +2,7 @@
  * Defines the look and feel of the header pane.
  */
 @import constants
+@import mixincommons
 #header-site
     background-color: inherit
     background-repeat: no-repeat 
@@ -24,47 +25,24 @@
             #media-links-inner
                 text-align: center
                 margin: 0 0 auto
+            .media-links-row
+                margin: 0 auto
 
             .media-links-icon
                 display: inline-block
-                margin: 0em 0em
-                .fa
-                    font-size: 1.5em
+                margin: 0
             a
-                padding: 0.5em
-                margin: 0 auto
-                height: 2.5em
-                width: 2.5em
-                display: table-cell
-                vertical-align: middle
-                text-align: center
-                border-radius: 50%
-                background: $cl-main-text
-                color: #fff
+                @include round-fa-anchor(1em, #fff, 0.5em)
             .facebook
-                a
-                    background: $facebook-blue
-                a:hover
-                    background: $facebook-blue-cloudy
-                    transition-duration: 0.2s 
+                @include media-link-icon($facebook-blue, $facebook-blue-cloudy)
             .twitter
-                a
-                    background: $twitter-blue
-                a:hover
-                    background: $twitter-blue-cloudy
-                    transition-duration: 0.2s 
+                @include media-link-icon($twitter-blue, $twitter-blue-cloudy)
+            .instagram
+                @include media-link-icon($instagram-blue, $instagram-blue-cloudy)
             .apple
-                a
-                    background: $apple-silver
-                a:hover
-                    background: $apple-silver-cloudy
-                    transition-duration: 0.2s
+                @include media-link-icon($apple-silver, $apple-silver-cloudy)
             .rss
-                a
-                    background: $rss-orange
-                a:hover
-                    background: $rss-orange-cloudy
-                    transition-duration: 0.2s
+                @include media-link-icon($rss-orange, $rss-orange-cloudy)
         #header-center
             width: 30%
             margin: 0 auto
@@ -90,7 +68,6 @@
         margin: 0.5em auto 1.5em
         text-align: center
         text-transform: uppercase
-        font-size: 1em
         width: 100%
         .fa
             display: inline
@@ -109,12 +86,13 @@
                 padding: 0.3em 0em 
                 color: inherit
                 text-align: center
-                font-size: 0.8em
                 background: $cl-inactive
                 display: block
                 transition-duration: 0.4s
             a:hover
                 transition-duration: 0.4s
+                text-decoration: none
                 color: $cl-theme1
         .active a
             color: $cl-theme1
+

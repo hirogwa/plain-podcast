@@ -1,0 +1,55 @@
+@import constants
+@mixin media-link-icon($color, $color-cloudy)
+    a
+        background: $color-cloudy
+        transition-duration: 0.2s 
+    a:hover
+        background: $color
+        transition-duration: 0.2s 
+        font-size: 1.1em
+@mixin round-fa-anchor($font-size, $font-color, $padding)
+    padding: $padding
+    margin: 0 auto
+    height: $font-size+$padding*2
+    width: $font-size+$padding*2
+    display: table-cell
+    vertical-align: middle
+    text-align: center
+    border-radius: 50%
+    color: $font-color
+    font-size: $font-size
+
+@mixin episode-li($cl-icon, $cl-icon-hover)
+    li
+        display: inline-block
+        width: 49%
+        margin: 0 0 1em 0
+        div.episode-list-summary, div.episode-list-icon
+            display: inline-block
+            max-height: 100%
+            overflow: hidden
+        div.episode-list-summary
+            max-width: 74%
+            margin-right: 1%
+        div.episode-list-icon
+            max-width: 24%
+            margin: auto 1% auto 0
+            a
+                @include round-fa-anchor(2em, #fff, 0.3em)
+                background: $cl-icon
+                transition-duration: 0.2s
+            a:hover
+                background: $cl-icon-hover
+                transition-duration: 0.2s
+        h3,p,div
+            max-width: 100%
+        h3
+            margin-top: 0.2em
+@mixin control-button($color)
+    display: inline-block
+    background: $color
+    padding: 0.6em 1.6em
+    border-radius: $button-radius
+    letter-spacing: 0.1em
+    color: #fff
+

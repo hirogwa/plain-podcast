@@ -1,1 +1,20 @@
-{% extends "podcast/wide/base.html" %}
+{% extends "podcast/wide/news_list.html" %}
+
+{% block article_footer %}
+<div class="fb-comments" data-href="{{ host }}{% url 'podcast:news' article.id %}" data-numposts="5" data-colorscheme="light"></div>
+{% endblock %}
+
+{% block pagination %}
+<div id="page-control-panel">
+  {% if prev_item %}
+  <span id="single-page-control-prev" class="page-control single-page-control">
+    <a href="{{ prev_item.get_absolute_url }}"><i class="fa fa-arrow-left"></i>{{ prev_item.title }}</a>
+  </span>
+  {% endif %}
+  {% if next_item %}
+  <span id="single-page-control-next" class="page-control single-page-control">
+    <a href="{{ next_item.get_absolute_url }}">{{ next_item.title }}<i class="fa fa-arrow-right"></i></a>
+  </span>
+  {% endif %}
+</div>
+{% endblock %}

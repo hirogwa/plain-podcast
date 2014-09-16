@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Podcast, Episode, Presenter, Statement, ScheduledEpisode, ITunesInfo, Theme, Promotion
+from models import *
 
 # Register your models here.
 admin.site.register(Podcast)
@@ -10,3 +10,5 @@ admin.site.register(ScheduledEpisode)
 admin.site.register(ITunesInfo)
 admin.site.register(Theme)
 admin.site.register(Promotion)
+admin.site.register(Blog)
+admin.site.register(News)

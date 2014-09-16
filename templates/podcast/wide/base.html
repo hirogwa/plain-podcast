@@ -31,16 +31,19 @@
           <div id="media-links-inner">
             <div class="media-links-row">
               <div class="media-links-icon facebook">
-                <a href="{{ podcast.facebook_page }}"><i class="fa fa-facebook"></i></a>
+                <a href="{{ podcast.facebook_page }}" target="_blank"><i class="fa fa-facebook"></i></a>
               </div>
               <div class="media-links-icon twitter">
-                <a href="https://www.twitter.com/{{ podcast.twitter_id }}"><i class="fa fa-twitter"></i></a>
+                <a href="https://www.twitter.com/{{ podcast.twitter_id }}" target="_blank"><i class="fa fa-twitter"></i></a>
+              </div>
+              <div class="media-links-icon instagram">
+                <a href="https://instagram.com/{{ podcast.instagram_id }}" target="_blank"><i class="fa fa-instagram"></i></a>
               </div>
               <div class="media-links-icon rss">
-                <a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i></a>
+                <a href="{% url 'podcast:feed' %}" target="_blank"><i class="fa fa-rss"></i></a>
               </div>
               <div class="media-links-icon apple">
-                <a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i></a>
+                <a href="{{ podcast.itunes_url }}" target="_blank"><i class="fa fa-apple"></i></a>
               </div>
             </div>
           </div>
@@ -80,48 +83,19 @@
 
   <footer id="footer-site">
     <div id="footer-site-inner">
-      <div class="footer-site-box">
-        {% if footer_about %}
-        <h2>{{ footer_about.title }}</h2>
-        <p>
-          {{ footer_about.statement|safe }}
-        </p>
-        {% endif %}
-      </div>
-      <div class="footer-site-box">
-        {% if footer_twitter %}
-        <h2>{{ footer_twitter.title }}</h2>
-        <p>
-          {{ footer_twitter.statement|safe }}
-        </p>
-        <div class="footer-twitter-button">
-          <a href="https://twitter.com/intent/tweet?button_hashtag={{ podcast.twitter_hashtag }}" class="twitter-hashtag-button" data-related="{{ podcast.twitter_id }}" data-url="{{ podcast.app_root_url }}">Tweet #{{ podcast.twitter_hashtag }}</a>
-        </div>
-        {% endif %}
-      </div>
-      <div class="footer-site-box">
-        {% if footer_subscription %}
-        <h2>{{ footer_subscription.title }}</h2>
-        <p>
-          {{ footer_subscription.statement|safe }}
-        </p>
-        <ul>
-          <li><a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i>RSS Feed</a></li>
-          <li><a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a></li>
-        </ul>
-        {% endif %}
+      <div class="disclaimer">
         {% if podcast.logo_stamp %}
         <div class="footer-stamp">
-          <img src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <a href="{{ podcast.facebook_page }}" target="_blank">
+            <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          </a>
         </div>
         {% endif %}
-      </div>
-      <div class="disclaimer">
         <p class="copyright">
-          Copyright &copy; 2014 by <a href="{{ podcast.facebook_page }}">{{ podcast.name }}</a>. All Rights Reserved.
+          Copyright &copy; 2014 by <a href="{{ podcast.facebook_page }}" target="_blank">{{ podcast.name }}</a>. All Rights Reserved.
         </p>
         <p class="credit">
-          <i>Powered by <a href="https://github.com/hirogwa/plain-podcast">plain-podcast</a></i>
+          <i>Powered by <a href="https://github.com/hirogwa/plain-podcast" target="_blank">plain-podcast</a></i>
         </p>
       </div>
     </div>

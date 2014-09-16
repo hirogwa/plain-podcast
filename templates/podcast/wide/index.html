@@ -45,22 +45,35 @@
       {% endif %}
     </div>
   </div>
-  <div class="row fixed-row">
+  <div id="episode-row" class="row regular-row">
     <div class="row-inner-column row-inner-column-left">
       <div id="latest-episodes">
-        <h2>EPISODES</h2>
-        {% for episode in recent_episodes %}
-        <h3>{{ episode.title }}</h3>
-        <p>{{ episode.description|truncatechars:50 }}</p>
-        {% endfor %}
-        <div id="episode-see-all">
-          <a href="#">MORE</a>
+        <h2>latest episodes</h2>
+        {% if episodes_recent %}
+        <ul class="episode-list">
+          {% for episode in episodes_recent %}
+          <li>
+            <div class="episode-list-icon">
+              <a href="{% url 'podcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
+            </div>
+            <div class="episode-list-summary">
+              <div class="title-info">{{ episode.pub_date.date }}</div>
+              <h3><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="see-all">
+          <div class="see-all-button">
+            <a href="{% url 'podcast:episodes' %}">VIEW ALL</a>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row-inner-column row-inner-column-center">
-      <div id="news">
-        <h2>NEWS</h2>
+        {% else %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+        {% endif %}
       </div>
     </div>
     <div id="twitter-timeline" class="row-inner-column row-inner-column-right">
@@ -69,10 +82,57 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="row-inner-column row-inner-column-single">
+  <div id="blog-row" class="row regular-row">
+    <div class="row-inner-column row-inner-column-left">
+      <div id="news">
+        <h2>news</h2>
+        {% if news_recent %}
+        <ul class="article-list">
+          {% for news in news_recent %}
+          <li>
+            <div class="title-info">{{ news.pub_date.date }} by {{ news.author.name }}</div>
+            <h3><a href="{% url 'podcast:news' news.id %}">{{ news.title }}</a></h3>
+            {{ news.content|safe|truncatechars:100 }}
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="see-all">
+          <div class="see-all-button">
+            <a href="{% url 'podcast:news' %}">VIEW ALL</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row-inner-column row-inner-column-right">
       <div id="recent-blog-entries">
-        <h2>BLOG</h2>
+        <h2>blog</h2>
+        {% if blog_recent %}
+        <ul class="article-list">
+          {% for entry in blog_recent %}
+          <li>
+            <div class="title-info">{{ entry.pub_date.date }} by {{ entry.author.name }}</div>
+            <h3><a href="{% url 'podcast:blog' entry.id %}">{{ entry.title }}</a></h3>
+            {{ entry.content|safe|truncatechars:100 }}
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="see-all">
+          <div class="see-all-button">
+            <a href="{% url 'podcast:blog' %}">VIEW ALL</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>

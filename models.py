@@ -7,22 +7,24 @@ from django.template.defaultfilters import slugify
 from mutagen.mp3 import MP3
 from storage import PrivateStorage
 
+APP_LABEL = 'podcast'
 
-APP_NAME = 'podcast'
+
+class PodcastModel(models.Model):
+    class Meta:
+        abstract = True
+        app_label = APP_LABEL
 
 
-class Theme(models.Model):
+class Theme(PodcastModel):
     name = models.CharField(max_length=100)
     notes = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.name
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class Podcast(models.Model):
+class Podcast(PodcastModel):
     name = models.CharField(max_length=200)
     tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
@@ -34,6 +36,7 @@ class Podcast(models.Model):
     logo_stamp = models.ImageField(upload_to='images', blank=True)
     itunes_url = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
+    instagram_id = models.CharField(max_length=100, blank=True)
     twitter_id = models.CharField(max_length=100, blank=True)
     twitter_hashtag = models.CharField(max_length=100, blank=True)
     twitter_timeline_widget_id = models.CharField(max_length=30, blank=True)
@@ -43,11 +46,8 @@ class Podcast(models.Model):
     def __unicode__(self):
         return self.name
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class Episode(models.Model):
+class Episode(PodcastModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True)
     description = models.TextField(blank=True)
@@ -73,13 +73,10 @@ class Episode(models.Model):
         return mimetypes.guess_type(self.audio_file.name)[0]
 
     def get_absolute_url(self):
-        return '/podcast/episode/%s' % self.slug
-
-    class Meta:
-        app_label = APP_NAME
+        return '/%s/episode/%s' % (APP_LABEL, self.slug)
 
 
-class ScheduledEpisode(models.Model):
+class ScheduledEpisode(PodcastModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True)
     slug_base = models.CharField(max_length=100, blank=True)
@@ -100,11 +97,8 @@ class ScheduledEpisode(models.Model):
                 self.slug = slugify(self.slug_base)
         super(ScheduledEpisode, self).save(*args, **kwargs)
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class Presenter(models.Model):
+class Presenter(PodcastModel):
     name = models.CharField(max_length=100)
     introduction = models.TextField()
     thumbnail_square = models.ImageField(upload_to='images', blank=True)
@@ -116,12 +110,8 @@ class Presenter(models.Model):
                                   choices=[('visible', 'visible'), ('hidden', 'hidden')],
                                   default='visible')
 
-    class Meta:
-        app_label = APP_NAME
-        ordering = ['display_order']
-
     def __unicode__(self):
-        return '[%s] %s' % (self.visibility, self.name)
+        return self.name
 
     def save(self, *args, **kwargs):
         if self.display_order is None:
@@ -129,7 +119,7 @@ class Presenter(models.Model):
         super(Presenter, self).save(*args, **kwargs)
 
 
-class Statement(models.Model):
+class Statement(PodcastModel):
     unique_name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     statement = models.TextField()
@@ -137,11 +127,8 @@ class Statement(models.Model):
     def __unicode__(self):
         return self.unique_name
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class ITunesInfo(models.Model):
+class ITunesInfo(PodcastModel):
     """
     channel(podcast global, not episode-to-episode) attributes passed to iTunes through the "itunes:" tags in RSS
     """
@@ -162,11 +149,8 @@ class ITunesInfo(models.Model):
     def __unicode__(self):
         return 'iTunesInfo'
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class Promotion(models.Model):
+class Promotion(PodcastModel):
     name = models.CharField(max_length=50)
     active = models.CharField(max_length=10,
                               choices=[('active', 'active'),
@@ -175,12 +159,10 @@ class Promotion(models.Model):
     image = models.ImageField(upload_to='images', blank=True)
     caption = models.TextField(blank=True)
     caption_location = models.CharField(max_length=50,
-                                        choices=[('TR', 'top-right'),
-                                                 ('TL', 'top-left'),
-                                                 ('BL', 'bottom-left'),
+                                        choices=[('BL', 'bottom-left'),
                                                  ('BR', 'bottom-right')],
                                         default='BL')
-    display_order = models.IntegerField(default=0)
+    display_order = models.IntegerField(default=99)
     input_datetime = models.DateTimeField(blank=True)
     update_datetime = models.DateTimeField(blank=True)
 
@@ -193,5 +175,39 @@ class Promotion(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class Article(PodcastModel):
+    title = models.CharField(max_length=100)
+    visibility = models.CharField(max_length=50,
+                                  choices=[('visible', 'visible'), ('hidden', 'hidden')],
+                                  default='visible')
+    author = models.ForeignKey(Presenter)
+    slug = models.SlugField(blank=True)
+    content = models.TextField()
+    pub_date = models.DateTimeField('published_time', blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.__class__.objects.filter(id=self.id):
+            self.pub_date = datetime.datetime.now()
+            date = self.pub_date
+            if self.slug == '':
+                self.slug = '%i-%02d-%02d-%02d%02d' % (date.year, date.month, date.day, date.hour, date.minute)
+        super(Article, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return ('/%s/%s/%d' % (APP_LABEL, self.__class__.__name__, self.id)).lower()
+
     class Meta:
-        app_label = APP_NAME
+        abstract = True
+        ordering = ['-pub_date']
+
+
+class Blog(Article):
+    pass
+
+
+class News(Article):
+    pass

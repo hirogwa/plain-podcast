@@ -1,27 +1,75 @@
+@charset "UTF-8"
 @import constants
-$carousel-height: 480px
+@import mixincommons
+$carousel-height: 360px
 $carousel-radius: 5px
-$carousel-fadeout: 80%
+$carousel-fadeout: 50%
+$button-radius: 5px
 $cl-carousel-dark: rgba(#000, 1)
 $cl-carousel-light: rgba(#000, 0)
-$fixed-row-height: 620px
+$min-row-height: 320px
 
-.fixed-row
-    max-height: $fixed-row-height
-    overflow: hidden
+.regular-row
+    padding: 0 $main-column-padding-horizontal
 .row
     max-width: $main-column-width
-    margin: 1em auto 3em
+    margin: 1em auto 2em
+    overflow: hidden
     .row-inner-column
-        width: 30%
         min-height: 1em
         display: inline-block
-        vertical-align: top
-        padding: 0 1.5%
+        margin: 0 1em
+        .title-info
+            font-size: 0.8em
+        h2
+            text-transform: uppercase
+            padding-left: 1em
+            margin-bottom: 3em
+            border-left: solid 4px $cl-theme1
+            font-size: 1.2em
+        .see-all
+            text-align: right
+            .see-all-button
+                margin-right: 2em
+                margin-top: 1em
+                a
+                    @include control-button($cl-theme1-soft)
+                    transition-duration: 0.2s
+                a:hover
+                    text-decoration: none
+                    background: $cl-theme1
+                    transition-duration: 0.2s
+    ul
+        list-style-type: none
+    ul.episode-list
+        padding-left: 0
+        margin-top: 3em
+        @include episode-li($cl-theme2-soft, $cl-theme2)
+    ul.article-list
+        padding-left: 1em
+        li
+            margin-bottom: 2em
+            h3
+                margin-top: 0.3em
+                margin-bottom: 0.5em
+            p
+                margin-top: 0
+#episode-row
+    .row-inner-column-left
+        width: 75%
     #twitter-timeline
+        width: 20%
+        float: right
+        margin-right: 1em
         #twitter-timeline-inner
-            max-width: 70%
+            max-width: 100%
             margin: auto
+#blog-row
+    min-height: $min-row-height
+    .row-inner-column
+        width: 47%
+    .row-inner-column-right
+        float: right
 #main-area-home
     margin: 0 auto
 #promotion
@@ -34,7 +82,7 @@ $fixed-row-height: 620px
         div.carousel
             box-shadow: 0 0 2px rgba(#000, 0.4)
             height: $carousel-height
-            max-width: 90%
+            max-width: 100%
             margin: 0 auto
             border-radius: $carousel-radius
             overflow: hidden
@@ -53,14 +101,13 @@ $fixed-row-height: 620px
                         background: linear-gradient(45deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
                     div.carousel-screen-BR
                         background: linear-gradient(-45deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
-                    div.carousel-screen-TL
-                        background: linear-gradient(135deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
-                    div.carousel-screen-TR
-                        background: linear-gradient(-135deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
-
                     div.carousel-caption
-                        font-size: 1.2em
+                        font-family: $font-maru
+                        font-size: 110%
                         max-width: 40%
+                        color: $cl-soft-text-on-dark
+                        h1,h2,h3
+                            color: $cl-main-text-on-dark
                         a
                             color: inherit
                             text-decoration: underline
