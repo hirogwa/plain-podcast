@@ -1,0 +1,9 @@
+{% extends "podcast/wide/base.html" %}
+
+{% block contact_active %}active{% endblock %}
+
+{% block contents %}
+<div id="contact-form">
+{{ podcast.google_contact_iframe|safe }}
+</div>
+{% endblock %}

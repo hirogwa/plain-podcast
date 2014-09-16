@@ -176,9 +176,9 @@ def episodes(request):
 
 
 def contact(request):
-    context = {'episodes': Episode.objects.all().order_by('-pub_date')}
+    context = {}
     context.update(get_common_context(request))
-    return render(request, template_file(context, 'episodes'), context)
+    return render(request, template_file(context, 'contact'), context)
 
 
 def scheduled_list(request):

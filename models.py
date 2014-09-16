@@ -42,6 +42,7 @@ class Podcast(PodcastModel):
     twitter_timeline_widget_id = models.CharField(max_length=30, blank=True)
     facebook_app_id = models.CharField(max_length=30, blank=True)
     google_analytics_id = models.CharField(max_length=50, blank=True)
+    google_contact_iframe = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.name
@@ -52,7 +53,7 @@ class Episode(PodcastModel):
     slug = models.SlugField(blank=True)
     description = models.TextField(blank=True)
     show_notes = models.TextField(blank=True)
-    audio_file = models.FileField(upload_to='episode', blank=True)
+    audio_file = models.FileField(upload_to='episode')
     pub_date = models.DateTimeField('published_time')
 
     def __unicode__(self):
