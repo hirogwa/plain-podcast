@@ -203,6 +203,7 @@ class Article(PodcastModel):
 
     class Meta:
         abstract = True
+        app_label = APP_LABEL
         ordering = ['-pub_date']
 
 
