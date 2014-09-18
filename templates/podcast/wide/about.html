@@ -8,29 +8,70 @@
 
 {% block contents %}
 {% load static %}
-{% for presenter in presenters %}
-<div class="presenter-profile content-box">
-  <h2><a>{{ presenter.name }}</a></h2>
-  <div class="presenter-profile-description
-   presenter-{% if forloop.counter0|divisibleby:2 %}even{% else %}odd{% endif %}
-   content-box-body">
-    <div class="profile-image-box">
-      <img class="profile-image" src="{% get_media_prefix %}{{ presenter.thumbnail_square }}" alt="">
-    </div>
-    <div class="profile-description-box">
-      <div class="profile-description-internal">
-        <p>
-          {{ presenter.introduction|safe }}
-        </p>
+<div id="profile-page" class="vertical-navigation-layout">
+  <div id="profile-main-contents" class="vertical-navigation-layout-main-contents">
+    {% if presenters %}
+    <ul id="presenter-list">
+    {% for presenter in presenters %}
+      <li>
+        <div class="presenter-profile content-box">
+          <div class="presenter-profile-description content-box-body">
+            <div class="profile-image-box"
+                 style="background-image: url('{% get_media_prefix %}{{ presenter.thumbnail_square }}');">
+            </div>
+            <div class="profile-description-box">
+              <h2>{{ presenter.name }}</h2>
+              <div class="presenter-statement">
+                {{ presenter.introduction|safe }}
+              </div>
+              {% if presenter.twitter_id %}
+              <div class="profile-description-footer">
+                <a href="https://twitter.com/{{ presenter.twitter_id }}" class="twitter-follow-button" data-show-count="false">Follow @{{ presenter.twitter_id }}</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <div id="profile-page-navigation" class="vertical-navigation">
+    <div id="article-navigation-contents">
+      <div class="recent-article-list article-navigation-section">
+        <h2>news</h2>
+        <ul>
+          {% for article in news_articles|slice:":5" %}
+          <li>
+            <h3><a href="{% url 'podcast:news' article.id %}">{{ article.title }}</a></h3>
+            <div class="article-information">
+              {{ article.pub_date.date }} by {{ article.author.name }}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
-      {% if presenter.twitter_id %}
-      <footer class="profile-description-footer">
-          <a href="https://twitter.com/{{ presenter.twitter_id }}" class="twitter-follow-button" data-show-count="false">Follow @{{ presenter.twitter_id }}</a>
-      </footer>
-      {% endif %}
+      <div class="recent-article-list article-navigation-section">
+        <h2>blog</h2>
+        <ul>
+          {% for article in blog_articles|slice:":3" %}
+          <li>
+            <h3><a href="{% url 'podcast:blog' article.id %}">{{ article.title }}</a></h3>
+            <div class="article-information">
+              {{ article.pub_date.date }} by {{ article.author.name }}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div id="twitter-timeline" class="navigation-section">
+        <div id="twitter-timeline-inner">
+          <a class="twitter-timeline"  href="https://twitter.com/hashtag/{{ podcast.twitter_hashtag }}"  data-widget-id="{{ podcast.twitter_timeline_widget_id }}">#{{ podcast.twitter_hashtag }} Tweets</a>
+        </div>
+      </div>
     </div>
   </div>
-  <span class="clear"></span>
+  <div class="vertical-navigation-layout-clear"></div>
 </div>
-{% endfor %}
 {% endblock %}

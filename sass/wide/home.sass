@@ -4,7 +4,6 @@
 $carousel-height: 360px
 $carousel-radius: 5px
 $carousel-fadeout: 50%
-$button-radius: 5px
 $cl-carousel-dark: rgba(#000, 1)
 $cl-carousel-light: rgba(#000, 0)
 $min-row-height: 320px
@@ -45,18 +44,35 @@ $min-row-height: 320px
         padding-left: 0
         margin-top: 3em
         @include episode-li($cl-theme2-soft, $cl-theme2)
+        li
+            width: 49%
+        li.featured
+            display: block
+            width: 100%
+            margin: 2em auto
+            div.episode-icon
+                font-size: 135%
+                margin-right: 1.5em
+                a
+                    background-color: $cl-theme1-soft
+                a:hover
+                    background-color: $cl-theme1
+            div.episode-summary
+                font-size: 110%
+                width: 73%
+                div.episode-audio-player
+                    margin: 2em auto
     ul.article-list
         padding-left: 1em
         li
             margin-bottom: 2em
             h3
-                margin-top: 0.3em
-                margin-bottom: 0.5em
+                margin: 0.5em auto
             p
                 margin-top: 0
 #episode-row
     .row-inner-column-left
-        width: 75%
+        width: 72%
     #twitter-timeline
         width: 20%
         float: right
@@ -90,10 +106,7 @@ $min-row-height: 320px
                 height: 100%
                 width: 100%
                 div.item
-                    height: 100%
-                    width: 100%
-                    background-size: cover
-                    background-position: center center
+                    @include background-imaged-div(100%, 100%)
                     div.carousel-screen
                         height: 100%
                         width: 100%
@@ -103,8 +116,8 @@ $min-row-height: 320px
                         background: linear-gradient(-45deg, $cl-carousel-dark, $cl-carousel-light $carousel-fadeout)
                     div.carousel-caption
                         font-family: $font-maru
-                        font-size: 110%
-                        max-width: 40%
+                        font-size: 115%
+                        max-width: 45%
                         color: $cl-soft-text-on-dark
                         h1,h2,h3
                             color: $cl-main-text-on-dark

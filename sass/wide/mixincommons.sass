@@ -1,4 +1,56 @@
 @import constants
+@mixin background-imaged-div($height, $width)
+    height: $height 
+    width: $width
+    background-size: cover
+    background-position: center center
+@mixin vertical-navigation-layout()
+    div.vertical-navigation-layout
+        max-width: $main-column-width
+        padding: 0 $main-column-padding-horizontal
+        margin: 0 auto
+        h2
+            text-transform: uppercase
+    div.vertical-navigation-layout-main-contents
+        margin-right: 2em
+        display: inline-block
+        width: 65%
+    div.vertical-navigation
+        display: inline-block
+        width: 26%
+        float: right
+        margin: auto 2em
+        h2
+            margin: 2em auto
+            font-size: 1.2em
+            text-transform: uppercase
+            padding-left: 1em
+            border-left: solid 3px $cl-theme1-soft
+        ul
+            list-style-type: none
+            padding-left: 1.5em
+            li
+                margin: 1em 0
+        div.navigation-section
+            margin-bottom: 3em
+            a
+                color: $cl-main-text
+            h3
+                margin: 1.5em 0 0.2em
+                color: $cl-soft-text
+    div.vertical-navigation-layout-clear
+        min-height: 1em
+        clear: both
+@mixin text-basic()
+    div, p, h3, li
+        letter-spacing: 0.1em
+        line-height: 1.5em
+        a
+            color: $cl-main-text
+@mixin iframe-at-center()
+    iframe
+        display: block
+        margin: 2em auto
 @mixin media-link-icon($color, $color-cloudy)
     a
         background: $color-cloudy
@@ -19,28 +71,30 @@
     color: $font-color
     font-size: $font-size
 
+@mixin episode-icon-title($cl-icon, $cl-icon-hover)
+    div.episode-summary, div.episode-icon
+        display: inline-block
+        max-height: 100%
+        overflow: hidden
+        vertical-align: middle
+    div.episode-summary
+        max-width: 65%
+    div.episode-icon
+        max-width: 27%
+        margin: auto 1em auto 0
+        a
+            @include round-fa-anchor(2em, #fff, 0.3em)
+            background: $cl-icon
+            transition-duration: 0.2s
+        a:hover
+            background: $cl-icon-hover
+            transition-duration: 0.2s
+
 @mixin episode-li($cl-icon, $cl-icon-hover)
     li
         display: inline-block
-        width: 49%
-        margin: 0 0 1em 0
-        div.episode-list-summary, div.episode-list-icon
-            display: inline-block
-            max-height: 100%
-            overflow: hidden
-        div.episode-list-summary
-            max-width: 74%
-            margin-right: 1%
-        div.episode-list-icon
-            max-width: 24%
-            margin: auto 1% auto 0
-            a
-                @include round-fa-anchor(2em, #fff, 0.3em)
-                background: $cl-icon
-                transition-duration: 0.2s
-            a:hover
-                background: $cl-icon-hover
-                transition-duration: 0.2s
+        margin: 0 0 1.5em 0
+        @include episode-icon-title($cl-icon, $cl-icon-hover)
         h3,p,div
             max-width: 100%
         h3
@@ -53,3 +107,6 @@
     letter-spacing: 0.1em
     color: #fff
 
+@mixin social-buttons()
+    div.social-button
+        margin: 0.2em 0

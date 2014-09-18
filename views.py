@@ -20,7 +20,7 @@ def index(request):
     news_all = News.objects.filter(visibility='visible').order_by('-pub_date')
     blog_all = Blog.objects.filter(visibility='visible').order_by('-pub_date')
     context = {'episodes': episodes_all,
-               'episodes_recent': episodes_all[:10],
+               'episodes_recent': episodes_all[:5],
                'news_recent': news_all[:5],
                'blog_recent': blog_all[:5],
                'promotions': Promotion.objects.filter(active='active').order_by('display_order', '-update_datetime'),
@@ -152,8 +152,14 @@ def blog(request, article_id=None, author=None):
 
 
 def about(request):
+    # main contents
     presenters = Presenter.objects.filter(visibility='visible').order_by('display_order')
-    context = {'presenters': presenters}
+    # for side bar
+    news_articles = News.objects.filter(visibility='visible').order_by('-pub_date')
+    blog_articles = Blog.objects.filter(visibility='visible').order_by('-pub_date')
+    context = {'presenters': presenters,
+               'news_articles': news_articles,
+               'blog_articles': blog_articles}
     context.update(get_common_context(request))
     return render(request, template_file(context, 'about'), context)
 

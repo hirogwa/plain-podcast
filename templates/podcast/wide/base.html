@@ -58,7 +58,7 @@
             <li class="{% block news_active %}{% endblock %}">
               <a href="{% url 'podcast:news' %}"><i class="fa fa-lightbulb-o"></i>News</a>
             </li>
-            <li class="{% block episodes_active %}{% endblock %}">
+            <li class="{% block episode_active %}{% endblock %}">
               <a href="{% url 'podcast:episodes' %}"><i class="fa fa-microphone"></i>Episode</a>
             </li>
             <li class="{% block blog_active %}{% endblock %}">
@@ -80,27 +80,26 @@
     {% block contents %}
     {% endblock %}
   </div>
-
-  <footer id="footer-site">
-    <div id="footer-site-inner">
-      <div class="disclaimer">
-        {% if podcast.logo_stamp %}
-        <div class="footer-stamp">
-          <a href="{{ podcast.facebook_page }}" target="_blank">
-            <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
-          </a>
-        </div>
-        {% endif %}
-        <p class="copyright">
-          Copyright &copy; 2014 by <a href="{{ podcast.facebook_page }}" target="_blank">{{ podcast.name }}</a>. All Rights Reserved.
-        </p>
-        <p class="credit">
-          <i>Powered by <a href="https://github.com/hirogwa/plain-podcast" target="_blank">plain-podcast</a></i>
-        </p>
-      </div>
-    </div>
-  </footer>
 </div>
+<footer id="footer-site">
+  <div id="footer-site-inner">
+    <div class="disclaimer">
+      {% if podcast.logo_stamp %}
+      <div class="footer-stamp">
+        <a href="{{ podcast.facebook_page }}" target="_blank">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+        </a>
+      </div>
+      {% endif %}
+      <p class="copyright">
+        Copyright &copy; 2014 by <a href="{{ podcast.facebook_page }}" target="_blank">{{ podcast.name }}</a>. All Rights Reserved.
+      </p>
+      <p class="credit">
+        <i>Powered by <a href="https://github.com/hirogwa/plain-podcast" target="_blank">plain-podcast</a></i>
+      </p>
+    </div>
+  </div>
+</footer>
 
 <script>
   $('video,audio').mediaelementplayer({audioWidth: '100%'});

@@ -1,9 +1,4 @@
-div#contents-article
-    max-width: $main-column-width
-    padding: 0 $main-column-padding-horizontal
-    margin: 0 auto
-    h2
-        text-transform: uppercase
+@include vertical-navigation-layout()
 div#article-filter
     padding-left: 2em
     margin-bottom: 2.5em
@@ -11,50 +6,30 @@ div#article-filter
     font-size: 110%
     letter-spacing: 0.1em
     text-transform: uppercase
-div#article-list
+div#article-list-inner
+    margin: 0 auto
     ul
         list-style-type: none
-    display: inline-block
-    max-width: 68%
     li.article-entry
         margin: 0 0 6em 0
     article 
+        @include text-basic()
         div.article-sup-top
             padding-left: 2em
             border-left: solid 4px $cl-theme2
             h2
                 margin-bottom: 0.2em
         div.article-content
+            @include iframe-at-center()
+            iframe
+                max-width: 85%
             margin: 2em 0
             line-height: 1.7em
-            iframe
-                max-width: 80%
         div.article-sup-bottom
-            div.social-button
-                margin: 0.2em 0
+            @include social-buttons()
     div.article-footer
         margin-top: 2em
         text-align: center
-div#article-navigation
-    display: inline-block
-    max-width: 28%
-    float: right
-    margin-right: 2em
-    h2
-        font-size: 1.2em
-        text-transform: uppercase
-        padding-left: 1em
-        border-left: solid 3px $cl-theme1-soft
-    h3
-        margin: 1.5em 0 0.2em
-        color: $cl-soft-text
-    ul
-        list-style-type: none
-        padding-left: 1.5em
-        li
-            margin: 1em 0
-    div.article-navigation-section
-        margin-bottom: 3em
 #page-control-panel
     margin: 1em 0
     text-align: center
@@ -70,11 +45,13 @@ div#article-navigation
             background: $cl-theme2
             transition-duration: 0.2s
     span.single-page-control
-        max-width: 45%
+        max-width: 40%
         i.fa
             margin: 0 0.5em
     span#single-page-control-prev
         float: left
+        margin-left: 3em
     span#single-page-control-next
         float: right
+        margin-right: 3em
 

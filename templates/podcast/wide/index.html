@@ -52,13 +52,23 @@
         {% if episodes_recent %}
         <ul class="episode-list">
           {% for episode in episodes_recent %}
-          <li>
-            <div class="episode-list-icon">
+          <li class="{% if forloop.counter0 == 0 %}featured{% endif %}">
+            <div class="episode-icon">
               <a href="{% url 'podcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
             </div>
-            <div class="episode-list-summary">
+            <div class="episode-summary">
               <div class="title-info">{{ episode.pub_date.date }}</div>
               <h3><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
+              {% if forloop.counter0 == 0 %}
+              <div class="episode-description">
+                {{ episode.description|truncatechars:80 }}
+              </div>
+              <div class="episode-audio-player">
+                <audio controls>
+                  <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
+                </audio>
+              </div>
+              {% endif %}
             </div>
           </li>
           {% endfor %}
@@ -92,7 +102,7 @@
           <li>
             <div class="title-info">{{ news.pub_date.date }} by {{ news.author.name }}</div>
             <h3><a href="{% url 'podcast:news' news.id %}">{{ news.title }}</a></h3>
-            {{ news.content|safe|truncatechars:100 }}
+            <p>{{ news.content|striptags|truncatechars:100 }}</p>
           </li>
           {% endfor %}
         </ul>
@@ -118,7 +128,7 @@
           <li>
             <div class="title-info">{{ entry.pub_date.date }} by {{ entry.author.name }}</div>
             <h3><a href="{% url 'podcast:blog' entry.id %}">{{ entry.title }}</a></h3>
-            {{ entry.content|safe|truncatechars:100 }}
+            <p>{{ entry.content|striptags|truncatechars:100 }}</p>
           </li>
           {% endfor %}
         </ul>
