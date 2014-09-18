@@ -11,7 +11,7 @@ import os.path
 import settings
 import stat
 
-ARTICLE_LIST_SIZE = 1
+ARTICLE_LIST_SIZE = 5
 PAGE_CTRL_SIZE = 2
 
 
@@ -20,7 +20,7 @@ def index(request):
     news_all = News.objects.filter(visibility='visible').order_by('-pub_date')
     blog_all = Blog.objects.filter(visibility='visible').order_by('-pub_date')
     context = {'episodes': episodes_all,
-               'episodes_recent': episodes_all[:5],
+               'episodes_recent': episodes_all[:9],
                'news_recent': news_all[:5],
                'blog_recent': blog_all[:5],
                'promotions': Promotion.objects.filter(active='active').order_by('display_order', '-update_datetime'),
