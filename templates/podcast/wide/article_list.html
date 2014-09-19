@@ -16,7 +16,7 @@
         </div>
       {% endif %}
       {% if articles %}
-        <ul>
+        <ul id="article-contents-list">
         {% for article in articles %}
           <li class="article-entry">
             <article>
@@ -83,9 +83,9 @@
       <div id="recent-article-list" class="navigation-section">
         <h2>recent</h2>
         {% if articles %}
-          <ul>
+          <ul class="article-navigation-list">
           {% for article in all_articles|slice:":5" %}
-            <li>
+            <li class="article-navigation-entry">
               <h3><a href="{% block article_url_nav %}{% endblock %}">{{ article.title }}</a></h3>
               <div class="article-information">
                 {{ article.pub_date.date }} by {{ article.author.name }}
@@ -97,9 +97,9 @@
       </div>
       <div id="author-list" class="navigation-section">
         <h2>author</h2>
-        <ul>
+        <ul class="article-navigation-list">
         {% for author, count in authors.items %}
-        <li>
+        <li class="article-navigation-entry">
           <span class="author-name"><a href="{% block author_url %}{% endblock %}">{{ author.name }}</a></span>&nbsp;
           <span class="author-count">({{ count }})</span>
         </li>

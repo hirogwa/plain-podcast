@@ -168,7 +168,7 @@ class Promotion(PodcastModel):
     update_datetime = models.DateTimeField(blank=True)
 
     def save(self, *args, **kwargs):
-        if not Promotion.objects.filter(id=self.id):
+        if (not Promotion.objects.filter(id=self.id)) & (not self.input_datetime):
             self.input_datetime = datetime.datetime.now()
         self.update_datetime = datetime.datetime.now()
         super(Promotion, self).save(*args, **kwargs)
@@ -188,7 +188,7 @@ class Article(PodcastModel):
     pub_date = models.DateTimeField('published_time', blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.__class__.objects.filter(id=self.id):
+        if (not self.__class__.objects.filter(id=self.id)) & (not self.pub_date):
             self.pub_date = datetime.datetime.now()
             date = self.pub_date
             if self.slug == '':

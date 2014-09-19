@@ -73,6 +73,7 @@ def get_article_author_map(base_articles):
     :return:
     """
     authors = {}
+    print (base_articles.values('author').annotate(author_count=Count('author')))
     for map_list in base_articles.values('author').annotate(author_count=Count('author')):
         author = Presenter.objects.filter(id=map_list['author'])
         if author:
@@ -128,7 +129,7 @@ def article_list(request, base_articles, template, presenter=None):
     context.update({'articles': articles,
                     'all_articles': sorted_articles,
                     'filters': filters,
-                    'authors': get_article_author_map(sorted_articles),
+                    'authors': get_article_author_map(base_articles),
                     'preceding_pages': preceding_pages,
                     'succeeding_pages': succeeding_pages})
     context.update(get_common_context(request))
