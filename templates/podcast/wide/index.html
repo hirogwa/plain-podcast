@@ -46,7 +46,12 @@
     </div>
   </div>
   <div id="episode-row" class="row regular-row">
-    <div class="row-inner-column row-inner-column-left">
+    <div id="twitter-timeline" class="row-inner-column row-inner-column-right">
+      <div id="twitter-timeline-inner">
+        <a class="twitter-timeline"  href="https://twitter.com/hashtag/{{ podcast.twitter_hashtag }}"  data-widget-id="{{ podcast.twitter_timeline_widget_id }}">#{{ podcast.twitter_hashtag }} Tweets</a>
+      </div>
+    </div>
+    <div id="episode-column" class="row-inner-column">
       <div id="latest-episodes">
         <h2>latest episodes</h2>
         {% if episodes_recent %}
@@ -84,11 +89,6 @@
           <p>Stay tuned!</p>
         </div>
         {% endif %}
-      </div>
-    </div>
-    <div id="twitter-timeline" class="row-inner-column row-inner-column-right">
-      <div id="twitter-timeline-inner">
-        <a class="twitter-timeline"  href="https://twitter.com/hashtag/{{ podcast.twitter_hashtag }}"  data-widget-id="{{ podcast.twitter_timeline_widget_id }}">#{{ podcast.twitter_hashtag }} Tweets</a>
       </div>
     </div>
   </div>

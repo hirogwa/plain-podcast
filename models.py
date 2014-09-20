@@ -176,6 +176,9 @@ class Promotion(PodcastModel):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        ordering = ['display_order', '-input_datetime']
+
 
 class Article(PodcastModel):
     title = models.CharField(max_length=100)
