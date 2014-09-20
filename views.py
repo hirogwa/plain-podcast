@@ -15,220 +15,322 @@ ARTICLE_LIST_SIZE = 5
 PAGE_CTRL_SIZE = 2
 
 
+def theme_view():
+    theme = Podcast.objects.all()[0].theme
+    return THEMES[theme.name]
+
+
 def index(request):
-    episodes_all = Episode.objects.all().order_by('-pub_date')
-    news_all = News.objects.filter(visibility='visible').order_by('-pub_date')
-    blog_all = Blog.objects.filter(visibility='visible').order_by('-pub_date')
-    context = {'episodes': episodes_all,
-               'episodes_recent': episodes_all[:9],
-               'news_recent': news_all[:5],
-               'blog_recent': blog_all[:5],
-               'promotions': Promotion.objects.filter(active='active').order_by('display_order', '-update_datetime'),
-               }
-    context.update(get_common_context(request))
-    return render(request, template_file(context, 'index'), context)
-
-
-def article(request, base_articles, template, article_id):
-    """
-    renders the page for single article
-    :param request:
-    :param base_articles:
-    :param template:
-    :param article_id:
-    :return:
-    """
-    context = {}
-
-    # target article
-    target_article_candidate = base_articles.filter(id=article_id)
-    if not target_article_candidate:
-        raise Http404
-    target_article = target_article_candidate[0]
-    context['articles'] = [target_article]
-
-    # previous and next article
-    next_item = None
-    prev_item = None
-    try:
-        next_item = target_article.get_next_by_pub_date
-        prev_item = target_article.get_previous_by_pub_date
-    except ObjectDoesNotExist:
-        pass
-    context['next_item'] = next_item
-    context['prev_item'] = prev_item
-
-    # other needs
-    context.update({'all_articles': base_articles.order_by('-pub_date'),
-                    'authors': get_article_author_map(base_articles),
-                    })
-    context.update(get_common_context(request))
-    return render(request, template_file(context, template), context)
-
-
-def get_article_author_map(base_articles):
-    """
-    given list of articles, returns the dictionary of authors to their article counts
-    :param base_articles:
-    :return:
-    """
-    authors = {}
-    print (base_articles.values('author').annotate(author_count=Count('author')))
-    for map_list in base_articles.values('author').annotate(author_count=Count('author')):
-        author = Presenter.objects.filter(id=map_list['author'])
-        if author:
-            authors[author[0]] = map_list['author_count']
-    return authors
-
-
-def article_list(request, base_articles, template, presenter=None):
-    """
-    renders the page for article list
-    :param request:
-    :param base_articles:
-    :param template:
-    :param presenter:
-    :param article_id:
-    :return:
-    """
-    context = {}
-
-    # sort
-    sorted_articles = base_articles.order_by('-pub_date')
-
-    # filter
-    filters = {}
-    filtered_articles = sorted_articles
-    if presenter:
-        filters['author'] = Presenter.objects.get(id=presenter)
-        filtered_articles = filtered_articles.filter(author=presenter)
-
-    # prepare paginated article list
-    paginator = Paginator(filtered_articles, ARTICLE_LIST_SIZE)
-    page_number = request.GET.get('page')
-    try:
-        articles = paginator.page(page_number)
-    except PageNotAnInteger:
-        articles = paginator.page(1)
-    except EmptyPage:
-        articles = paginator.page(paginator.num_pages)
-
-    # page control info
-    preceding_pages = []
-    for x in range(1, articles.number):
-        if len(preceding_pages) == PAGE_CTRL_SIZE:
-            break
-        preceding_pages.insert(0, articles.number - x)
-    succeeding_pages = []
-    for x in range(articles.number + 1, paginator.num_pages + 1):
-        if len(succeeding_pages) == PAGE_CTRL_SIZE:
-            break
-        succeeding_pages.append(x)
-
-    # returned values
-    context.update({'articles': articles,
-                    'all_articles': sorted_articles,
-                    'filters': filters,
-                    'authors': get_article_author_map(base_articles),
-                    'preceding_pages': preceding_pages,
-                    'succeeding_pages': succeeding_pages})
-    context.update(get_common_context(request))
-    return render(request, template_file(context, template), context)
-
-
-def news(request, article_id=None, author=None):
-    news_articles = News.objects.filter(visibility='visible')
-    if article_id:
-        return article(request, news_articles, 'news', article_id)
-    else:
-        return article_list(request, news_articles, 'news_list', presenter=author)
-
-
-def blog(request, article_id=None, author=None):
-    blog_articles = Blog.objects.filter(visibility='visible')
-    if article_id:
-        return article(request, blog_articles, 'blog', article_id)
-    else:
-        return article_list(request, blog_articles, 'blog_list', presenter=author)
+    return theme_view().index(request)
 
 
 def about(request):
-    # main contents
-    presenters = Presenter.objects.filter(visibility='visible').order_by('display_order')
-    # for side bar
-    news_articles = News.objects.filter(visibility='visible').order_by('-pub_date')
-    blog_articles = Blog.objects.filter(visibility='visible').order_by('-pub_date')
-    context = {'presenters': presenters,
-               'news_articles': news_articles,
-               'blog_articles': blog_articles}
-    context.update(get_common_context(request))
-    return render(request, template_file(context, 'about'), context)
-
-
-def episode(request, slug):
-    episode_obj = get_object_or_404(Episode, slug=slug)
-    context = {'episode': episode_obj}
-    context.update(get_common_context(request))
-    return render(request, template_file(context, 'episode'), context)
-
-
-def episodes(request):
-    """
-    :param request:
-    :return: the list of episodes
-    """
-    context = {'episodes': Episode.objects.all().order_by('-pub_date')}
-    context.update(get_common_context(request))
-    return render(request, template_file(context, 'episodes'), context)
+    return theme_view().about(request)
 
 
 def contact(request):
-    context = {}
-    context.update(get_common_context(request))
-    return render(request, template_file(context, 'contact'), context)
+    return theme_view().contact(request)
+
+
+def news(request, **kwargs):
+    return theme_view().news(request, **kwargs)
+
+
+def blog(request, **kwargs):
+    return theme_view().blog(request, **kwargs)
+
+
+def episode(request, slug):
+    return theme_view().episode(request, slug)
+
+
+def episodes(request):
+    return theme_view().episodes(request)
 
 
 def scheduled_list(request):
-    if request.user.is_authenticated():
-        context = {'episodes': ScheduledEpisode.objects.all().order_by('-pub_date')}
-        context.update(get_common_context(request))
-        context.update(get_private_context(request))
-        return render(request, 'podcast/scheduled_list.html', context)
-    else:
-        raise Http404()
+    return theme_view().sheduled_list(request)
 
 
 def scheduled_episode(request, slug):
-    if request.user.is_authenticated():
-        episode_obj = get_object_or_404(ScheduledEpisode, slug=slug)
+    return theme_view().scheduled_episode(request, slug)
+
+
+class View:
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def get_common_context(request):
+        podcast_obj = get_object_or_404(Podcast, pk=1)
+        footer_about = Statement.objects.filter(unique_name='footer-about').first()
+        footer_twitter = Statement.objects.filter(unique_name='footer-twitter').first()
+        footer_subscription = Statement.objects.filter(unique_name='footer-subscription').first()
+        context = {'host': request.META['HTTP_HOST'],
+                   'podcast': podcast_obj,
+                   'footer_about': footer_about,
+                   'footer_twitter': footer_twitter,
+                   'footer_subscription': footer_subscription,
+                   }
+        return context
+
+    @classmethod
+    def index(cls, request):
+        context, template = cls.index_context(request)
+        return render(request, template, context)
+
+    @classmethod
+    def index_context(cls, request):
+        episodes_all = Episode.objects.all().order_by('-pub_date')
+        context = {'episodes': episodes_all}
+        context.update(cls.get_common_context(request))
+        return context, cls._template_file('index')
+
+    @classmethod
+    def about(cls, request):
+        context, template = cls.about_context(request)
+        return render(request, template, context)
+
+    @classmethod
+    def about_context(cls, request):
+        presenters = Presenter.objects.filter(visibility='visible').order_by('display_order')
+        context = {'presenters': presenters}
+        context.update(cls.get_common_context(request))
+        return context, cls._template_file('about')
+
+    @classmethod
+    def contact(cls, request):
+        context, template = cls.contact_context(request)
+        return render(request, template, context)
+
+    @classmethod
+    def contact_context(cls, request):
+        context = cls.get_common_context(request)
+        return context, cls._template_file('contact')
+
+    @classmethod
+    def news(cls, request, **kwargs):
+        news_articles = News.objects.filter(visibility='visible')
+        if 'article_id' in kwargs:
+            return cls._article(request, news_articles, 'news', kwargs.get('article_id'))
+        else:
+            return cls._article_list(request, news_articles, 'news_list', presenter=kwargs.get('author'))
+
+    @classmethod
+    def blog(cls, request, **kwargs):
+        blog_articles = Blog.objects.filter(visibility='visible')
+        if 'article_id' in kwargs:
+            return cls._article(request, blog_articles, 'blog', kwargs.get('article_id'))
+        else:
+            return cls._article_list(request, blog_articles, 'blog_list', presenter=kwargs.get('author'))
+
+    @classmethod
+    def episode(cls, request, slug):
+        episode_obj = get_object_or_404(Episode, slug=slug)
         context = {'episode': episode_obj}
-        context.update(get_common_context(request))
-        context.update(get_private_context(request))
-        return render(request, 'podcast/scheduled_episode.html', context)
-    else:
-        raise Http404()
+        context.update(cls.get_common_context(request))
+        return render(request, cls._template_file('episode'), context)
+
+    @classmethod
+    def episodes(cls, request):
+        """
+        :param request:
+        :return: the list of episodes
+        """
+        context = {'episodes': Episode.objects.all().order_by('-pub_date')}
+        context.update(cls.get_common_context(request))
+        return render(request, cls._template_file('episodes'), context)
+
+    @classmethod
+    def scheduled_list(cls, request):
+        if request.user.is_authenticated():
+            context = {'episodes': ScheduledEpisode.objects.all().order_by('-pub_date')}
+            context.update(cls.get_common_context(request))
+            context.update(cls.get_private_context())
+            return render(request, 'podcast/scheduled_list.html', context)
+        else:
+            raise Http404()
 
 
-def get_common_context(request):
-    podcast_obj = get_object_or_404(Podcast, pk=1)
-    footer_about = Statement.objects.filter(unique_name='footer-about').first()
-    footer_twitter = Statement.objects.filter(unique_name='footer-twitter').first()
-    footer_subscription = Statement.objects.filter(unique_name='footer-subscription').first()
-    context = {'host': request.META['HTTP_HOST'],
-               'podcast': podcast_obj,
-               'footer_about': footer_about,
-               'footer_twitter': footer_twitter,
-               'footer_subscription': footer_subscription,
-               }
-    return context
+    @classmethod
+    def scheduled_episode(cls, request, slug):
+        if request.user.is_authenticated():
+            episode_obj = get_object_or_404(ScheduledEpisode, slug=slug)
+            context = {'episode': episode_obj}
+            context.update(cls.get_common_context(request))
+            context.update(cls.get_private_context())
+            return render(request, 'podcast/scheduled_episode.html', context)
+        else:
+            raise Http404()
 
 
-def get_private_context(request):
-    return {'private_media_prefix': settings.PRIVATE_FILE_URL}
+    @classmethod
+    def get_common_context(cls, request):
+        podcast_obj = get_object_or_404(Podcast, pk=1)
+        footer_about = Statement.objects.filter(unique_name='footer-about').first()
+        footer_twitter = Statement.objects.filter(unique_name='footer-twitter').first()
+        footer_subscription = Statement.objects.filter(unique_name='footer-subscription').first()
+        context = {'host': request.META['HTTP_HOST'],
+                   'podcast': podcast_obj,
+                   'footer_about': footer_about,
+                   'footer_twitter': footer_twitter,
+                   'footer_subscription': footer_subscription,
+                   }
+        return context
+
+    @staticmethod
+    def get_private_context():
+        return {'private_media_prefix': settings.PRIVATE_FILE_URL}
+
+    @classmethod
+    def _get_article_author_map(cls, base_articles):
+        """
+        given list of articles, returns the dictionary of authors to their article counts
+        :param base_articles:
+        :return:
+        """
+        authors = {}
+        print (base_articles.values('author').annotate(author_count=Count('author')))
+        for map_list in base_articles.values('author').annotate(author_count=Count('author')):
+            author = Presenter.objects.filter(id=map_list['author'])
+            if author:
+                authors[author[0]] = map_list['author_count']
+        return authors
+
+    @classmethod
+    def _article(cls, request, base_articles, template, article_id):
+        """
+        renders the page for single article
+        :param request:
+        :param base_articles:
+        :param template:
+        :param article_id:
+        :return:
+        """
+        context = {}
+
+        # target article
+        target_article_candidate = base_articles.filter(id=article_id)
+        if not target_article_candidate:
+            raise Http404
+        target_article = target_article_candidate[0]
+        context['articles'] = [target_article]
+
+        # previous and next article
+        next_item = None
+        prev_item = None
+        try:
+            next_item = target_article.get_next_by_pub_date
+            prev_item = target_article.get_previous_by_pub_date
+        except ObjectDoesNotExist:
+            pass
+        context['next_item'] = next_item
+        context['prev_item'] = prev_item
+
+        # other needs
+        context.update({'all_articles': base_articles.order_by('-pub_date'),
+                        'authors': cls._get_article_author_map(base_articles),
+                        })
+        context.update(cls.get_common_context(request))
+        return render(request, cls._template_file(template), context)
+
+    @classmethod
+    def _article_list(cls, request, base_articles, template, presenter=None):
+        """
+        renders the page for article list
+        :param request:
+        :param base_articles:
+        :param template:
+        :param presenter:
+        :param article_id:
+        :return:
+        """
+        context = {}
+
+        # sort
+        sorted_articles = base_articles.order_by('-pub_date')
+
+        # filter
+        filters = {}
+        filtered_articles = sorted_articles
+        if presenter:
+            filters['author'] = Presenter.objects.get(id=presenter)
+            filtered_articles = filtered_articles.filter(author=presenter)
+
+        # prepare paginated article list
+        paginator = Paginator(filtered_articles, ARTICLE_LIST_SIZE)
+        page_number = request.GET.get('page')
+        try:
+            articles = paginator.page(page_number)
+        except PageNotAnInteger:
+            articles = paginator.page(1)
+        except EmptyPage:
+            articles = paginator.page(paginator.num_pages)
+
+        # page control info
+        preceding_pages = []
+        for x in range(1, articles.number):
+            if len(preceding_pages) == PAGE_CTRL_SIZE:
+                break
+            preceding_pages.insert(0, articles.number - x)
+        succeeding_pages = []
+        for x in range(articles.number + 1, paginator.num_pages + 1):
+            if len(succeeding_pages) == PAGE_CTRL_SIZE:
+                break
+            succeeding_pages.append(x)
+
+        # returned values
+        context.update({'articles': articles,
+                        'all_articles': sorted_articles,
+                        'filters': filters,
+                        'authors': cls._get_article_author_map(base_articles),
+                        'preceding_pages': preceding_pages,
+                        'succeeding_pages': succeeding_pages})
+        context.update(cls.get_common_context(request))
+        return render(request, cls._template_file(template), context)
+
+    @staticmethod
+    def _template_file(template):
+        theme = Podcast.objects.all()[0].theme
+        return 'podcast/{}/{}.html'.format(theme.name, template)
 
 
-def template_file(context, template):
-    return 'podcast/{}/{}.html'.format(context.get('podcast').theme, template)
+class Wide(View):
+    @classmethod
+    def index_context(cls, request):
+        context, template = View.index_context(request)
+        news_all = News.objects.filter(visibility='visible').order_by('-pub_date')
+        blog_all = Blog.objects.filter(visibility='visible').order_by('-pub_date')
+        context.update({'episodes_recent': context['episodes'][:9],
+                        'news_recent': news_all[:5],
+                        'blog_recent': blog_all[:5],
+                        'promotions': Promotion.objects.filter(
+                            active='active').order_by('display_order', '-update_datetime'),
+                        })
+        return context, template
+
+    @classmethod
+    def about_context(cls, request):
+        context, template = View.about_context(request)
+        news_articles = News.objects.filter(visibility='visible').order_by('-pub_date')
+        blog_articles = Blog.objects.filter(visibility='visible').order_by('-pub_date')
+        context.update({'news_articles': news_articles,
+                        'blog_articles': blog_articles})
+        return context, template
+
+
+class Plain(View):
+    @classmethod
+    def contact_context(cls, request):
+        raise Http404
+
+    @classmethod
+    def news(cls, request, **kwargs):
+        raise Http404
+
+    @classmethod
+    def blog(cls, request, **kwargs):
+        raise Http404
 
 
 def private_resources(request, path):
@@ -252,3 +354,7 @@ def private_resources(request, path):
 
     else:
         raise Http404()
+
+
+THEMES = {'plain-yogurt': Plain(),
+          'wide': Wide()}
