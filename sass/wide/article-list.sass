@@ -10,7 +10,7 @@ div#article-list-inner
     margin: 0 auto
     ul#article-contents-list
         list-style-type: none
-        margin-right: 2em
+        padding: 0 1.5em
     li.article-entry
         margin: 0 0 6em 0
     article 
@@ -23,7 +23,7 @@ div#article-list-inner
         div.article-content
             @include iframe-at-center()
             iframe
-                max-width: 85%
+                @include max-width(85%, 100%)
             margin: 2em 0
             line-height: 1.7em
         div.article-sup-bottom

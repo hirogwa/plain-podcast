@@ -16,6 +16,11 @@
         margin-left: $mobile
     @media screen and (min-width: $mobile-max)
         margin-left: $desktop
+@mixin max-width($desktop, $mobile)
+    @media screen and (max-width: $mobile-max)
+        max-width: $mobile
+    @media screen and (min-width: $mobile-max)
+        max-width: $desktop
 @mixin width($desktop, $mobile)
     @media screen and (max-width: $mobile-max)
         width: $mobile
