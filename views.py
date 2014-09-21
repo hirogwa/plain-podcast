@@ -183,18 +183,16 @@ class View:
         return {'private_media_prefix': settings.PRIVATE_FILE_URL}
 
     @classmethod
-    def _get_article_author_map(cls, base_articles):
+    def _get_article_author_map(cls, article_class_name):
         """
         given list of articles, returns the dictionary of authors to their article counts
         :param base_articles:
         :return:
         """
         authors = {}
-        print (base_articles.values('author').annotate(author_count=Count('author')))
-        for map_list in base_articles.values('author').annotate(author_count=Count('author')):
-            author = Presenter.objects.filter(id=map_list['author'])
-            if author:
-                authors[author[0]] = map_list['author_count']
+        author_counts = Presenter.objects.annotate(article_count=Count(article_class_name.lower()))
+        for author in author_counts:
+            authors[author] = author.article_count
         return authors
 
     @classmethod
@@ -229,7 +227,7 @@ class View:
 
         # other needs
         context.update({'all_articles': base_articles.order_by('-pub_date'),
-                        'authors': cls._get_article_author_map(base_articles),
+                        'authors': cls._get_article_author_map(base_articles.model.__name__),
                         })
         context.update(cls.get_common_context(request))
         return render(request, cls._template_file(template), context)
@@ -283,7 +281,7 @@ class View:
         context.update({'articles': articles,
                         'all_articles': sorted_articles,
                         'filters': filters,
-                        'authors': cls._get_article_author_map(base_articles),
+                        'authors': cls._get_article_author_map(base_articles.model.__name__),
                         'preceding_pages': preceding_pages,
                         'succeeding_pages': succeeding_pages})
         context.update(cls.get_common_context(request))
