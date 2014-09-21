@@ -17,7 +17,7 @@ $min-row-height: 320px
     .row-inner-column
         min-height: 1em
         display: inline-block
-        margin: 0 1em
+        margin: 0 0em
         .title-info
             font-size: 0.8em
         h2
@@ -40,6 +40,7 @@ $min-row-height: 320px
                     transition-duration: 0.2s
     ul
         list-style-type: none
+        margin-right: 2em
     ul.episode-list
         padding-left: 0
         margin-top: 3em
@@ -47,22 +48,25 @@ $min-row-height: 320px
         li
             @include width(49%, 100%)
         li.featured
-            display: block
-            width: 100%
-            margin: 2em auto
-            div.episode-icon
-                @include width(25%, 25%)
-                @include font-size(135%, 110%)
-                margin-right: 1.5em
-                a
-                    background-color: $cl-theme1-soft
-                a:hover
-                    background-color: $cl-theme1
-            div.episode-summary
-                font-size: 110%
-                @include width(73%, 73%)
-                div.episode-audio-player
-                    margin: 2em auto
+            div.episode-summary-featured
+                @include disappear-on-mobile()
+            @media screen and (min-width: $mobile-max)
+                display: block
+                width: 100%
+                margin: 2em auto
+                div.episode-icon
+                    max-width: 25%
+                    @include font-size(135%, 110%)
+                    margin-right: 1.5em
+                    a
+                        background-color: $cl-theme1-soft
+                    a:hover
+                        background-color: $cl-theme1
+                div.episode-summary
+                    font-size: 110%
+                    @include width(73%, 73%)
+                    div.episode-audio-player
+                        margin: 2em auto
     ul.article-list
         padding-left: 1em
         li

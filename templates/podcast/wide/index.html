@@ -69,13 +69,15 @@
               <div class="title-info">{{ episode.pub_date.date }}</div>
               <h3><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
               {% if forloop.counter0 == 0 %}
-              <div class="episode-description">
-                {{ episode.description|truncatechars:80 }}
-              </div>
-              <div class="episode-audio-player">
-                <audio controls>
-                  <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
-                </audio>
+              <div class="episode-summary-featured">
+                <div class="episode-description">
+                  {{ episode.description|truncatechars:80 }}
+                </div>
+                <div class="episode-audio-player">
+                  <audio controls>
+                    <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
+                  </audio>
+                </div>
               </div>
               {% endif %}
             </div>
