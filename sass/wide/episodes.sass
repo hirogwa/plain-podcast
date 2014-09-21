@@ -22,16 +22,16 @@ div#episode-single
     margin: 0 auto
     @include text-basic()
     div.episode-sup-top
-        max-width: $single-width-wide
+        @include width($single-width-wide, 100%)
         margin: 0 auto
         text-align: center
         font-size: 110%
         @include episode-icon-title($cl-theme2-soft, $cl-theme2)
     div.episode-audio-player
-        max-width: $single-width
+        @include width($single-width, 80%)
         margin: 3em auto
     div.episode-description, div.episode-footer
-        max-width: $single-width
+        @include width($single-width, 80%)
         margin: 3em auto
         @include social-buttons()
 
