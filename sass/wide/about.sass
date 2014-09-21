@@ -9,11 +9,14 @@ div#profile-page
             margin: 2em 0 5em
     div.profile-image-box
         @include background-imaged-div($image-dimension, $image-dimension)
-        float: left
+        @include center-on-mobile()
+        @media screen and (min-width: $mobile-max)
+            float: left
         border-radius: 50%
     div.profile-description-box
         @include text-basic()
-        margin-left: $image-dimension
+        @include margin-left($image-dimension, 0)
+        @include center-on-mobile()
         padding: 0 3em
         h2
             padding-left: 1.5em

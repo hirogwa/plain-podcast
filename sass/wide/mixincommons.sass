@@ -1,4 +1,26 @@
 @import constants
+@mixin font-size($desktop, $mobile)
+    @media screen and (max-width: $mobile-max)
+        font-size: $mobile
+    @media screen and (min-width: $mobile-max)
+        font-size: $desktop
+@mixin disappear-on-mobile()
+    @media screen and (max-width: $mobile-max)
+        display: none
+@mixin center-on-mobile()
+    @media screen and (max-width: $mobile-max)
+        display: block
+        margin: 0 auto
+@mixin margin-left($desktop, $mobile)
+    @media screen and (max-width: $mobile-max)
+        margin-left: $mobile
+    @media screen and (min-width: $mobile-max)
+        margin-left: $desktop
+@mixin width($desktop, $mobile)
+    @media screen and (max-width: $mobile-max)
+        width: $mobile
+    @media screen and (min-width: $mobile-max)
+        width: $desktop
 @mixin background-imaged-div($height, $width)
     height: $height 
     width: $width
@@ -12,10 +34,11 @@
     div.vertical-navigation-layout-main-contents
         margin-right: 2em
         display: inline-block
-        width: 65%
+        @include width(65%, 100%)
     div.vertical-navigation
         display: inline-block
-        width: 26%
+        @include width(26%, 0%)
+        @include disappear-on-mobile()
         float: right
         margin: auto 2em
         h2

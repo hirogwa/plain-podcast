@@ -3,6 +3,7 @@
  */
 @import constants
 @import mixincommons
+
 #header-site
     background-color: inherit
     background-repeat: no-repeat 
@@ -20,6 +21,11 @@
         #header-right, #header-left
             min-height: 1em
             width: 33%
+            @include width(33%, 100%)
+        #header-left
+            @include width(33%, 100%)
+        #header-right
+            @include center-on-mobile()
         #header-right #media-links
             padding: 1em
             #media-links-inner
@@ -44,14 +50,15 @@
             .rss
                 @include media-link-icon($rss-orange, $rss-orange-cloudy)
         #header-center
-            width: 30%
+            @include width(30%, 100%)
             margin: 0 auto
+            @include center-on-mobile()
             #header-title-clear
                 display: block
                 clear: both
             #title-lines
                 #title-logo
-                    max-width: 60%
+                    @include width(60%, 60%)
                     margin: 1em auto 0
                     h1
                         margin: 0
@@ -81,6 +88,8 @@
             padding: 0
             display: inline-block
             width: 16%
+            @media screen and (max-width: $mobile-max)
+                width: 40%
             a
                 margin: 0.2em 0
                 padding: 0.3em 0em 
