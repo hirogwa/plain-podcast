@@ -26,6 +26,13 @@
         width: $mobile
     @media screen and (min-width: $mobile-max)
         width: $desktop
+@mixin padding-side($desktop, $mobile)
+    @media screen and (max-width: $mobile-max)
+        padding-right: $mobile
+        padding-left: $mobile
+    @media screen and (min-width: $mobile-max)
+        padding-right: $desktop
+        padding-left: $desktop
 @mixin background-imaged-div($height, $width)
     height: $height 
     width: $width
@@ -34,7 +41,7 @@
 @mixin vertical-navigation-layout()
     div.vertical-navigation-layout
         max-width: $main-column-width
-        padding: 0 $main-column-padding-horizontal
+        @include padding-side($main-column-padding-horizontal, 0.5em)
         margin: 0 auto
     div.vertical-navigation-layout-main-contents
         display: inline-block
