@@ -189,8 +189,12 @@ class View:
         :param base_articles:
         :return:
         """
+        filter_kwarg = {article_class_name.lower() + '__visibility': 'visible'}
+        author_counts = Presenter.objects \
+            .filter(**filter_kwarg) \
+            .annotate(article_count=Count(article_class_name.lower()))
+
         authors = {}
-        author_counts = Presenter.objects.annotate(article_count=Count(article_class_name.lower()))
         for author in author_counts:
             authors[author] = author.article_count
         return authors
