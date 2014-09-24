@@ -43,6 +43,7 @@ class Podcast(PodcastModel):
     facebook_app_id = models.CharField(max_length=30, blank=True)
     google_analytics_id = models.CharField(max_length=50, blank=True)
     google_contact_iframe = models.TextField(blank=True)
+    disqus_shortname = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self):
         return self.name
