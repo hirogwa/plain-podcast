@@ -1,5 +1,4 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseNotModified
@@ -219,15 +218,8 @@ class View:
         context['articles'] = [target_article]
 
         # previous and next article
-        next_item = None
-        prev_item = None
-        try:
-            next_item = target_article.get_next_by_pub_date
-            prev_item = target_article.get_previous_by_pub_date
-        except ObjectDoesNotExist:
-            pass
-        context['next_item'] = next_item
-        context['prev_item'] = prev_item
+        context['next_item'] = target_article.get_next
+        context['prev_item'] = target_article.get_previous
 
         # other needs
         context.update({'all_articles': base_articles.order_by('-pub_date'),

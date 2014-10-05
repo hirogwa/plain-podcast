@@ -2,6 +2,7 @@ import datetime
 import mimetypes
 import os.path
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from mutagen.mp3 import MP3
@@ -204,6 +205,18 @@ class Article(PodcastModel):
 
     def get_absolute_url(self):
         return ('/%s/%s/%d' % (APP_LABEL, self.__class__.__name__, self.id)).lower()
+
+    def get_next(self):
+        try:
+            return self.get_next_by_pub_date(visibility='visible')
+        except ObjectDoesNotExist:
+            return None
+
+    def get_previous(self):
+        try:
+            return self.get_previous_by_pub_date(visibility='visible')
+        except ObjectDoesNotExist:
+            return None
 
     class Meta:
         abstract = True
