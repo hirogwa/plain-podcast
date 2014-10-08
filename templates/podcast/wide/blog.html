@@ -4,7 +4,7 @@
 {% if podcast.disqus_shortname %}
 <div id="comment_area_disqus">
   {% with idstr=article.id|stringformat:"d" %}
-  {% include "podcast/disqus_snippet.html" with identifier='blog/'|add:article.slug url='/podcast/blog/'|add:idstr title=article.title %}
+  {% include "podcast/disqus_snippet.html" with identifier_base='blog/' identifier=article.id url='/podcast/blog/'|add:idstr title=article.title %}
   {% endwith %}
 </div>
 {% else %}
