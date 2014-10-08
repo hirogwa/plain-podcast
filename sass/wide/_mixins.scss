@@ -1,39 +1,37 @@
-// Mixins
+// Selected mixins from bootstrap
 // --------------------------------------------------
 
-// Utilities
-@import "mixins/hide-text";
-@import "mixins/opacity";
-@import "mixins/image";
-@import "mixins/labels";
-@import "mixins/reset-filter";
-@import "mixins/resize";
-@import "mixins/responsive-visibility";
-@import "mixins/size";
-@import "mixins/tab-focus";
-@import "mixins/text-emphasis";
-@import "mixins/text-overflow";
-@import "mixins/vendor-prefixes";
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}
+// Responsive image
+//
+// Keep images from scaling beyond the width of their parents.
+@mixin img-responsive($display: block) {
+  display: $display;
+  width: 100% \9; // Force IE10 and below to size SVG images correctly
+  max-width: 100%; // Part 1: Set a maximum relative to the parent
+  height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+}
+// Opacity
 
-// Components
-@import "mixins/alerts";
-@import "mixins/buttons";
-@import "mixins/panels";
-@import "mixins/pagination";
-@import "mixins/list-group";
-@import "mixins/nav-divider";
-@import "mixins/forms";
-@import "mixins/progress-bar";
-@import "mixins/table-row";
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  // IE8 filter
+  $opacity-ie: ($opacity * 100);
+  filter: #{alpha(opacity=$opacity-ie)};
+}
+// Horizontal gradient, from left to right
+//
+// Creates two color stops, start and end, by specifying a color and position for each color stop.
+// Color stops are not available in IE9 and below.
+@mixin gradient-horizontal($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+  background-image: -webkit-linear-gradient(left, $start-color $start-percent, $end-color $end-percent); // Safari 5.1-6, Chrome 10+
+  background-image: -o-linear-gradient(left, $start-color $start-percent, $end-color $end-percent); // Opera 12
+  background-image: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=1); // IE9 and down
+}
 
-// Skins
-@import "mixins/background-variant";
-@import "mixins/border-radius";
-@import "mixins/gradients";
-
-// Layout
-@import "mixins/clearfix";
-@import "mixins/center-block";
-@import "mixins/nav-vertical-align";
-@import "mixins/grid-framework";
-@import "mixins/grid";
