@@ -1,0 +1,30 @@
+@import constants
+@import mixincommons
+$image-dimension: 250px
+@include vertical-navigation-layout()
+div#profile-page
+    ul#presenter-list
+        list-style-type: none
+        margin-right: 2em
+        li
+            margin: 2em 0 5em
+    div.profile-image-box
+        @include background-imaged-div($image-dimension, $image-dimension)
+        @include center-on-mobile()
+        @media screen and (min-width: $mobile-max)
+            float: left
+        border-radius: 50%
+    div.profile-description-box
+        @include text-basic()
+        @include margin-left($image-dimension, 0)
+        @include center-on-mobile()
+        @media screen and (min-width: $mobile-max)
+            padding-left: 3em
+        h2
+            padding-left: 1.5em
+            border-left: solid 4px $cl-theme2
+        div
+            margin: 2em 0
+    div#twitter-timeline-inner
+        max-width: 85%
+        margin: 3em auto -3em

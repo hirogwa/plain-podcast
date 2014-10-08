@@ -1,0 +1,41 @@
+@import mixincommons
+@import constants
+$single-width-wide: 80%
+$single-width: 55%
+div#all-episode-list
+    max-width: $main-column-width
+    padding: 0 $main-column-padding-horizontal
+    margin: 0 auto
+    div#all-episode-list-inner
+        margin: 0 auto
+ul.episode-list
+    padding-left: 0
+    margin-top: 3em
+    @include episode-li($cl-theme2-soft, $cl-theme2)
+    li
+        @include width(33%, 100%)
+        h3
+            font-size: 1em
+
+div#episode-single
+    max-width: $main-column-width
+    margin: 0 auto
+    @include text-basic()
+    div.episode-sup-top
+        @include width($single-width-wide, 100%)
+        margin: 0 auto
+        text-align: center
+        font-size: 110%
+        @include episode-icon-title($cl-theme2-soft, $cl-theme2)
+    div.episode-audio-player
+        @include width($single-width, 80%)
+        margin: 3em auto
+    div.episode-description, div.episode-footer
+        @include width($single-width, 80%)
+        margin: 3em auto
+        @include social-buttons()
+
+div.episode-comment
+    margin-top: 2em
+    display: block
+    text-align: center

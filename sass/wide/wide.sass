@@ -1,0 +1,47 @@
+@charset "UTF-8"
+// bootstrap
+@import variables
+@import mixins
+@import carousel
+// original
+@import constants
+@import pane-layout
+@import header-pane
+@import footer-pane
+@import home
+@import article-list
+@import contact
+@import episodes
+@import about
+
+/*
+ * Common themes like color and font.
+ */
+
+body
+    font-family: $font-kaku
+    background-color: #fff
+    background-repeat: repeat 
+    color: $cl-soft-text
+    font-size: 80%
+
+    a
+        color: inherit
+        text-decoration: none
+    a:hover
+        text-decoration: underline
+    h1,h2,h3
+        color: $cl-main-text
+    h1,h2
+        letter-spacing: 0.2em
+    h3,h4,h5,h6
+        letter-spacing: 0.1em
+    img.logo-stamp
+        max-width: $stamp-size
+        max-height: $stamp-size
+    div.notice-no-content
+        margin: $stamp-size auto
+        max-width: $stamp-size
+        p
+            max-width: 100%
+

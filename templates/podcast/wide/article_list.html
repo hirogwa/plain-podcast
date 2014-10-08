@@ -1,0 +1,113 @@
+{% extends "podcast/wide/base.html" %}
+{% block page-title %}
+<title>{{ podcast.name }}</title>
+{% endblock %}
+
+{% block contents %}
+<div id="contents-article" class="vertical-navigation-layout">
+  <div id="article-list" class="vertical-navigation-layout-main-contents">
+    <div id="article-list-inner">
+      {% if filters %}
+        <div id="article-filter">
+          <span>filter: </span>
+          {% for k,v in filters.items %}
+          <span>{{ k }}={{ v }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if articles %}
+        <ul id="article-contents-list">
+        {% for article in articles %}
+          <li class="article-entry">
+            <article>
+              <div class="article-sup-top">
+                <h2><a href="{% block article_url %}{% endblock %}">{{ article.title }}</a></h2>
+                  {{ article.pub_date.date }} by {{ article.author.name }}
+              </div>
+              <div class="article-content">
+                {{ article.content|safe }}
+              </div>
+              <div class="article-sup-bottom">
+                <div class="article-social-buttons">
+                  <div class="fb-like fb-like-button social-button" data-href="{% block article_url_fb %}{% endblock %}" data-layout="button_count" data-width="30px" data-action="like" data-show-faces="false" data-share="true"></div>
+                  <div class="twitter-share-button social-button">
+                    <a href="https://twitter.com/share" class="twitter-share-button"
+                       data-url="http://{{ host }}{% block article_url_tw %}{% endblock %}" data-text="{{ article.title }}" data-hashtags="{{ podcast.name }}">Tweet</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <div class="article-footer">
+              {% block article_footer %}
+              {% endblock %}
+            </div>
+          </li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        {% load static %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+      {% endif %}
+      {% block pagination %}
+      <div id="page-control-panel">
+        {% if articles.has_previous %}
+          <span  class="page-control">
+            <a href="?page={{ articles.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a>
+          </span>
+          {% for num in preceding_pages %}
+            <span class="page-control">
+              <a href="?page={{ num }}">{{ num }}</a>
+            </span>
+          {% endfor %}
+        {% endif %}
+        <span id="current-page" class="page-control">{{ articles.number }}</span>
+        {% if articles.has_next %}
+          {% for num in succeeding_pages %}
+            <span class="page-control">
+              <a href="?page={{ num }}">{{ num }}</a>
+            </span>
+          {% endfor %}
+          <span  class="page-control">
+            <a href="?page={{ articles.next_page_number }}"><i class="fa fa-angle-double-right"></i></a>
+          </span>
+        {% endif %}
+      </div>
+      {% endblock %}
+    </div>
+  </div>
+  <div id="article-navigation" class="vertical-navigation">
+    <div id="article-navigation-contents">
+      <div id="recent-article-list" class="navigation-section">
+        <h2>recent</h2>
+        {% if articles %}
+          <ul class="article-navigation-list">
+          {% for article in all_articles|slice:":5" %}
+            <li class="article-navigation-entry">
+              <h3><a href="{% block article_url_nav %}{% endblock %}">{{ article.title }}</a></h3>
+              <div class="article-information">
+                {{ article.pub_date.date }} by {{ article.author.name }}
+              </div>
+            </li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div id="author-list" class="navigation-section">
+        <h2>author</h2>
+        <ul class="article-navigation-list">
+        {% for author, count in authors.items %}
+        <li class="article-navigation-entry">
+          <span class="author-name"><a href="{% block author_url %}{% endblock %}">{{ author.name }}</a></span>&nbsp;
+          <span class="author-count">({{ count }})</span>
+        </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="vertical-navigation-layout-clear"></div>
+</div>
+{% endblock %}

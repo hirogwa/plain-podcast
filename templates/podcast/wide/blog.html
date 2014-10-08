@@ -1,0 +1,28 @@
+{% extends "podcast/wide/blog_list.html" %}
+
+{% block article_footer %}
+{% if podcast.disqus_shortname %}
+<div id="comment_area_disqus">
+  {% with idstr=article.id|stringformat:"d" %}
+  {% include "podcast/disqus_snippet.html" with identifier='blog/'|add:article.slug url='/podcast/blog/'|add:idstr title=article.title %}
+  {% endwith %}
+</div>
+{% else %}
+<div class="fb-comments" data-href="{{ host }}{% url 'podcast:blog' article.id %}" data-numposts="5" data-colorscheme="light"></div>
+{% endif %}
+{% endblock %}
+
+{% block pagination %}
+<div id="page-control-panel">
+  {% if prev_item %}
+  <span id="single-page-control-prev" class="page-control single-page-control">
+    <a href="{{ prev_item.get_absolute_url }}"><i class="fa fa-arrow-left"></i>{{ prev_item.title }}</a>
+  </span>
+  {% endif %}
+  {% if next_item %}
+  <span id="single-page-control-next" class="page-control single-page-control">
+    <a href="{{ next_item.get_absolute_url }}">{{ next_item.title }}<i class="fa fa-arrow-right"></i></a>
+  </span>
+  {% endif %}
+</div>
+{% endblock %}

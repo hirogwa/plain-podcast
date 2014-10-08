@@ -1,0 +1,157 @@
+{% extends "podcast/wide/base.html" %}
+
+{% block page-title %}
+<title>{{ podcast.name }}</title>
+{% endblock %}
+
+{% block index_active %}active{% endblock %}
+
+{% block contents %}
+{% load static %}
+<div id="main-area-home">
+  <div id="promotion" class="row">
+    {% if promotions %}
+    <div id="promotion-inner">
+      <div id="carousel-promotion" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          {% for promotion in promotions %}
+          <li data-target="#carousel-promotion" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %}active{% endif %}"></li>
+          {% endfor %}
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          {% for promotion in promotions %}
+            <div class="{% if forloop.counter0 == 0 %}item active{% else %}item{% endif %}"
+                 style="background-image: url('{% get_media_prefix %}{{ promotion.image }}');">
+              <div class="carousel-screen carousel-screen-{{ promotion.caption_location }}">
+                <div class="carousel-caption carousel-caption-{{ promotion.caption_location }}">
+                  {{ promotion.caption|safe }}
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      <!-- Controls -->
+      <a class="left carousel-control" href="#carousel-promotion" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="right carousel-control" href="#carousel-promotion" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div id="episode-row" class="row regular-row">
+    <div id="twitter-timeline" class="row-inner-column row-inner-column-right">
+      <div id="twitter-timeline-inner">
+        <a class="twitter-timeline"
+           href="https://twitter.com/hashtag/{{ podcast.twitter_hashtag }}"
+           data-border-color=""
+           data-chrome=""
+           data-widget-id="{{ podcast.twitter_timeline_widget_id }}">#{{ podcast.twitter_id }} Tweets</a>
+      </div>
+    </div>
+    <div id="episode-column" class="row-inner-column">
+      <div id="latest-episodes">
+        <h2>latest episodes</h2>
+        {% if episodes_recent %}
+        <ul class="episode-list">
+          {% for episode in episodes_recent %}
+          <li class="{% if forloop.counter0 == 0 %}featured{% endif %}">
+            <div class="episode-icon">
+              <a href="{% url 'podcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
+            </div>
+            <div class="episode-summary">
+              <div class="title-info">{{ episode.pub_date.date }}</div>
+              <h3><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
+              {% if forloop.counter0 == 0 %}
+              <div class="episode-summary-featured">
+                <div class="episode-description">
+                  {{ episode.description|truncatechars:80 }}
+                </div>
+                <div class="episode-audio-player">
+                  <audio controls>
+                    <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
+                  </audio>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="see-all">
+          <div class="see-all-button">
+            <a href="{% url 'podcast:episodes' %}">VIEW ALL</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div id="blog-row" class="row regular-row">
+    <div class="row-inner-column row-inner-column-left">
+      <div id="news">
+        <h2>news</h2>
+        {% if news_recent %}
+        <ul class="article-list">
+          {% for news in news_recent %}
+          <li>
+            <div class="title-info">{{ news.pub_date.date }} by {{ news.author.name }}</div>
+            <h3><a href="{% url 'podcast:news' news.id %}">{{ news.title }}</a></h3>
+            <p>{{ news.content|striptags|truncatechars:100 }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="see-all">
+          <div class="see-all-button">
+            <a href="{% url 'podcast:news' %}">VIEW ALL</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row-inner-column row-inner-column-right">
+      <div id="recent-blog-entries">
+        <h2>blog</h2>
+        {% if blog_recent %}
+        <ul class="article-list">
+          {% for entry in blog_recent %}
+          <li>
+            <div class="title-info">{{ entry.pub_date.date }} by {{ entry.author.name }}</div>
+            <h3><a href="{% url 'podcast:blog' entry.id %}">{{ entry.title }}</a></h3>
+            <p>{{ entry.content|striptags|truncatechars:100 }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="see-all">
+          <div class="see-all-button">
+            <a href="{% url 'podcast:blog' %}">VIEW ALL</a>
+          </div>
+        </div>
+        {% else %}
+        <div class="notice-no-content">
+          <img class="logo-stamp" src="{% get_media_prefix %}{{ podcast.logo_stamp }}" alt=""/>
+          <p>Stay tuned!</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>$('.carousel').carousel()</script>
+{% endblock %}

@@ -1,19 +1,35 @@
+import datetime
 import mimetypes
 import os.path
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from mutagen.mp3 import MP3
 from storage import PrivateStorage
 
+APP_LABEL = 'podcast'
 
-APP_NAME = 'podcast'
+
+class PodcastModel(models.Model):
+    class Meta:
+        abstract = True
+        app_label = APP_LABEL
 
 
-class Podcast(models.Model):
+class Theme(PodcastModel):
+    name = models.CharField(max_length=100)
+    notes = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Podcast(PodcastModel):
     name = models.CharField(max_length=200)
     tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
+    theme = models.ForeignKey(Theme)
     media_url = models.URLField()
     app_root_url = models.URLField()
     favicon = models.ImageField(upload_to='images', blank=True)
@@ -21,25 +37,25 @@ class Podcast(models.Model):
     logo_stamp = models.ImageField(upload_to='images', blank=True)
     itunes_url = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
+    instagram_id = models.CharField(max_length=100, blank=True)
     twitter_id = models.CharField(max_length=100, blank=True)
     twitter_hashtag = models.CharField(max_length=100, blank=True)
     twitter_timeline_widget_id = models.CharField(max_length=30, blank=True)
     facebook_app_id = models.CharField(max_length=30, blank=True)
     google_analytics_id = models.CharField(max_length=50, blank=True)
+    google_contact_iframe = models.TextField(blank=True)
+    disqus_shortname = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self):
         return self.name
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class Episode(models.Model):
+class Episode(PodcastModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True)
     description = models.TextField(blank=True)
     show_notes = models.TextField(blank=True)
-    audio_file = models.FileField(upload_to='episode', blank=True)
+    audio_file = models.FileField(upload_to='episode')
     pub_date = models.DateTimeField('published_time')
 
     def __unicode__(self):
@@ -60,13 +76,10 @@ class Episode(models.Model):
         return mimetypes.guess_type(self.audio_file.name)[0]
 
     def get_absolute_url(self):
-        return '/podcast/episode/%s' % self.slug
-
-    class Meta:
-        app_label = APP_NAME
+        return '/%s/episode/%s' % (APP_LABEL, self.slug)
 
 
-class ScheduledEpisode(models.Model):
+class ScheduledEpisode(PodcastModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True)
     slug_base = models.CharField(max_length=100, blank=True)
@@ -87,11 +100,8 @@ class ScheduledEpisode(models.Model):
                 self.slug = slugify(self.slug_base)
         super(ScheduledEpisode, self).save(*args, **kwargs)
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class Presenter(models.Model):
+class Presenter(PodcastModel):
     name = models.CharField(max_length=100)
     introduction = models.TextField()
     thumbnail_square = models.ImageField(upload_to='images', blank=True)
@@ -103,12 +113,8 @@ class Presenter(models.Model):
                                   choices=[('visible', 'visible'), ('hidden', 'hidden')],
                                   default='visible')
 
-    class Meta:
-        app_label = APP_NAME
-        ordering = ['display_order']
-
     def __unicode__(self):
-        return '[%s] %s' % (self.visibility, self.name)
+        return self.name
 
     def save(self, *args, **kwargs):
         if self.display_order is None:
@@ -116,7 +122,7 @@ class Presenter(models.Model):
         super(Presenter, self).save(*args, **kwargs)
 
 
-class Statement(models.Model):
+class Statement(PodcastModel):
     unique_name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     statement = models.TextField()
@@ -124,11 +130,8 @@ class Statement(models.Model):
     def __unicode__(self):
         return self.unique_name
 
-    class Meta:
-        app_label = APP_NAME
 
-
-class ITunesInfo(models.Model):
+class ITunesInfo(PodcastModel):
     """
     channel(podcast global, not episode-to-episode) attributes passed to iTunes through the "itunes:" tags in RSS
     """
@@ -149,5 +152,81 @@ class ITunesInfo(models.Model):
     def __unicode__(self):
         return 'iTunesInfo'
 
+
+class Promotion(PodcastModel):
+    name = models.CharField(max_length=50)
+    active = models.CharField(max_length=10,
+                              choices=[('active', 'active'),
+                                       ('inactive', 'inactive')],
+                              default='active')
+    image = models.ImageField(upload_to='images', blank=True)
+    caption = models.TextField(blank=True)
+    caption_location = models.CharField(max_length=50,
+                                        choices=[('BL', 'bottom-left'),
+                                                 ('BR', 'bottom-right')],
+                                        default='BL')
+    display_order = models.IntegerField(default=99)
+    input_datetime = models.DateTimeField(blank=True)
+    update_datetime = models.DateTimeField(blank=True)
+
+    def save(self, *args, **kwargs):
+        if (not Promotion.objects.filter(id=self.id)) & (not self.input_datetime):
+            self.input_datetime = datetime.datetime.now()
+        self.update_datetime = datetime.datetime.now()
+        super(Promotion, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.name
+
     class Meta:
-        app_label = APP_NAME
+        ordering = ['display_order', '-input_datetime']
+
+
+class Article(PodcastModel):
+    title = models.CharField(max_length=100)
+    visibility = models.CharField(max_length=50,
+                                  choices=[('visible', 'visible'), ('hidden', 'hidden')],
+                                  default='visible')
+    author = models.ForeignKey(Presenter)
+    slug = models.SlugField(blank=True)
+    content = models.TextField()
+    pub_date = models.DateTimeField('published_time', blank=True)
+
+    def save(self, *args, **kwargs):
+        if (not self.__class__.objects.filter(id=self.id)) & (not self.pub_date):
+            self.pub_date = datetime.datetime.now()
+            date = self.pub_date
+            if self.slug == '':
+                self.slug = '%i-%02d-%02d-%02d%02d' % (date.year, date.month, date.day, date.hour, date.minute)
+        super(Article, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return ('/%s/%s/%d' % (APP_LABEL, self.__class__.__name__, self.id)).lower()
+
+    def get_next(self):
+        try:
+            return self.get_next_by_pub_date(visibility='visible')
+        except ObjectDoesNotExist:
+            return None
+
+    def get_previous(self):
+        try:
+            return self.get_previous_by_pub_date(visibility='visible')
+        except ObjectDoesNotExist:
+            return None
+
+    class Meta:
+        abstract = True
+        app_label = APP_LABEL
+        ordering = ['-pub_date']
+
+
+class Blog(Article):
+    pass
+
+
+class News(Article):
+    pass

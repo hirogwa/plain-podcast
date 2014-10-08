@@ -1,0 +1,49 @@
+{% extends "podcast/wide/base.html" %}
+
+{% block page-title %}
+<title>{{ podcast.name }} - {{ episode.title }}</title>
+{% endblock %}
+{% block episode_active %}active{% endblock %}
+
+{% block contents %}
+{% load static %}
+<div id="episode-single">
+  <div class="episode-sup-top">
+    <div class="episode-icon">
+      <a href="{% url 'podcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
+    </div>
+    <div class="episode-summary">
+      <h2>
+        <a href="{% block episode_url %}{% url 'podcast:episode' episode.slug %}{% endblock %}">{{ episode.title }}</a>
+      </h2>
+      <span>{{ episode.pub_date.date }}</span>
+    </div>
+  </div>
+  <div class="episode-audio-player">
+    <audio controls>
+      <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
+    </audio>
+  </div>
+  <div class="episode-description">
+      <p>{{ episode.description }}</p>
+      <h3>Show Notes</h3>
+      <p>{{ episode.show_notes|safe }}</p>
+  </div>
+  <div class="episode-footer">
+    <div class="episode-social-buttons">
+      <div class="fb-like social-button" data-href="{% url 'podcast:episode' episode.slug %}" data-layout="button_count" data-width="30px" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="social-button">
+        <a href="https://twitter.com/share" class="twitter-share-button"
+         data-url="http://{{ host }}{% url 'podcast:episode' episode.slug %}" data-text="{{ episode.title }}" data-hashtags="{{ podcast.name }}">Tweet</a>
+      </div>
+    </div>
+    {% if podcast.disqus_shortname %}
+    <div id="comment_area_disqus" class="episode-comment">
+      {% include "podcast/disqus_snippet.html" with identifier='episode/'|add:episode.slug url='/podcast/episode/'|add:episode.slug title=episode.title %}
+    </div>
+    {% else %}
+    <div class="fb-comments episode-comment" data-href="{{ host }}{% url 'podcast:episode' episode.slug %}" data-numposts="5" data-colorscheme="light"></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

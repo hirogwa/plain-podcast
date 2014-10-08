@@ -1,0 +1,58 @@
+@include vertical-navigation-layout()
+div#article-filter
+    padding-left: 2em
+    margin-bottom: 2.5em
+    font-style: italic
+    font-size: 110%
+    letter-spacing: 0.1em
+    text-transform: uppercase
+div#article-list-inner
+    margin: 0 auto
+    ul#article-contents-list
+        list-style-type: none
+        padding: 0 1.5em
+    li.article-entry
+        margin: 0 0 6em 0
+    article 
+        @include text-basic()
+        div.article-sup-top
+            padding-left: 2em
+            border-left: solid 4px $cl-theme2
+            h2
+                margin-bottom: 0.2em
+        div.article-content
+            @include iframe-at-center()
+            iframe
+                @include max-width(85%, 100%)
+            margin: 2em 0
+            line-height: 1.7em
+        div.article-sup-bottom
+            @include social-buttons()
+    div.article-footer
+        margin-top: 2em
+        text-align: center
+#page-control-panel
+    margin: 1em 0
+    text-align: center
+    span#current-page
+        @include control-button($cl-theme1-soft)
+    span.page-control
+        margin: 0 0.1em
+        a
+            @include control-button($cl-theme2-soft)
+            transition-duration: 0.2s
+        a:hover
+            text-decoration: none
+            background: $cl-theme2
+            transition-duration: 0.2s
+    span.single-page-control
+        @include max-width(42%, 35%)
+        i.fa
+            margin: 0 0.5em
+    span#single-page-control-prev
+        float: left
+        @include margin-left(2em, 1em)
+    span#single-page-control-next
+        float: right
+        @include margin-right(2em, 1em)
+

@@ -1,0 +1,107 @@
+/*
+ * Defines the look and feel of the header pane.
+ */
+@import constants
+@import mixincommons
+
+#header-site
+    background-color: inherit
+    background-repeat: no-repeat 
+    background-position: center center
+    background-size: cover
+    color: $cl-main-text
+
+    #header-site-inner
+        max-width: $main-column-width
+        margin: auto
+        padding: 1em 0em 0
+        letter-spacing: 0.2em
+        .header-column
+            display: inline-block
+        #header-right, #header-left
+            min-height: 1em
+            width: 33%
+            @include width(33%, 100%)
+        #header-left
+            @include width(33%, 100%)
+        #header-right
+            @include center-on-mobile()
+        #header-right #media-links
+            padding: 1em
+            #media-links-inner
+                text-align: center
+                margin: 0 0 auto
+            .media-links-row
+                margin: 0 auto
+
+            .media-links-icon
+                display: inline-block
+                margin: 0
+            a
+                @include round-fa-anchor(1em, #fff, 0.5em)
+            .facebook
+                @include media-link-icon($facebook-blue, $facebook-blue-cloudy)
+            .twitter
+                @include media-link-icon($twitter-blue, $twitter-blue-cloudy)
+            .instagram
+                @include media-link-icon($instagram-blue, $instagram-blue-cloudy)
+            .apple
+                @include media-link-icon($apple-silver, $apple-silver-cloudy)
+            .rss
+                @include media-link-icon($rss-orange, $rss-orange-cloudy)
+        #header-center
+            @include width(30%, 100%)
+            margin: 0 auto
+            @include center-on-mobile()
+            #header-title-clear
+                display: block
+                clear: both
+            #title-lines
+                #title-logo
+                    @include width(60%, 60%)
+                    margin: 1em auto 0
+                    h1
+                        margin: 0
+                    img
+                        max-width: 100%
+                #title-tagline
+                    text-align: center
+                    margin: 0
+                    font-size: 1em
+                    color: $cl-soft-text
+                    p
+                        margin: 0
+    #header-navigation
+        margin: 0.5em auto 1.5em
+        text-align: center
+        text-transform: uppercase
+        width: 100%
+        .fa
+            display: inline
+            margin-right: 0.5em
+        ul
+            list-style: none outside none
+            margin: 0 auto
+            padding: 0
+        li
+            list-style: none
+            padding: 0
+            display: inline-block
+            width: 16%
+            @media screen and (max-width: $mobile-max)
+                width: 40%
+            a
+                margin: 0.2em 0
+                padding: 0.3em 0em 
+                color: inherit
+                text-align: center
+                background: $cl-inactive
+                display: block
+                transition-duration: 0.2s
+            a:hover
+                transition-duration: 0.2s
+                text-decoration: none
+                color: $cl-theme1
+        .active a
+            color: $cl-theme1
+

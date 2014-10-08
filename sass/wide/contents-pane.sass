@@ -1,0 +1,93 @@
+/*
+ * Defines the look and feel of the contents pane.
+ */
+$heading-color: #444
+$text-color: #888
+#contents
+    padding: 0 2em 1em
+
+    .social-share
+        padding: 20px
+
+    .twitter-share
+        padding: 20px
+        background-color: black
+
+    .content-box
+        margin-top: 2em
+        margin-bottom: 15px
+        padding-bottom: 15px
+        background-color: rgba(255,250,240,0)
+        position: relative
+
+        h2
+            color: $heading-color
+            margin: 0
+            font-size: 120%
+            letter-spacing: 0.1em
+            border-left: 4px solid rgba(255, 102, 102, 0.85)
+
+            a
+                color: inherit
+                display: block
+                padding: 0.5em 1.5em
+                transition-duration: 0.2s
+
+            a:hover
+                background: rgba(255, 102, 102, 0.85)
+                color: #fff
+                transition-duration: 0.2s 
+
+        .audio-player
+            padding: 20px 25px 0
+
+            audio
+                width: 100%
+
+        .content-box-body
+            padding: 0.5em 0
+            font-size: 90%
+            color: $text-color
+            line-height: 170%
+
+            a
+                color: #222
+            a:hover
+                text-decoration: underline
+
+            h3
+                color: $heading-color
+                letter-spacing: 0.2em
+                border-bottom: solid 1px #ccc
+
+            .date
+                margin: 0
+                padding-right: 2em
+                text-align: right
+                font-style: italic
+                font-size: 0.9em
+                font-weight: bold
+
+        .episode-footer
+            margin-bottom: 10px
+            padding: 10px 25px
+
+            .episode-footer-inner
+                background-color: #eee
+                padding: 10px 15px
+                min-height: 21px
+
+                .episode-twitter-share-button
+                    box-sizing: border-box
+                    width: 15%
+                    float: left
+
+                .episode-fb-like-button
+                    box-sizing: border-box
+                    width: 35%
+                    float: left
+                    bottom: 5px
+
+                .episode-footer-clear
+                    clear: left
+                    display: block
