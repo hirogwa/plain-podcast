@@ -180,6 +180,7 @@ class Promotion(PodcastModel):
 
     class Meta:
         ordering = ['display_order', '-input_datetime']
+        app_label = APP_LABEL
 
 
 class Article(PodcastModel):
