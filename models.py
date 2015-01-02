@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from mutagen.mp3 import MP3
-from storage import PrivateStorage
+from plainpodcast.storage import PrivateStorage
 
 APP_LABEL = 'podcast'
 

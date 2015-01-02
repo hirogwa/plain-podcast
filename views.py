@@ -4,10 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseNotModified
 from django.utils.http import http_date
 from django.views.static import was_modified_since
-from models import *
+from plainpodcast.models import *
 import mimetypes
 import os.path
-import settings
+import plainpodcast.settings as settings
 import stat
 
 ARTICLE_LIST_SIZE = 5

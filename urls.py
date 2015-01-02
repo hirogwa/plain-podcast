@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, url
-from feed import AllEpisodesFeed
-import settings
-import views
+from plainpodcast.feed import AllEpisodesFeed
+import plainpodcast.settings as settings
+import plainpodcast.views as views
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),

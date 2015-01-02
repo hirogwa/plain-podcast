@@ -1,5 +1,5 @@
 from django.core.files.storage import FileSystemStorage
-import settings
+import plainpodcast.settings as settings
 
 
 class PrivateStorage(FileSystemStorage):
