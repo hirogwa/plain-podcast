@@ -1,4 +1,4 @@
-{% extends "podcast/wide/base.html" %}
+{% extends "plainpodcast/wide/base.html" %}
 
 {% block page-title %}
 <title>{{ podcast.name }}</title>
@@ -63,11 +63,11 @@
           {% for episode in episodes_recent %}
           <li class="{% if forloop.counter0 == 0 %}featured{% endif %}">
             <div class="episode-icon">
-              <a href="{% url 'podcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
+              <a href="{% url 'plainpodcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
             </div>
             <div class="episode-summary">
               <div class="title-info">{{ episode.pub_date.date }}</div>
-              <h3><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
+              <h3><a href="{% url 'plainpodcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
               {% if forloop.counter0 == 0 %}
               <div class="episode-summary-featured">
                 <div class="episode-description">
@@ -86,7 +86,7 @@
         </ul>
         <div class="see-all">
           <div class="see-all-button">
-            <a href="{% url 'podcast:episodes' %}">VIEW ALL</a>
+            <a href="{% url 'plainpodcast:episodes' %}">VIEW ALL</a>
           </div>
         </div>
         {% else %}
@@ -107,14 +107,14 @@
           {% for news in news_recent %}
           <li>
             <div class="title-info">{{ news.pub_date.date }} by {{ news.author.name }}</div>
-            <h3><a href="{% url 'podcast:news' news.id %}">{{ news.title }}</a></h3>
+            <h3><a href="{% url 'plainpodcast:news' news.id %}">{{ news.title }}</a></h3>
             <p>{{ news.content|striptags|truncatechars:100 }}</p>
           </li>
           {% endfor %}
         </ul>
         <div class="see-all">
           <div class="see-all-button">
-            <a href="{% url 'podcast:news' %}">VIEW ALL</a>
+            <a href="{% url 'plainpodcast:news' %}">VIEW ALL</a>
           </div>
         </div>
         {% else %}
@@ -133,14 +133,14 @@
           {% for entry in blog_recent %}
           <li>
             <div class="title-info">{{ entry.pub_date.date }} by {{ entry.author.name }}</div>
-            <h3><a href="{% url 'podcast:blog' entry.id %}">{{ entry.title }}</a></h3>
+            <h3><a href="{% url 'plainpodcast:blog' entry.id %}">{{ entry.title }}</a></h3>
             <p>{{ entry.content|striptags|truncatechars:100 }}</p>
           </li>
           {% endfor %}
         </ul>
         <div class="see-all">
           <div class="see-all-button">
-            <a href="{% url 'podcast:blog' %}">VIEW ALL</a>
+            <a href="{% url 'plainpodcast:blog' %}">VIEW ALL</a>
           </div>
         </div>
         {% else %}

@@ -1,4 +1,4 @@
-{% extends "podcast/wide/blog_list.html" %}
+{% extends "plainpodcast/wide/blog_list.html" %}
 
 {% block article_footer %}
 {% if podcast.disqus_shortname %}
@@ -8,7 +8,7 @@
   {% endwith %}
 </div>
 {% else %}
-<div class="fb-comments" data-href="{{ host }}{% url 'podcast:blog' article.id %}" data-numposts="5" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="{{ host }}{% url 'plainpodcast:blog' article.id %}" data-numposts="5" data-colorscheme="light"></div>
 {% endif %}
 {% endblock %}
 

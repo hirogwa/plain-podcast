@@ -1,4 +1,4 @@
-{% extends "podcast/wide/base.html" %}
+{% extends "plainpodcast/wide/base.html" %}
 
 {% block page-title %}
 <title>{{ podcast.name }} - EPISODES</title>
@@ -14,11 +14,11 @@
     {% for episode in episodes %}
     <li>
       <div class="episode-icon">
-        <a href="{% url 'podcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
+        <a href="{% url 'plainpodcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
       </div>
       <div class="episode-summary">
         <div class="title-info">{{ episode.pub_date.date }}</div>
-        <h3><a href="{% url 'podcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
+        <h3><a href="{% url 'plainpodcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
       </div>
     </li>
     {% endfor %}

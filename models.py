@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 from mutagen.mp3 import MP3
 from plainpodcast.storage import PrivateStorage
 
-APP_LABEL = 'podcast'
+APP_LABEL = 'plainpodcast'
 
 
 class PodcastModel(models.Model):
@@ -20,6 +20,9 @@ class PodcastModel(models.Model):
 class Theme(PodcastModel):
     name = models.CharField(max_length=100)
     notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
 
     def __unicode__(self):
         return self.name
@@ -45,6 +48,9 @@ class Podcast(PodcastModel):
     google_analytics_id = models.CharField(max_length=50, blank=True)
     google_contact_iframe = models.TextField(blank=True)
     disqus_shortname = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
 
     def __unicode__(self):
         return self.name
