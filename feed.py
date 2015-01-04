@@ -1,7 +1,7 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from plainpodcast.models import Episode, Podcast, ITunesInfo
-from urllib.parse import urljoin
+from urlparse import urljoin
 import mimetypes
 
 
