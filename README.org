@@ -1,0 +1,25 @@
+#+TITLE: plainpodcast
+#+AUTHOR: hirogwa
+Django application to host podcast.
+
+* Features
+- episode pre-uploading
+- RSS feed with iTunes tags
+
+* Setup
+*** plainpodcast.yaml
+Set the environment dependent values. See the doc in the file.
+
+*** the rest
+#+BEGIN_SRC sh
+$ pip install -r requirements.txt
+$ python setup.py
+#+END_SRC
+
+* Run
+#+BEGIN_SRC sh
+$ python manage.py runserver 0.0.0.0:8000
+#+END_SRC
+
+## License
+plainpodcast is released under the [[http://opensource.org/licenses/MIT][MIT license]]

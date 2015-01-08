@@ -1,6 +1,0 @@
-# configurations for the podcast application,
-# especially those that run outside Django project
-# and cannot see the project settings.
-
-project_directory: /Users/hirogwa/Documents/workspace/uragakuya
-project_settings: uragakuya.settings
