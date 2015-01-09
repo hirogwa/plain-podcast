@@ -1,4 +1,4 @@
-{% extends "podcast/base.html" %}
+{% extends "plainpodcast/base.html" %}
 
 {% block body %}
 {% load static %}
@@ -6,7 +6,7 @@
   <header id="header-site">
     <div id="header-site-inner">
       <h1>
-        <a href="{% url 'podcast:index' %}" class="title">
+        <a href="{% url 'plainpodcast:index' %}" class="title">
           <img src="{% get_media_prefix %}{{ podcast.logo_horizontal }}" alt="{{ podcast.name }}"/>
         </a>
       </h1>
@@ -28,13 +28,13 @@
       <nav id="header-navigation">
         <ul>
           <li class="{% block index_active %}{% endblock %}">
-            <a href="{% url 'podcast:index' %}"><i class="fa fa-home"></i>Home</a>
+            <a href="{% url 'plainpodcast:index' %}"><i class="fa fa-home"></i>Home</a>
           </li>
           <li class="{% block about_active %}{% endblock %}">
-            <a href="{% url 'podcast:about' %}"><i class="fa fa-microphone"></i>About</a>
+            <a href="{% url 'plainpodcast:about' %}"><i class="fa fa-microphone"></i>About</a>
           </li>
           <li>
-            <a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i>RSS</a>
+            <a href="{% url 'plainpodcast:feed' %}"><i class="fa fa-rss"></i>RSS</a>
           </li>
           <li>
             <a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a>
@@ -81,7 +81,7 @@
           {{ footer_subscription.statement|safe }}
         </p>
         <ul>
-          <li><a href="{% url 'podcast:feed' %}"><i class="fa fa-rss"></i>RSS Feed</a></li>
+          <li><a href="{% url 'plainpodcast:feed' %}"><i class="fa fa-rss"></i>RSS Feed</a></li>
           <li><a href="{{ podcast.itunes_url }}"><i class="fa fa-apple"></i>iTunes</a></li>
         </ul>
         {% endif %}

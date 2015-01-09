@@ -1,4 +1,4 @@
-{% extends "podcast/plain-yogurt/base.html" %}
+{% extends "plainpodcast/plain-yogurt/base.html" %}
 
 {% block page-title %}
 <title>{{ podcast.name }}</title>
@@ -11,7 +11,7 @@
   {% for episode in episodes %}
     <div class="episode content-box">
       <h2>
-        <a href="{% block episode_url %}{% url 'podcast:episode' episode.slug %}{% endblock %}">{{ episode.title }}</a>
+        <a href="{% block episode_url %}{% url 'plainpodcast:episode' episode.slug %}{% endblock %}">{{ episode.title }}</a>
       </h2>
       <div class="episode-description content-box-body">
         <div class="excerpt">

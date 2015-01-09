@@ -1,14 +1,14 @@
-{% extends "podcast/wide/news_list.html" %}
+{% extends "plainpodcast/wide/news_list.html" %}
 
 {% block article_footer %}
 {% if podcast.disqus_shortname %}
 <div id="comment_area_disqus">
   {% with idstr=article.id|stringformat:"d" %}
-  {% include "podcast/disqus_snippet.html" with identifier_base='news/' identifier=article.id url='/podcast/news/'|add:idstr title=article.title %}
+  {% include "plainpodcast/disqus_snippet.html" with identifier_base='news/' identifier=article.id url='/podcast/news/'|add:idstr title=article.title %}
   {% endwith %}
 </div>
 {% else %}
-<div class="fb-comments" data-href="{{ host }}{% url 'podcast:news' article.id %}" data-numposts="5" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="{{ host }}{% url 'plainpodcast:news' article.id %}" data-numposts="5" data-colorscheme="light"></div>
 {% endif %}
 {% endblock %}
 

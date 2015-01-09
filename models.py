@@ -6,9 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from mutagen.mp3 import MP3
-from storage import PrivateStorage
 
-APP_LABEL = 'podcast'
+APP_LABEL = 'plainpodcast'
 
 
 class PodcastModel(models.Model):
@@ -21,6 +20,9 @@ class Theme(PodcastModel):
     name = models.CharField(max_length=100)
     notes = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.name
+
     def __unicode__(self):
         return self.name
 
@@ -30,7 +32,7 @@ class Podcast(PodcastModel):
     tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
     theme = models.ForeignKey(Theme)
-    media_url = models.URLField()
+    media_url = models.URLField()    # TODO remove?
     app_root_url = models.URLField()
     favicon = models.ImageField(upload_to='images', blank=True)
     logo_horizontal = models.ImageField(upload_to='images', blank=True)
@@ -45,6 +47,9 @@ class Podcast(PodcastModel):
     google_analytics_id = models.CharField(max_length=50, blank=True)
     google_contact_iframe = models.TextField(blank=True)
     disqus_shortname = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.name
 
     def __unicode__(self):
         return self.name
@@ -68,8 +73,8 @@ class Episode(PodcastModel):
         super(Episode, self).save(*args, **kwargs)
 
     def get_duration(self):
-        a_file = MP3(os.path.join(settings.MEDIA_ROOT, self.audio_file.name))
-        sec = a_file.info.length
+        # FIXME
+        sec = 1200
         return '%d:%02d' % (sec // 60, sec % 60)
 
     def get_mime_type(self):
@@ -82,10 +87,10 @@ class Episode(PodcastModel):
 class ScheduledEpisode(PodcastModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(blank=True)
-    slug_base = models.CharField(max_length=100, blank=True)
+    slug_base = models.CharField(max_length=100, blank=True)  # TODO remove
     description = models.TextField(blank=True)
     show_notes = models.TextField(blank=True)
-    audio_file = models.FileField(upload_to='episode', storage=PrivateStorage(), blank=True)
+    audio_file = models.FileField(upload_to='episode', blank=True)
     pub_date = models.DateTimeField('published_time')
 
     def __unicode__(self):
@@ -133,7 +138,8 @@ class Statement(PodcastModel):
 
 class ITunesInfo(PodcastModel):
     """
-    channel(podcast global, not episode-to-episode) attributes passed to iTunes through the "itunes:" tags in RSS
+    channel(podcast global, not episode-to-episode) attributes
+    passed to iTunes through the "itunes:" tags in RSS
     """
     author = models.CharField(max_length=100, blank=True)
     category = models.CharField(max_length=100, blank=True)

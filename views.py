@@ -4,10 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseNotModified
 from django.utils.http import http_date
 from django.views.static import was_modified_since
-from models import *
+from plainpodcast.models import *
 import mimetypes
 import os.path
-import settings
+import plainpodcast.settings as settings
 import stat
 
 ARTICLE_LIST_SIZE = 5
@@ -146,7 +146,7 @@ class View:
             context = {'episodes': ScheduledEpisode.objects.all().order_by('-pub_date')}
             context.update(cls.get_common_context(request))
             context.update(cls.get_private_context())
-            return render(request, 'podcast/scheduled_list.html', context)
+            return render(request, 'plainpodcast/scheduled_list.html', context)
         else:
             raise Http404()
 
@@ -158,7 +158,7 @@ class View:
             context = {'episode': episode_obj}
             context.update(cls.get_common_context(request))
             context.update(cls.get_private_context())
-            return render(request, 'podcast/scheduled_episode.html', context)
+            return render(request, 'plainpodcast/scheduled_episode.html', context)
         else:
             raise Http404()
 
@@ -286,7 +286,7 @@ class View:
     @staticmethod
     def _template_file(template):
         theme = Podcast.objects.all()[0].theme
-        return 'podcast/{}/{}.html'.format(theme.name, template)
+        return 'plainpodcast/{}/{}.html'.format(theme.name, template)
 
 
 class Wide(View):

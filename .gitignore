@@ -1,7 +1,9 @@
-*.css
+plainpodcast.yaml
 *.log
 *.pyc
 *.swp
 *.sassc
 *.sass-cache/
 *.DS_Store
+*~
+static/

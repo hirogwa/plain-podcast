@@ -1,4 +1,4 @@
-{% extends "podcast/base.html" %}
+{% extends "plainpodcast/base.html" %}
 
 {% block external %}
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -15,7 +15,7 @@
         <div id="title-lines">
           <div id="title-logo">
             <h1>
-              <a href="{% url 'podcast:index' %}" class="title">
+              <a href="{% url 'plainpodcast:index' %}" class="title">
                 <img src="{% get_media_prefix %}{{ podcast.logo_horizontal }}" alt="{{ podcast.name }}"/>
               </a>
             </h1>
@@ -40,7 +40,7 @@
                 <a href="https://instagram.com/{{ podcast.instagram_id }}" target="_blank"><i class="fa fa-instagram"></i></a>
               </div>
               <div class="media-links-icon rss">
-                <a href="{% url 'podcast:feed' %}" target="_blank"><i class="fa fa-rss"></i></a>
+                <a href="{% url 'plainpodcast:feed' %}" target="_blank"><i class="fa fa-rss"></i></a>
               </div>
               <div class="media-links-icon apple">
                 <a href="{{ podcast.itunes_url }}" target="_blank"><i class="fa fa-apple"></i></a>
@@ -53,22 +53,22 @@
         <nav id="header-navigation">
           <ul>
             <li class="{% block index_active %}{% endblock %}">
-              <a href="{% url 'podcast:index' %}"><i class="fa fa-home"></i>Home</a>
+              <a href="{% url 'plainpodcast:index' %}"><i class="fa fa-home"></i>Home</a>
             </li>
             <li class="{% block news_active %}{% endblock %}">
-              <a href="{% url 'podcast:news' %}"><i class="fa fa-lightbulb-o"></i>News</a>
+              <a href="{% url 'plainpodcast:news' %}"><i class="fa fa-lightbulb-o"></i>News</a>
             </li>
             <li class="{% block episode_active %}{% endblock %}">
-              <a href="{% url 'podcast:episodes' %}"><i class="fa fa-microphone"></i>Episode</a>
+              <a href="{% url 'plainpodcast:episodes' %}"><i class="fa fa-microphone"></i>Episode</a>
             </li>
             <li class="{% block blog_active %}{% endblock %}">
-              <a href="{% url 'podcast:blog' %}"><i class="fa fa-calendar"></i>Blog</a>
+              <a href="{% url 'plainpodcast:blog' %}"><i class="fa fa-calendar"></i>Blog</a>
             </li>
             <li class="{% block about_active %}{% endblock %}">
-              <a href="{% url 'podcast:about' %}"><i class="fa fa-question"></i>About</a>
+              <a href="{% url 'plainpodcast:about' %}"><i class="fa fa-question"></i>About</a>
             </li>
             <li class="{% block contact_active %}{% endblock %}">
-              <a href="{% url 'podcast:contact' %}"><i class="fa fa-envelope"></i>Contact</a>
+              <a href="{% url 'plainpodcast:contact' %}"><i class="fa fa-envelope"></i>Contact</a>
             </li>
           </ul>
         </nav>

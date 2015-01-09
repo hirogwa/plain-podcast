@@ -1,0 +1,7 @@
+# Required for episodeupdate.py
+# The directory of the Django project that this app belongs to
+project_directory: /path/to/your/project/
+
+# Required for episodeupdate.py
+# The settings module that this app should refer to
+project_settings: yourproject.settings

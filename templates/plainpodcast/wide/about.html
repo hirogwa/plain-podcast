@@ -1,4 +1,4 @@
-{% extends "podcast/wide/base.html" %}
+{% extends "plainpodcast/wide/base.html" %}
 
 {% block page-title %}
 <title>{{ podcast.name }} - ABOUT</title>
@@ -44,7 +44,7 @@
         <ul>
           {% for article in news_articles|slice:":5" %}
           <li>
-            <h3><a href="{% url 'podcast:news' article.id %}">{{ article.title }}</a></h3>
+            <h3><a href="{% url 'plainpodcast:news' article.id %}">{{ article.title }}</a></h3>
             <div class="article-information">
               {{ article.pub_date.date }} by {{ article.author.name }}
             </div>
@@ -57,7 +57,7 @@
         <ul>
           {% for article in blog_articles|slice:":3" %}
           <li>
-            <h3><a href="{% url 'podcast:blog' article.id %}">{{ article.title }}</a></h3>
+            <h3><a href="{% url 'plainpodcast:blog' article.id %}">{{ article.title }}</a></h3>
             <div class="article-information">
               {{ article.pub_date.date }} by {{ article.author.name }}
             </div>
