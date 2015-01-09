@@ -15,9 +15,9 @@
   {% endblock %}
   {% load staticfiles %}
   <link rel="icon" type="image/png" href="{{ podcast.favicon }}">
-<!--  <link rel="stylesheet" type="text/css" href="plainpodcast/{{ podcast.theme }}/{{ podcast.theme }}.css"/>
--->
-  <link rel="stylesheet" type="text/css" href="{% static 'plainpodcast/wide/wide.css' %}"/>
+  {% with 'plainpodcast/'|add:podcast.theme.name|add:'/'|add:podcast.theme.name|add:'.css' as css_file %}
+    <link rel="stylesheet" type="text/css" href="{% static css_file %}"/>
+  {% endwith %}
       <div id="fb-root">
     <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];

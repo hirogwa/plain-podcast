@@ -73,8 +73,8 @@ class Episode(PodcastModel):
         super(Episode, self).save(*args, **kwargs)
 
     def get_duration(self):
-        a_file = MP3(os.path.join(settings.MEDIA_ROOT, self.audio_file.name))
-        sec = a_file.info.length
+        # FIXME
+        sec = 1200
         return '%d:%02d' % (sec // 60, sec % 60)
 
     def get_mime_type(self):
