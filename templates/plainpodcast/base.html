@@ -13,8 +13,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/mediaelement/2.13.2/js/mediaelement-and-player.min.js"></script>
   {% block external %}
   {% endblock %}
-  {% load staticfiles %}
-  <link rel="icon" type="image/png" href="{{ podcast.favicon }}">
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% get_media_prefix %}{{ podcast.favicon }}">
   {% with 'plainpodcast/'|add:podcast.theme.name|add:'/'|add:podcast.theme.name|add:'.css' as css_file %}
     <link rel="stylesheet" type="text/css" href="{% static css_file %}"/>
   {% endwith %}
