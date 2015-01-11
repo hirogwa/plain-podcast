@@ -47,10 +47,6 @@ def episodes(request):
     return theme_view().episodes(request)
 
 
-def scheduled_list(request):
-    return theme_view().sheduled_list(request)
-
-
 def scheduled_episode(request, slug):
     return theme_view().scheduled_episode(request, slug)
 
@@ -139,17 +135,6 @@ class View:
         context = {'episodes': Episode.objects.all().order_by('-pub_date')}
         context.update(cls.get_common_context(request))
         return render(request, cls._template_file('episodes'), context)
-
-    @classmethod
-    def scheduled_list(cls, request):
-        if request.user.is_authenticated():
-            context = {'episodes': ScheduledEpisode.objects.all().order_by('-pub_date')}
-            context.update(cls.get_common_context(request))
-            context.update(cls.get_private_context())
-            return render(request, 'plainpodcast/scheduled_list.html', context)
-        else:
-            raise Http404()
-
 
     @classmethod
     def scheduled_episode(cls, request, slug):
@@ -325,29 +310,6 @@ class Plain(View):
     @classmethod
     def blog(cls, request, **kwargs):
         raise Http404
-
-
-def private_resources(request, path):
-    if request.user.is_authenticated():
-        full_path = os.path.join(settings.PRIVATE_FILE_ROOT, path)
-        if not os.path.exists(full_path):
-            raise Http404('resource not found:"{}"'.format(full_path))
-
-        stat_obj = os.stat(full_path)
-        mime_type = mimetypes.guess_type(full_path)[0]
-
-        if not was_modified_since(
-                request.META.get('HTTP_IF_MODIFIED_SINCE'),
-                stat_obj[stat.ST_MTIME],
-                stat_obj[stat.ST_SIZE]):
-            return HttpResponseNotModified(content_type=mime_type)
-
-        response = HttpResponse(open(full_path, 'rb').read(), content_type=mime_type)
-        response["Last-Modified"] = http_date(stat_obj[stat.ST_MTIME])
-        return response
-
-    else:
-        raise Http404()
 
 
 THEMES = {'plain-yogurt': Plain(),

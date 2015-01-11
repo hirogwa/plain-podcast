@@ -1,7 +1,7 @@
 import datetime
 import mimetypes
-import os.path
-from django.conf import settings
+import os
+import plainpodcast.settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -61,20 +61,30 @@ class Episode(PodcastModel):
     description = models.TextField(blank=True)
     show_notes = models.TextField(blank=True)
     audio_file = models.FileField(upload_to='episode')
+    duration = models.FloatField(blank=True)
     pub_date = models.DateTimeField('published_time')
 
     def __unicode__(self):
         return self.title
 
     def save(self, *args, **kwargs):
+        # slug
         date = self.pub_date
         if self.slug == '':
             self.slug = '%i-%02d-%02d' % (date.year, date.month, date.day)
+
+        # duration
+        temppath = os.path.join(
+            plainpodcast.settings.TEMP_DIR,
+            '{}.tmp'.format(os.path.basename(self.audio_file.name)))
+        with open(temppath, 'wb') as tempfile:
+            tempfile.write(self.audio_file.file.file.getvalue())
+        self.duration = MP3(temppath).info.length
+
         super(Episode, self).save(*args, **kwargs)
 
     def get_duration(self):
-        # FIXME
-        sec = 1200
+        sec = self.duration
         return '%d:%02d' % (sec // 60, sec % 60)
 
     def get_mime_type(self):

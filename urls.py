@@ -22,10 +22,4 @@ urlpatterns = patterns(
     # episodes
     url(r'^episode/(?P<slug>\S+)/$', views.episode, name='episode'),
     url(r'^episodes/$', views.episodes, name='episodes'),
-
-    # private views
-    url(r'^private/preview/$', views.scheduled_list, name='scheduled_list'),
-    url(r'^private/preview/episode/(?P<slug>\S+)/$', views.scheduled_episode, name='scheduled_episode'),
-    url(r'^{}(?P<path>.*)$'.format(settings.PRIVATE_FILE_URL.lstrip('/')),
-        views.private_resources, name='private_resources')
 )
