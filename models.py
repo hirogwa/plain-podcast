@@ -80,6 +80,7 @@ class Episode(PodcastModel):
         with open(temppath, 'wb') as tempfile:
             tempfile.write(self.audio_file.file.file.getvalue())
         self.duration = MP3(temppath).info.length
+        os.remove(temppath)
 
         super(Episode, self).save(*args, **kwargs)
 
