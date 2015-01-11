@@ -1,4 +1,1 @@
-mutagen
-Pillow==2.5.0
-pyyaml
-pytz
+# TODO
