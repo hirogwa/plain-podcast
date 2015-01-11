@@ -32,7 +32,6 @@ class Podcast(PodcastModel):
     tagline = models.CharField(max_length=300, blank=True)
     description = models.TextField(blank=True)
     theme = models.ForeignKey(Theme)
-    media_url = models.URLField()    # TODO remove?
     app_root_url = models.URLField()
     favicon = models.ImageField(upload_to='images', blank=True)
     logo_horizontal = models.ImageField(upload_to='images', blank=True)

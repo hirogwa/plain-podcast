@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from plainpodcast.models import Episode, Podcast, ITunesInfo
@@ -8,26 +9,30 @@ import mimetypes
 class ITunesFeed(Rss201rev2Feed):
     def rss_attributes(self):
         attrs = super(ITunesFeed, self).rss_attributes()
-        attrs.update({"xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd"})
+        attrs.update(
+            {"xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd"})
         return attrs
 
     def add_root_elements(self, handler):
         super(ITunesFeed, self).add_root_elements(handler)
-        podcast = Podcast.objects.all()[0]
         itunes_info_list = ITunesInfo.objects.all()
         if len(itunes_info_list) > 0:
             itunes_info = itunes_info_list[0]
             handler.addQuickElement('itunes:author', itunes_info.author)
-            handler.addQuickElement('itunes:image',
-                                    attrs={'href': urljoin(podcast.media_url + '/', itunes_info.image.name)})
+            handler.addQuickElement(
+                'itunes:image',
+                attrs={'href': urljoin(
+                    settings.MEDIA_URL, itunes_info.image.name)})
             handler.addQuickElement('itunes:explicit', itunes_info.explicit)
             handler.addQuickElement('itunes:subtitle', itunes_info.subtitle)
             handler.addQuickElement('itunes:summary', itunes_info.summary)
             handler.addQuickElement('itunes:keywords', itunes_info.keywords)
 
             # (nested) category information
-            handler.startElement('itunes:category', attrs={'text': itunes_info.category})
-            handler.startElement('itunes:category', attrs={'text': itunes_info.subcategory})
+            handler.startElement(
+                'itunes:category', attrs={'text': itunes_info.category})
+            handler.startElement(
+                'itunes:category', attrs={'text': itunes_info.subcategory})
             handler.endElement('itunes:category')
             handler.endElement('itunes:category')
 
@@ -74,7 +79,7 @@ class AllEpisodesFeed(Feed):
         return episode.description + '<h3>Show Notes</h3>' + episode.show_notes
 
     def item_enclosure_url(self, episode):
-        return urljoin(self.podcast.media_url + '/', episode.audio_file.name)
+        return urljoin(settings.MEDIA_URL, episode.audio_file.name)
 
     def item_enclosure_length(self, episode):
         return episode.audio_file.size
