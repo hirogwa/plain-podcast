@@ -21,8 +21,8 @@ class ITunesFeed(Rss201rev2Feed):
             handler.addQuickElement('itunes:author', itunes_info.author)
             handler.addQuickElement(
                 'itunes:image',
-                attrs={'href': urljoin(
-                    settings.MEDIA_URL, itunes_info.image.name)})
+                attrs={'href': urljoin(settings.MEDIA_URL.replace(
+                    'https', 'http'), itunes_info.image.name)})
             handler.addQuickElement('itunes:explicit', itunes_info.explicit)
             handler.addQuickElement('itunes:subtitle', itunes_info.subtitle)
             handler.addQuickElement('itunes:summary', itunes_info.summary)
@@ -79,7 +79,8 @@ class AllEpisodesFeed(Feed):
         return episode.description + '<h3>Show Notes</h3>' + episode.show_notes
 
     def item_enclosure_url(self, episode):
-        return urljoin(settings.MEDIA_URL, episode.audio_file.name)
+        return urljoin(settings.MEDIA_URL.replace(
+            'https', 'http'), episode.audio_file.name)
 
     def item_enclosure_length(self, episode):
         return episode.audio_file.size
