@@ -77,7 +77,7 @@ class Episode(PodcastModel):
             plainpodcast.settings.TEMP_DIR,
             '{}.tmp'.format(os.path.basename(self.audio_file.name)))
         with open(temppath, 'wb') as tempfile:
-            tempfile.write(self.audio_file.file.file.getvalue())
+            tempfile.write(self.audio_file.file.read())
         self.duration = MP3(temppath).info.length
         os.remove(temppath)
 
