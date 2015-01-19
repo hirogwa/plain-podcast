@@ -5,3 +5,7 @@ project_directory: /path/to/your/project/
 # Required for episodeupdate.py
 # The settings module that this app should refer to
 project_settings: yourproject.settings
+
+# Required for logwatch.py
+# The location of the logfile to be consumed
+access_log: /path/to/your/server/log/file
