@@ -247,3 +247,23 @@ class Blog(Article):
 
 class News(Article):
     pass
+
+
+class AccessLog(PodcastModel):
+    """
+    Model representation of access log from web server
+    """
+    remote_addr = models.TextField(blank=True)
+    remote_user = models.TextField(blank=True)
+    time_local = models.DateTimeField(blank=True, db_index=True)
+    request = models.TextField(blank=True)
+    status = models.TextField(blank=True)
+    body_bytes_sent = models.IntegerField(blank=True, default=0)
+    http_referer = models.TextField(blank=True)
+    http_user_agent = models.TextField(blank=True)
+
+    def __str__(self):
+        return "[{}]{}".format(self.time_local, self.remote_addr)
+
+    def __unicode__(self):
+        return self.__str__()
