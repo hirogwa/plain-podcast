@@ -16,6 +16,7 @@ from plainpodcast.models import AccessLog
 import logging
 import datetime
 import os
+import shutil
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -81,7 +82,10 @@ class NginxAccessLog():
                            datetime.datetime.strftime(
                                datetime.datetime.now(),
                                '%y%m%d%H%M%S')))
-        os.rename(LOG_PATH, tgt_path)
+
+        shutil.copyfile(LOG_PATH, tgt_path)
+        open(LOG_PATH, 'w').close()
+
         AccessLog.objects.bulk_create(
             [cls.log_model(x) for x in cls.log_lines(tgt_path)])
         logger.info('{} analyzed and renamed to {}'.format(
