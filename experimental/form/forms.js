@@ -288,29 +288,44 @@ var LinkedTextListPreviewItem = React.createClass({
         });
     },
 
+    addClass: function(name) {
+        var classSet = this.state.classSet;
+        classSet[name] = true;
+        this.setState({classSet: classSet});
+    },
+
+    removeClass: function(name) {
+        var classSet = this.state.classSet;
+        delete classSet[name];
+        this.setState(this.state.classSet);
+    },
+
     handleDragStart: function(e) {
-        this.getDOMNode().style.opacity = 0.4;
         e.dataTransfer.setData('text/plain', 'dummy');
-        this.setState({classSet: {'newclass': true}});
+        this.addClass('beingDragged');
     },
 
     handleDragEnter: function(e) {
-        console.log('entered');
-        this.setState({classSet: {'entered': true}});
-        return false;
+        e.preventDefault();
+        this.addClass('dragEntered');
     },
 
     handleDragOver: function(e) {
-        /*
         e.preventDefault();
-        console.log('overed');
-        e.dataTransfer.dropEffect = 'move';
-        return false;
-        */
     },
 
     handleDragLeave: function(e) {
-        console.log('leavel');
+        this.removeClass('dragEntered');
+    },
+
+    handleDrop: function(e) {
+        e.preventDefault();
+        this.removeClass('dragEntered');
+        return false;
+    },
+
+    handleDragend: function(e) {
+        this.removeClass('beingDragged');
     },
 
     componentDidUpdate: function() {
@@ -322,6 +337,10 @@ var LinkedTextListPreviewItem = React.createClass({
             'dragover', this.handleDragOver, false);
         this.getDOMNode().addEventListener(
             'dragleave', this.handleDragLeave, false);
+        this.getDOMNode().addEventListener(
+            'drop', this.handleDrop, false);
+        this.getDOMNode().addEventListener(
+            'dragend', this.handleDragend, false);
     },
 
     render: function() {

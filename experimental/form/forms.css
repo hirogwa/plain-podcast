@@ -1,3 +1,9 @@
 li {
     cursor: move;
 }
+.beingDragged {
+    opacity: 0.4;
+}
+.dragEntered {
+    border: solid black 1px;
+}
