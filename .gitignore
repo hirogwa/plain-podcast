@@ -7,3 +7,4 @@ plainpodcast.yaml
 *.DS_Store
 *~
 static/
+tags

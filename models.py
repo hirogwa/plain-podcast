@@ -62,6 +62,9 @@ class Episode(PodcastModel):
     audio_file = models.FileField(upload_to='episode')
     duration = models.FloatField(blank=True)
     pub_date = models.DateTimeField('published_time')
+    pub_status = models.CharField(max_length=20,
+                                  choices=[('public', 'public'), ('archived', 'archived')],
+                                  default='public')
 
     def __unicode__(self):
         return self.title
@@ -141,6 +144,14 @@ class Statement(PodcastModel):
     unique_name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     statement = models.TextField()
+
+    def __unicode__(self):
+        return self.unique_name
+
+
+class CustomString(PodcastModel):
+    unique_name = models.CharField(max_length=100)
+    custom_string = models.CharField(max_length=500)
 
     def __unicode__(self):
         return self.unique_name
