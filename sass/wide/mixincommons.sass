@@ -126,6 +126,10 @@
         a:hover
             background: $cl-icon-hover
             transition-duration: 0.2s
+        a.episode-inactive
+            background: $cl-icon-inactive
+            pointer-events: none
+            cursor: default
 
 @mixin episode-li($cl-icon, $cl-icon-hover)
     li

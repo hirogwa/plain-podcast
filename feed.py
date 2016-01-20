@@ -67,7 +67,7 @@ class AllEpisodesFeed(Feed):
     itunes_info = None if len(itunes_info_list) == 0 else itunes_info_list[0]
 
     def items(self):
-        return Episode.objects.all().order_by('-pub_date')
+        return Episode.objects.filter(pub_status='public').order_by('-pub_date')
 
     def item_title(self, episode):
         return episode.title

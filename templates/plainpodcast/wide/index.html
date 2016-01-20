@@ -63,21 +63,40 @@
           {% for episode in episodes_recent %}
           <li class="{% if forloop.counter0 == 0 %}featured{% endif %}">
             <div class="episode-icon">
-              <a href="{% url 'plainpodcast:episode' episode.slug %}"><i class="fa fa-microphone"></i></a>
+              {% if episode.pub_status == "public" %}
+              <a href="{% url 'plainpodcast:episode' episode.slug %}">
+                <i class="fa fa-microphone"></i>
+              </a>
+              {% else %}
+              <a class="episode-inactive">
+                <i class="fa fa-microphone"></i>
+              </a>
+              {% endif %}
             </div>
             <div class="episode-summary">
               <div class="title-info">{{ episode.pub_date.date }}</div>
-              <h3><a href="{% url 'plainpodcast:episode' episode.slug %}">{{ episode.title }}</a></h3>
+              {% if episode.pub_status == "public" %}
+              <h3>
+                <a href="{% url 'plainpodcast:episode' episode.slug %}">{{ episode.title }}</a>
+              </h3>
+              {% else %}
+              <h3 class="episode-inactive">
+                [{{ string_archived }}]<br>
+                {{ episode.title }}
+              </h3>
+              {% endif %}
               {% if forloop.counter0 == 0 %}
               <div class="episode-summary-featured">
                 <div class="episode-description">
                   {{ episode.description|truncatechars:80 }}
                 </div>
+                {% if episode.pub_status == "public" %}
                 <div class="episode-audio-player">
                   <audio controls>
                     <source src="{% block media_prefix %}{% get_media_prefix %}{% endblock %}{{ episode.audio_file }}" type="{{ episode.get_mime_type }}">
                   </audio>
                 </div>
+                {% endif %}
               </div>
               {% endif %}
             </div>

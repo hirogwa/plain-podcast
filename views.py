@@ -77,7 +77,12 @@ class View:
     @classmethod
     def index_context(cls, request):
         episodes_all = Episode.objects.all().order_by('-pub_date')
-        context = {'episodes': episodes_all}
+
+        context = {
+            'episodes': episodes_all,
+            'string_archived': cls._custom_string(
+                'string-episode-archived', 'archived')
+        }
         context.update(cls.get_common_context(request))
         return context, cls._template_file('index')
 
@@ -122,6 +127,9 @@ class View:
     @classmethod
     def episode(cls, request, slug):
         episode_obj = get_object_or_404(Episode, slug=slug)
+        if episode_obj.pub_status == 'archived':
+            raise Http404()
+
         context = {'episode': episode_obj}
         context.update(cls.get_common_context(request))
         return render(request, cls._template_file('episode'), context)
@@ -132,7 +140,11 @@ class View:
         :param request:
         :return: the list of episodes
         """
-        context = {'episodes': Episode.objects.all().order_by('-pub_date')}
+        context = {
+            'episodes': Episode.objects.all().order_by('-pub_date'),
+            'string_archived': cls._custom_string(
+                'string-episode-archived', 'archived')
+        }
         context.update(cls.get_common_context(request))
         return render(request, cls._template_file('episodes'), context)
 
@@ -272,6 +284,15 @@ class View:
     def _template_file(template):
         theme = Podcast.objects.all()[0].theme
         return 'plainpodcast/{}/{}.html'.format(theme.name, template)
+
+    @staticmethod
+    def _custom_string(unique_name, default_string=''):
+        custom_string_obj = CustomString.objects.filter(
+            unique_name=unique_name).first()
+        if custom_string_obj:
+            return custom_string_obj.custom_string
+        else:
+            return default_string
 
 
 class Wide(View):
